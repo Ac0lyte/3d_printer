@@ -130,7 +130,7 @@ module prism(l, w, h){
            );
 }
 
-module 2020_inside_l() {
+module 2020_inside_l( toung=false) {
     // TODO: parameterize
     small=0.001;
     hole_diam=4.5;
@@ -142,12 +142,14 @@ module 2020_inside_l() {
     difference() {
         union() {
             translate([0,15,3]) cube([20,30,6], center=true);
-            translate([0,15,-2]) cube([toung_width,toung_lenght,toung_height], center=true);
             translate([0,3,15]) cube([20,6,30], center=true);
-            translate([0,-2,15]) cube([toung_width,toung_height,toung_lenght], center=true);
             translate([-10,0,20]) rotate([270,0,0]) prism(20,20,20);
             translate([-10,0,30]) rotate([270,0,0]) prism(6,30,30);
             translate([4,0,30]) rotate([270,0,0]) prism(6,30,30);
+            if( toung == true) {
+                translate([0,-2,15]) cube([toung_width,toung_height,toung_lenght], center=true);
+                translate([0,15,-2]) cube([toung_width,toung_lenght,toung_height], center=true);
+            }
         }
         translate([0,20,0]) cylinder(h=15,d=hole_diam, center=true, $fn=200);
         rotate([90,0,0]) translate([0,20,0]) cylinder(h=15,d=hole_diam, center=true, $fn=200);

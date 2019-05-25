@@ -229,7 +229,7 @@ if (print_inside_corners) {
 }
 
 if (print_inside_3_way_corners) {
-    2020_inside_3_way();
+    rotate([0,0,0]) 2020_inside_3_way();
 }
 
 if (print_frame_rail_mounts) {
