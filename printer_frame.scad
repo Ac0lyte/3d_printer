@@ -48,9 +48,9 @@ z_rail_width = 60;
 z_carriage_width = z_rail_width + frame_size;
 
 /* What to print */
-print_full = true;
+print_full = false;
 print_inside_corners = false;
-print_inside_3_way_corners = false;
+print_inside_3_way_corners = true;
 print_frame_rail_mounts = false;
 print_frame_dual_rail_mounts = false;
 print_platform_dual_rail_mounts = false;
