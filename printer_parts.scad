@@ -1,7 +1,10 @@
+/* Global */
+include <vars.scad>;
+
 /* ========================================================= */
 /* MODULES                                                   */
 /* ========================================================= */
-module 2020_corner_plate(x=4, y=4) {
+module 2020_corner_plate(x=4, y=4, wide=false) {
   difference(){
     hull(){
       for ( i = [0:x-1]) {
@@ -10,6 +13,8 @@ module 2020_corner_plate(x=4, y=4) {
       for ( i = [0:y-1]) {
         translate([0, 10 * i, 0]) cylinder(h=5, d=20, center=true, $fn=200);
       }
+      translate([x*5-7.5,-12.5,0]) cube([x*10+15,5,5], center=true);
+      translate([-12.5,y*5-7.5,0]) cube([5,y*10+15,5], center=true);
     }
     for ( i = [0:x-1]) {
       translate([10 * i, 0, 0]) cylinder(h=6, d=5, center=true, $fn=200);
@@ -17,6 +22,33 @@ module 2020_corner_plate(x=4, y=4) {
     for ( i = [0:y-1]) {
       translate([0, 10 * i, 0]) cylinder(h=6, d=5, center=true, $fn=200);
     }
+  }
+}
+
+
+module 2020_3_way_corner_plate(x=4) {
+  color("red") union() {
+    translate([10,10,-2.5]) rotate([0, 0, 0])   2020_corner_plate(x,x,true);
+    translate([10,-2.5,10]) rotate([90,0, 0])   2020_corner_plate(x,x,true);
+    translate([-2.5,10,10]) rotate([0, 270, 0]) 2020_corner_plate(x,x,true);
+
+    /* translate([(x*10)/2,-2.5,-2.5]) rotate([0,0,0]) cube([x*10,5,5], center=true);
+    translate([-2.5,(x*10)/2,-2.5]) rotate([0,270,0]) cube([5,x*10,5], center=true);
+    translate([-2.5,-2.5,(x*10)/2]) rotate([0,0,270]) cube([5,5,x*10], center=true);
+
+    hull(){
+      translate([5,-2.5,-2.5]) rotate([0,0,0]) cube([20,5,5], center=true);
+      translate([-2.5,5,-2.5]) rotate([0,270,0]) cube([5,20,5], center=true);
+    }
+    hull(){
+      translate([-2.5,5,-2.5]) rotate([0,270,0]) cube([5,20,5], center=true);
+      translate([-2.5,-2.5,5]) rotate([0,0,270]) cube([5,5,20], center=true);
+    }
+    hull(){
+      translate([-2.5,-2.5,5]) rotate([0,0,270]) cube([5,5,20], center=true);
+      translate([5,-2.5,-2.5]) rotate([0,0,0]) cube([20,5,5], center=true);
+    } */
+
   }
 }
 

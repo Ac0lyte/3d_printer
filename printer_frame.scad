@@ -30,35 +30,16 @@
     - Wire Holder
 */
 /* Global */
-
-/* frame */
-height = 690;
-width = 500;
-depth = 500;
-
-frame_size = 20;
-frame_half = frame_size / 2;
-
-glass_height = 3;
-glass_width = 400;
-glass_depth = 400;
-
-rail_diam = 10;
-z_rail_width = 60;
-z_carriage_width = z_rail_width + frame_size;
+include <vars.scad>;
 
 /* What to print */
-print_full = false;
-print_inside_corners = false;
-print_inside_3_way_corners = true;
-print_frame_rail_mounts = false;
-print_frame_dual_rail_mounts = false;
-print_platform_dual_rail_mounts = false;
+PART = "none";
+SHOW = "full";
 
 use <printer_parts.scad>;
 
 /*  FRAME */
-if (print_full) {
+if (SHOW == "full") {
   color("Grey") {
       // uprights
       translate([frame_half,frame_half,height/2]) 2020_extrusion(height);
@@ -86,6 +67,11 @@ if (print_full) {
       translate([width+40, 0, 0]) rotate([0, 0, 90]) 2020_inside_3_way();
       translate([width+40, depth+40, 0]) rotate([0, 0, 180]) 2020_inside_3_way();
       translate([0, depth+40, 0]) rotate([0, 0, 270]) 2020_inside_3_way();
+
+      translate([0, 0, 0]) rotate([0, 0, 0]) 2020_3_way_corner_plate();
+      translate([width+40, 0, 0]) rotate([0, 0, 90]) 2020_3_way_corner_plate();
+      translate([width+40, depth+40, 0]) rotate([0, 0, 180]) 2020_3_way_corner_plate();
+      translate([0, depth+40, 0]) rotate([0, 0, 270]) 2020_3_way_corner_plate();
   }
 
   // top corners
@@ -94,7 +80,13 @@ if (print_full) {
       translate([width+40, 0, height]) rotate([180, 0, 180]) 2020_inside_3_way();
       translate([width+40, depth+40, height]) rotate([180, 0, 270]) 2020_inside_3_way();
       translate([0, depth+40, height]) rotate([180, 0, 0]) 2020_inside_3_way();
+
+      translate([0, 0, height]) rotate([180, 0, 90]) 2020_3_way_corner_plate();
+      translate([width+40, 0, height]) rotate([180, 0, 180]) 2020_3_way_corner_plate();
+      translate([width+40, depth+40, height]) rotate([180, 0, 270]) 2020_3_way_corner_plate();
+      translate([0, depth+40, height]) rotate([180, 0, 0]) 2020_3_way_corner_plate();
   }
+
 
   /* X rails */
   translate([depth-35, width/2+frame_size ,height-frame_half]) rotate([90, 0, 0]) cylinder(h=depth, d=rail_diam, center=true);
@@ -224,22 +216,26 @@ if (print_full) {
 }
 
 
-if (print_inside_corners) {
+if (PART == "2020_inside_l") {
     2020_inside_l();
 }
 
-if (print_inside_3_way_corners) {
+if (PART == "2020_inside_3_way") {
     rotate([0,0,0]) 2020_inside_3_way();
 }
 
-if (print_frame_rail_mounts) {
+if (PART == "2020_3_way_corner_plate") {
+    2020_3_way_corner_plate();
+}
+
+if (PART == "2020_rail_mount") {
     2020_rail_mount();
 }
 
-if (print_frame_dual_rail_mounts) {
+if (PART == "2020_dual_rail_mount") {
     2020_dual_rail_mount();
 }
 
-if (print_platform_dual_rail_mounts) {
-    2020_dual_rail_lift();
+if (PART == "2020_dual_rail_mount") {
+    2020_dual_rail_mount();
 }
