@@ -38,10 +38,11 @@
 PREFIX=printer_frame
 
 # OpenSCAD binary and options on OS X
-#OPENSCAD=/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD
+# OPENSCAD=/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD
 OPENSCAD=/usr/bin/openscad
-OPENSCAD_OPTIONS=-DVERBOSE=false
-IMAGE_OPTIONS=--imgsize=1024,768 --colorscheme=DeepOcean
+OPENSCAD_OPTIONS=-DVERBOSE=false -DSHOW=none
+# IMAGE_OPTIONS=--imgsize=1024,768 --colorscheme=DeepOcean
+IMAGE_OPTIONS=--imgsize=1024,768
 
 # Slic3r binary and options
 SLIC3R=/opt/Slic3r/latest/slic3r

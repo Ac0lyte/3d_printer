@@ -19,7 +19,7 @@
       - Pully gears
       - Lift connectors
     - DW-G system
-      - Pullys
+      - Pullyss
       - Spools
       - wire
     - Extruder
@@ -33,8 +33,8 @@
 include <vars.scad>;
 
 /* What to print */
-PART = "none";
-SHOW = "full";
+PART = "2020_3_way_corner_plate";
+SHOW = "none";
 
 use <printer_parts.scad>;
 
