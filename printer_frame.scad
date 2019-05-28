@@ -157,7 +157,7 @@ if (SHOW == "full") {
         }
     }
 
-    translate([frame_half + width, frame_size + width/2 , 37.5]) rotate([0,0,90]) {
+    translate([frame_size + frame_half + width, frame_size + width/2 , 37.5]) rotate([0,0,90]) {
         color("green") {
             2020_rail_carriage_lift();
         }
