@@ -33,8 +33,8 @@
 include <vars.scad>;
 
 /* What to print */
-PART = "2020_3_way_corner_plate";
-SHOW = "none";
+PART = "~2020_rail_carriage_lift";
+SHOW = "full";
 
 use <printer_parts.scad>;
 
@@ -98,11 +98,11 @@ if (SHOW == "full") {
 
 
   /* Z rails */
-  translate([frame_half, (depth/2) - (z_rail_width/2) ,height/2]) cylinder(h=height-40, d=rail_diam, center=true);
-  translate([frame_half, (depth/2) + (z_rail_width/2) ,height/2]) cylinder(h=height-40, d=rail_diam, center=true);
+  translate([frame_half, frame_size + (depth/2) - (z_rail_width/2) ,height/2]) cylinder(h=height-40, d=rail_diam, center=true);
+  translate([frame_half, frame_size + (depth/2) + (z_rail_width/2) ,height/2]) cylinder(h=height-40, d=rail_diam, center=true);
 
-  translate([width + frame_size + frame_half, (depth/2) - (z_rail_width/2) ,height/2]) cylinder(h=height-40, d=rail_diam, center=true);
-  translate([width + frame_size + frame_half, (depth/2) + (z_rail_width/2) ,height/2]) cylinder(h=height-40, d=rail_diam, center=true);
+  translate([width + frame_size + frame_half, frame_size + (depth/2) - (z_rail_width/2) ,height/2]) cylinder(h=height-40, d=rail_diam, center=true);
+  translate([width + frame_size + frame_half, frame_size + (depth/2) + (z_rail_width/2) ,height/2]) cylinder(h=height-40, d=rail_diam, center=true);
 
 
   /* X rail frame mounts */
@@ -120,10 +120,10 @@ if (SHOW == "full") {
 
   /* Z rail frame mounts */
   color("SlateGray") {
-      translate([frame_half, width/2, frame_size]) rotate([0,0,90]) 2020_dual_rail_mount();
-      translate([depth + 30, width/2, frame_size]) rotate([0,0,90]) 2020_dual_rail_mount();
-      translate([frame_half, width/2, height-frame_size]) rotate([0,180,90]) 2020_dual_rail_mount();
-      translate([depth + 30, width/2, height-frame_size]) rotate([0,180,90]) 2020_dual_rail_mount();
+      translate([frame_half, frame_size + width/2, frame_size]) rotate([0,0,90]) 2020_dual_rail_mount();
+      translate([depth + 30, frame_size + width/2, frame_size]) rotate([0,0,90]) 2020_dual_rail_mount();
+      translate([frame_half, frame_size + width/2, height-frame_size]) rotate([0,180,90]) 2020_dual_rail_mount();
+      translate([depth + 30, frame_size + width/2, height-frame_size]) rotate([0,180,90]) 2020_dual_rail_mount();
   }
 
 
@@ -134,76 +134,86 @@ if (SHOW == "full") {
 
 
   /* Z rail carriage mounts */
-  animi=$t * 300;
+  animi=($t * 300) + 30;
   translate([0,0,animi]) {
-    color("green") {
-        translate([frame_half, width/2, 40]) rotate([0,0,270]) 2020_dual_rail_lift();
-        translate([depth + 30, width/2, 40]) rotate([0,0,90]) 2020_dual_rail_lift();
+    translate([frame_half, frame_size + width/2, 37.5]) rotate([0,0,270]) {
+        color("green") {
+            2020_rail_carriage_lift();
+        }
+        // 4 platform levelers/connectors
+        height_lever();
+        mirror([1,0,0]) height_lever();
+
+        translate([200,45,0]) platform_corner();
+        mirror([1,0,0]) translate([200,45,0]) platform_corner();
+
+        color("white") {
+            // 608zz bearings
+            translate([170,36+0.1,0]) rotate([90,0,0]) 608zz_bearing();
+            translate([-170,36+0.1,0]) rotate([90,0,0]) 608zz_bearing();
+            // 608zz bearings
+            translate([200,40,0]) rotate([90,0,0]) 608zz_bearing();
+            translate([-200,40,0]) rotate([90,0,0]) 608zz_bearing();
+        }
     }
 
-    // 4 platform levelers/connectors
+    translate([frame_half + width, frame_size + width/2 , 37.5]) rotate([0,0,90]) {
+        color("green") {
+            2020_rail_carriage_lift();
+        }
+        // 4 platform levelers/connectors
+        height_lever();
+        mirror([1,0,0]) height_lever();
+
+        translate([200,45,0]) platform_corner();
+        mirror([1,0,0]) translate([200,45,0]) platform_corner();
+
+        color("white") {
+            // 608zz bearings
+            translate([170,36+0.1,0]) rotate([90,0,0]) 608zz_bearing();
+            translate([-170,36+0.1,0]) rotate([90,0,0]) 608zz_bearing();
+            // 608zz bearings
+            translate([200,40,0]) rotate([90,0,0]) 608zz_bearing();
+            translate([-200,40,0]) rotate([90,0,0]) 608zz_bearing();
+        }
+    }
+
+
 
     // glass frame
     glass_offset=5;
     color("Grey") {
-      translate([frame_size+(width - glass_width)/2 - glass_offset,(depth/2)+frame_size,50]) rotate([90,0,0]) 2020_extrusion(glass_depth-(2*glass_offset));
-      translate([frame_size+width-((width - glass_width)/2) + glass_offset,(depth/2)+frame_size,50]) rotate([90,0,0]) 2020_extrusion(glass_depth-(2*glass_offset));
-      translate([(width/2)+frame_size,frame_size+(depth - glass_depth)/2 - glass_offset,50]) rotate([0,90,0]) 2020_extrusion(glass_width -(2*glass_offset)+ 40);
-      translate([(width/2)+frame_size,frame_size+depth-((depth - glass_depth)/2) + glass_offset ,50]) rotate([0,90,0]) 2020_extrusion(glass_width -(2*glass_offset)+ 40);
+        translate([frame_size+(width - glass_width)/2 - glass_offset,(depth/2)+frame_size,50]) rotate([90,0,0]) 2020_extrusion(glass_depth-(2*glass_offset));
+        translate([frame_size+width-((width - glass_width)/2) + glass_offset,(depth/2)+frame_size,50]) rotate([90,0,0]) 2020_extrusion(glass_depth-(2*glass_offset));
+        translate([(width/2)+frame_size,frame_size+(depth - glass_depth)/2 - glass_offset,50]) rotate([0,90,0]) 2020_extrusion(glass_width -(2*glass_offset)+ 40);
+        translate([(width/2)+frame_size,frame_size+depth-((depth - glass_depth)/2) + glass_offset ,50]) rotate([0,90,0]) 2020_extrusion(glass_width -(2*glass_offset)+ 40);
     }
+
     // 4 inside connectors
     color("DimGray") {
-      translate([
-          frame_size + (width - glass_width)/2 + frame_half - glass_offset,
-          frame_size+(depth - glass_depth)/2 + frame_half - glass_offset,
-          50
-      ]) rotate([0, 90, 0]) 2020_inside_l();
+        translate([
+            frame_size + (width - glass_width)/2 + frame_half - glass_offset,
+            frame_size+(depth - glass_depth)/2 + frame_half - glass_offset,
+            50
+        ]) rotate([0, 90, 0]) 2020_inside_l();
 
-      translate([
-          frame_size + width - (width - glass_width)/2 - frame_half + glass_offset,
-          frame_size+(depth - glass_depth)/2 + frame_half - glass_offset,
-          50
-      ]) rotate([0, 90, 90]) 2020_inside_l();
+        translate([
+            frame_size + width - (width - glass_width)/2 - frame_half + glass_offset,
+            frame_size+(depth - glass_depth)/2 + frame_half - glass_offset,
+            50
+        ]) rotate([0, 90, 90]) 2020_inside_l();
 
-      translate([
-          frame_size + width - (width - glass_width)/2 - frame_half + glass_offset,
-          frame_size + depth - (depth - glass_depth)/2 - frame_half + glass_offset,
-          50
-      ]) rotate([0, 90, 180]) 2020_inside_l();
+        translate([
+            frame_size + width - (width - glass_width)/2 - frame_half + glass_offset,
+            frame_size + depth - (depth - glass_depth)/2 - frame_half + glass_offset,
+            50
+        ]) rotate([0, 90, 180]) 2020_inside_l();
 
-      translate([
-          frame_size + (width - glass_width)/2 + frame_half - glass_offset,
-          frame_size + depth - (depth - glass_depth)/2 - frame_half + glass_offset,
-          50
-      ]) rotate([0, 90, 270]) 2020_inside_l();
-    }
-
-
-    // 4 corner plates
-    color("red") {
-      translate([
-          frame_size + (width - glass_width)/2 - glass_offset,
-          frame_size+(depth - glass_depth)/2 - glass_offset,
-          37.5
-      ]) rotate([0, 0, 0]) 2020_corner_plate();
-
-      translate([
-        frame_size + width - (width - glass_width)/2  + glass_offset,
-          frame_size+(depth - glass_depth)/2 - glass_offset,
-          37.5
-      ]) rotate([0, 0, 90]) 2020_corner_plate();
-
-      translate([
-        frame_size + width - (width - glass_width)/2  + glass_offset,
-        frame_size + depth - (depth - glass_depth)/2  + glass_offset,
-          37.5
-      ]) rotate([0, 0, 180]) 2020_corner_plate();
-
-      translate([
-          frame_size + (width - glass_width)/2 - glass_offset,
-          frame_size + depth - (depth - glass_depth)/2  + glass_offset,
-          37.5
-      ]) rotate([0, 0, 270]) 2020_corner_plate();
+        translate([
+            frame_size + (width - glass_width)/2 + frame_half - glass_offset,
+            frame_size + depth - (depth - glass_depth)/2 - frame_half + glass_offset,
+            50
+        ]) rotate([0, 90, 270]) 2020_inside_l();
     }
 
     // glass
@@ -214,6 +224,7 @@ if (SHOW == "full") {
     // 4 magnets
    }
 }
+
 
 
 if (PART == "2020_inside_l") {
@@ -228,12 +239,28 @@ if (PART == "2020_3_way_corner_plate") {
     2020_3_way_corner_plate();
 }
 
-if (PART == "2020_rail_mount") {
-    2020_rail_mount();
+if (PART == "2020_rail_carriage_lift") {
+    2020_rail_carriage_lift();
 }
 
-if (PART == "2020_dual_rail_mount") {
-    2020_dual_rail_mount();
+if (PART == "height_lever") {
+    height_lever();
+}
+
+if (PART == "platform_corner") {
+    platform_corner();
+}
+
+if (PART == "2020_rail_lift") {
+    2020_rail_lift();
+}
+
+if (PART == "2020_dual_rail_lift") {
+    2020_dual_rail_lift();
+}
+
+if (PART == "2020_rail_mount") {
+    2020_rail_mount();
 }
 
 if (PART == "2020_dual_rail_mount") {
