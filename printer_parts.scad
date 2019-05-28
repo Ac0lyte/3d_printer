@@ -151,11 +151,11 @@ module 2020_rail_carriage_lift(rail_d=10) {
 
   // 608zz bearing race stop
   translate([170,32.5,0]) difference() {
-    sphere(d=bearing_race, $fn=100, center=true);
+    sphere(d=bearing_race, $fn=100);
     translate([0, bearing_race/4, 0]) cube([bearing_race+1, bearing_race/2, bearing_race+1], center=true);
   }
   translate([-170,32.5,0]) difference() {
-    sphere(d=bearing_race, $fn=100, center=true);
+    sphere(d=bearing_race, $fn=100);
     translate([0, bearing_race/4, 0]) cube([bearing_race+1, bearing_race/2, bearing_race+1], center=true);
   }
 }
@@ -237,7 +237,7 @@ module platform_corner() {
             cylinder(h=bearing_height+1, d=bearing_id, $fn=100, center=true);
 
         translate([0, 0, 0]) difference() {
-            sphere(d=bearing_race, $fn=100, center=true);
+            sphere(d=bearing_race, $fn=100);
             translate([0, bearing_race/4, bearing_race/2])
                 cube([bearing_race+1, bearing_race/2, bearing_race+1], center=true);
         }
@@ -361,8 +361,7 @@ module pyramid(l, w, h) {
 
 module corner_center(s) {
     polyhedron(
-    points=[ [0,0,0],[s,0,0],[0,s,0],[0,0,s],
-           [0,0,h]  ],
+    points=[ [0,0,0],[s,0,0],[0,s,0],[0,0,s] ],
     faces=[ [0,1,2],[0,3,1],[1,3,2],[2,3,0] ]
     );
 }
@@ -371,8 +370,7 @@ module corner_center(s) {
 module prism(l, w, h){
    polyhedron(
            points=[[0,0,0], [l,0,0], [l,w,0], [0,w,0], [0,w,h], [l,w,h]],
-           faces=[[0,1,2,3],[5,4,3,2],[0,4,5,1],[0,3,4],[5,2,1]],
-           center=true
+           faces=[[0,1,2,3],[5,4,3,2],[0,4,5,1],[0,3,4],[5,2,1]]
            );
 }
 
