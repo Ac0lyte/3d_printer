@@ -225,7 +225,7 @@ if (PART == "2020_inside_3_way") {
 }
 
 if (PART == "2020_3_way_corner_plate") {
-    2020_3_way_corner_plate();
+    rotate([0,0,180]) 2020_3_way_corner_plate();
 }
 
 if (PART == "2020_rail_mount") {
@@ -236,6 +236,3 @@ if (PART == "2020_dual_rail_mount") {
     2020_dual_rail_mount();
 }
 
-if (PART == "2020_dual_rail_mount") {
-    2020_dual_rail_mount();
-}

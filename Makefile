@@ -38,9 +38,29 @@
 PREFIX=printer_frame
 
 # OpenSCAD binary and options on OS X
+ifeq ($(OS),Windows_NT)
+    OPENSCAD=""
+else
+    UNAME_S := $(shell uname -s)
+    ifeq ($(UNAME_S),Linux)
+        OPENSCAD=/usr/bin/openscad
+    endif
+    ifeq ($(UNAME_S),Darwin)
+        OPENSCAD=/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD
+    endif
+    UNAME_P := $(shell uname -p)
+    ifeq ($(UNAME_P),x86_64)
+        OPENSCAD=/usr/bin/openscad
+    endif
+    ifneq ($(filter %86,$(UNAME_P)),)
+        OPENSCAD=/usr/bin/openscad
+    endif
+    ifneq ($(filter arm%,$(UNAME_P)),)
+        OPENSCAD=/usr/bin/openscad
+    endif
+endif
 # OPENSCAD=/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD
-OPENSCAD=/usr/bin/openscad
-OPENSCAD_OPTIONS=-DVERBOSE=false -DSHOW=none
+# OPENSCAD_OPTIONS=-DVERBOSE=false -DSHOW=none
 # IMAGE_OPTIONS=--imgsize=1024,768 --colorscheme=DeepOcean
 IMAGE_OPTIONS=--imgsize=1024,768
 
