@@ -7,20 +7,22 @@ include <vars.scad>;
 module 2020_corner_plate(x=4, y=4, wide=false) {
   difference(){
     hull(){
-      for ( i = [0:x-1]) {
-        translate([10 * i, 0, 0]) cylinder(h=5, d=20, center=true, $fn=200);
-      }
-      for ( i = [0:y-1]) {
-        translate([0, 10 * i, 0]) cylinder(h=5, d=20, center=true, $fn=200);
-      }
-      translate([x*5-7.5,-12.5,0]) cube([x*10+15,5,5], center=true);
-      translate([-12.5,y*5-7.5,0]) cube([5,y*10+15,5], center=true);
+        for ( i = [0:x-1]) {
+          translate([10 * i, 0, 0]) cylinder(h=5, d=20, center=true, $fn=200);
+        }
+        for ( i = [0:y-1]) {
+          translate([0, 10 * i, 0]) cylinder(h=5, d=20, center=true, $fn=200);
+        }
+        if(wide == true) {
+            translate([x*5-7.5,-12.5,0]) cube([x*10+15,5,5], center=true);
+            translate([-12.5,y*5-7.5,0]) cube([5,y*10+15,5], center=true);
+        }
     }
     for ( i = [0:x-1]) {
-      translate([10 * i, 0, 0]) cylinder(h=6, d=5, center=true, $fn=200);
+        translate([10 * i, 0, 0]) cylinder(h=6, d=5, center=true, $fn=200);
     }
     for ( i = [0:y-1]) {
-      translate([0, 10 * i, 0]) cylinder(h=6, d=5, center=true, $fn=200);
+        translate([0, 10 * i, 0]) cylinder(h=6, d=5, center=true, $fn=200);
     }
   }
 }
@@ -31,25 +33,237 @@ module 2020_3_way_corner_plate(x=4) {
     translate([10,10,-2.5]) rotate([0, 0, 0])   2020_corner_plate(x,x,true);
     translate([10,-2.5,10]) rotate([90,0, 0])   2020_corner_plate(x,x,true);
     translate([-2.5,10,10]) rotate([0, 270, 0]) 2020_corner_plate(x,x,true);
-
-    /* translate([(x*10)/2,-2.5,-2.5]) rotate([0,0,0]) cube([x*10,5,5], center=true);
-    translate([-2.5,(x*10)/2,-2.5]) rotate([0,270,0]) cube([5,x*10,5], center=true);
-    translate([-2.5,-2.5,(x*10)/2]) rotate([0,0,270]) cube([5,5,x*10], center=true);
-
-    hull(){
-      translate([5,-2.5,-2.5]) rotate([0,0,0]) cube([20,5,5], center=true);
-      translate([-2.5,5,-2.5]) rotate([0,270,0]) cube([5,20,5], center=true);
-    }
-    hull(){
-      translate([-2.5,5,-2.5]) rotate([0,270,0]) cube([5,20,5], center=true);
-      translate([-2.5,-2.5,5]) rotate([0,0,270]) cube([5,5,20], center=true);
-    }
-    hull(){
-      translate([-2.5,-2.5,5]) rotate([0,0,270]) cube([5,5,20], center=true);
-      translate([5,-2.5,-2.5]) rotate([0,0,0]) cube([20,5,5], center=true);
-    } */
-
   }
+}
+
+
+module 2020_rail_carriage_lift(rail_d=10) {
+  // Platform base dimentions
+  platfom_width = 160;
+  platfom_height = 5;
+  platfom_depth = 30;
+
+  //
+  linear_bearing_height=29;
+  linear_bearing_od=19;
+  linear_bearing_id=10;
+
+  //608zz
+  bearing_height=7;
+  bearing_od=22;
+  bearing_id=8;
+  bearing_race=11;
+
+  // M5 Nut
+  M5_height = 4;
+  M5_diam = 9;
+
+  difference(){
+    union() {
+      // Bearing race holes
+      translate([-30, 0, 0]) 2020_rail_bearing();
+      translate([ 30, 0, 0]) 2020_rail_bearing();
+
+      hull() {
+        translate([ 30,0,0])   cylinder(h=5, d=20, $fn=100, center=true);
+        translate([-30,0,0])   cylinder(h=5, d=20, $fn=100, center=true);
+        translate([ 165,30,0]) cylinder(h=5, d=20, $fn=100, center=true);
+        translate([-165,30,0]) cylinder(h=5, d=20, $fn=100, center=true);
+      }
+
+      // Bridge between races
+      translate([0,0,0]) cube([50,5,20], $fn=100, center=true);
+
+      // Ribs
+      hull() {
+        translate([30, 0, 7.5]) sphere(d=5, $fn=100);
+        translate([30, 0,-7.5]) sphere(d=5, $fn=100);
+        translate([0,37.5,1])   sphere(d=5, $fn=100);
+        translate([0,37.5,-1])  sphere(d=5, $fn=100);
+      }
+      // Ribs
+      hull() {
+        translate([-30, 0, 7.5]) sphere(d=5, $fn=100);
+        translate([-30, 0,-7.5]) sphere(d=5, $fn=100);
+        translate([0,37.5,1])    sphere(d=5, $fn=100);
+        translate([0,37.5,-1])   sphere(d=5, $fn=100);
+      }
+      // Ribs
+      hull() {
+        translate([-30, 0, 7.5]) sphere(d=5, $fn=100);
+        translate([-30, 0,-7.5]) sphere(d=5, $fn=100);
+        translate([-95,37.5,1])  sphere(d=5, $fn=100);
+        translate([-95,37.5,-1]) sphere(d=5, $fn=100);
+      }
+      // Ribs
+      hull() {
+        translate([30, 0, 7.5]) sphere(d=5, $fn=100);
+        translate([30, 0,-7.5]) sphere(d=5, $fn=100);
+        translate([95,37.5,1])  sphere(d=5, $fn=100);
+        translate([95,37.5,-1]) sphere(d=5, $fn=100);
+      }
+      // Ribs
+      hull() {
+        translate([-30, 0, 7.5])    sphere(d=5, $fn=100);
+        translate([-30, 0,-7.5])    sphere(d=5, $fn=100);
+        translate([-172.5,32.5,1])  sphere(d=5, $fn=100);
+        translate([-172.5,32.5,-1]) sphere(d=5, $fn=100);
+      }
+      // Ribs
+      hull() {
+        translate([30, 0, 7.5])    sphere(d=5, $fn=100);
+        translate([30, 0,-7.5])    sphere(d=5, $fn=100);
+        translate([172.5,32.5,1])  sphere(d=5, $fn=100);
+        translate([172.5,32.5,-1]) sphere(d=5, $fn=100);
+      }
+
+      // height adjustment bolt stand
+      translate([ 10,35,0]) cylinder(h=10, d=10, $fn=100, center=true);
+      translate([-10,35,0]) cylinder(h=10, d=10, $fn=100, center=true);
+    }
+
+    // Rail holes
+    translate([ 30, 0, 0])  cylinder(h=21, d=10, $fn=100, center=true);
+    translate([-30, 0, 0])  cylinder(h=21, d=10, $fn=100, center=true);
+
+    // height adjustment bolt hole
+    translate([ 10,35,5]) cylinder(h=10, d=4, $fn=100, center=true);
+    translate([-10,35,5]) cylinder(h=10, d=4, $fn=100, center=true);
+
+    // height adjustment spring hole
+    translate([10,35,5]) cylinder(h=1, d=5, $fn=100, center=true);
+    translate([-10,35,5]) cylinder(h=1, d=5, $fn=100, center=true);
+
+    // height adjustment nut hole
+    translate([10,35,0]) rotate([0,0,30]) cylinder(h=M5_height, d=M5_diam, $fn=6, center=true);
+    translate([10,40,0]) cube([8,10,M5_height], center=true);
+    translate([-10,35,0]) rotate([0,0,30]) cylinder(h=M5_height, d=M5_diam, $fn=6, center=true);
+    translate([-10,40,0]) cube([8,10,M5_height], center=true);
+
+    // 608zz bearing slot
+    translate([ 170,36,0]) rotate([90,0,0]) cylinder(h=bearing_height+2, d=bearing_od+10, $fn=100, center=true);
+    translate([-170,36,0]) rotate([90,0,0]) cylinder(h=bearing_height+2, d=bearing_od+10, $fn=100, center=true);
+  }
+
+  // 608zz bearing peg
+  translate([ 170,36,0]) rotate([90,0,0]) cylinder(h=bearing_height+2, d=bearing_id-0.2, $fn=100, center=true);
+  translate([-170,36,0]) rotate([90,0,0]) cylinder(h=bearing_height+2, d=bearing_id-0.2, $fn=100, center=true);
+
+  // 608zz bearing race stop
+  translate([170,32.5,0]) difference() {
+    sphere(d=bearing_race, $fn=100);
+    translate([0, bearing_race/4, 0]) cube([bearing_race+1, bearing_race/2, bearing_race+1], center=true);
+  }
+  translate([-170,32.5,0]) difference() {
+    sphere(d=bearing_race, $fn=100);
+    translate([0, bearing_race/4, 0]) cube([bearing_race+1, bearing_race/2, bearing_race+1], center=true);
+  }
+}
+
+module height_lever() {
+  // Platform base dimentions
+  platfom_width = 180;
+  platfom_height = 5;
+  platfom_depth = 30;
+
+  //
+  linear_bearing_height=29;
+  linear_bearing_od=19;
+  linear_bearing_id=10;
+
+  //608zz
+  bearing_height=7;
+  bearing_od=22;
+  bearing_id=8;
+  bearing_race=11;
+
+  // M5 Nut
+  M5_height = 4;
+  M5_diam = 9;
+
+  // hight adjust lever
+  color("lightblue") {
+    // 608zz bearing holder
+    difference() {
+      union(){
+        hull(){
+          translate([10, 35, bearing_height+7.5]) cylinder(h=5, d=10, $fn=100, center=true);
+          translate([115,38,bearing_height+7.5]) rotate([90,0,0])  cylinder(h=bearing_height+5, d=5, $fn=100, center=true);
+          translate([170,38,bearing_height+7.5]) rotate([90,0,0])  cylinder(h=bearing_height+5, d=5, $fn=100, center=true);
+        }
+        hull(){
+          translate([170,38,bearing_height+7.5]) rotate([90,0,0])  cylinder(h=bearing_height+5, d=5, $fn=100, center=true);
+          translate([200,38,bearing_height+7.5]) rotate([90,0,0])  cylinder(h=bearing_height+5, d=5, $fn=100, center=true);
+        }
+        hull(){
+          translate([170,38,bearing_height+7.5]) rotate([90,0,0])  cylinder(h=bearing_height+5, d=5, $fn=100, center=true);
+          translate([170,38,0]) rotate([90,0,0])  cylinder(h=bearing_height+5, d=bearing_od+5, $fn=100, center=true);
+        }
+        hull(){
+          translate([200,38,bearing_height+7.5]) rotate([90,0,0])  cylinder(h=bearing_height+5, d=5, $fn=100, center=true);
+          translate([200,38,0]) rotate([90,0,0])  cylinder(h=bearing_height+5, d=bearing_od+5, $fn=100, center=true);
+        }
+      }
+      // Bearing holes
+      translate([170,28,0]) rotate([90,0,0])  cylinder(h=bearing_height+5, d=bearing_od,   $fn=100, center=true);
+      translate([200,42.5,0]) rotate([90,0,0])  cylinder(h=bearing_height+5, d=bearing_od,   $fn=100, center=true);
+      // screw hole in lever
+      translate([10, 35, bearing_height+7.5]) cylinder(h=6, d=4, $fn=100, center=true);
+      // spring indent in lever
+      translate([10, 35, bearing_height+5]) cylinder(h=1, d=5, $fn=100, center=true);
+    }
+  }
+}
+
+
+module platform_corner() {
+    // Bearing dimensions
+    bearing_height=7;
+    bearing_od=22;
+    bearing_id=8;
+    bearing_race=11;
+
+
+    // Platform corner
+    color("lightgreen") {
+        // Corner plate
+        translate([5, 10, 0]) rotate([0,180,0]) 2020_corner_plate(3,3);
+
+        //
+        //translate([x, y-0.5, 0]) rotate([90,0,0])
+        //    cylinder(h=1, d=bearing_race, $fn=100, center=true);
+
+        translate([0, 0-(bearing_id/2), 0]) rotate([90,0,0])
+            cylinder(h=bearing_height+1, d=bearing_id, $fn=100, center=true);
+
+        translate([0, 0, 0]) difference() {
+            sphere(d=bearing_race, $fn=100);
+            translate([0, bearing_race/4, bearing_race/2])
+                cube([bearing_race+1, bearing_race/2, bearing_race+1], center=true);
+        }
+    } // lightgreen
+} // platform_corner
+
+
+module 608zz_bearing() {
+    bearing_height=7;
+    bearing_od=22;
+    bearing_id=8;
+
+    color("white")
+    difference() {
+      cylinder(h=bearing_height, d=bearing_od, $fn=100, center=true);
+      cylinder(h=bearing_height+1, d=bearing_id, $fn=100, center=true);
+    }
+}
+
+module 2020_rail_bearing(rail_d=10) {
+    height=20;
+
+    difference() {
+      cylinder(h=height, d=rail_d*2, $fn=100, center=true);
+      cylinder(h=height+1, d=rail_d, $fn=100, center=true);
+    }
 }
 
 module 2020_dual_rail_lift(rail_d=10) {
@@ -147,8 +361,7 @@ module pyramid(l, w, h) {
 
 module corner_center(s) {
     polyhedron(
-    points=[ [0,0,0],[s,0,0],[0,s,0],[0,0,s],
-           [0,0,h]  ],
+    points=[ [0,0,0],[s,0,0],[0,s,0],[0,0,s] ],
     faces=[ [0,1,2],[0,3,1],[1,3,2],[2,3,0] ]
     );
 }
@@ -157,8 +370,7 @@ module corner_center(s) {
 module prism(l, w, h){
    polyhedron(
            points=[[0,0,0], [l,0,0], [l,w,0], [0,w,0], [0,w,h], [l,w,h]],
-           faces=[[0,1,2,3],[5,4,3,2],[0,4,5,1],[0,3,4],[5,2,1]],
-           center=true
+           faces=[[0,1,2,3],[5,4,3,2],[0,4,5,1],[0,3,4],[5,2,1]]
            );
 }
 

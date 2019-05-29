@@ -61,6 +61,9 @@ else
 endif
 # OPENSCAD=/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD
 # OPENSCAD_OPTIONS=-DVERBOSE=false -DSHOW=none
+
+OPENSCAD_OPTIONS=-DVERBOSE=false -DSHOW=none
+
 # IMAGE_OPTIONS=--imgsize=1024,768 --colorscheme=DeepOcean
 IMAGE_OPTIONS=--imgsize=1024,768
 
