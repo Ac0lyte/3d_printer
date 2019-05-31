@@ -13,3 +13,25 @@ glass_depth = 400;
 rail_diam = 10;
 z_rail_width = 60;
 z_carriage_width = z_rail_width + frame_size;
+
+// Sources for Metric fastener dimensions
+// http://www.carbidedepot.com/formulas-tap-metric.htm
+// http://www.roymech.co.uk/Useful_Tables/Screws/cap_screws.htm
+// https://www.fairburyfastener.com/xdims_metric_nuts.htm
+
+// M5
+M5_bolt_diam = 5;
+M5_nut_height = 4;
+M5_nut_width = 7.9;
+M5_nut_diam = 9;
+
+// M4
+M4_bolt_diam = 4;
+M4_nut_height = 3.5;
+M4_nut_width = 6.9;
+M4_nut_diam = 8;
+
+// Height adjustment
+pivot_diam=12;
+height_bolt_diam=M4_bolt_diam;
+
