@@ -33,8 +33,8 @@
 include <vars.scad>;
 
 /* What to print */
-PART = "~2020_rail_carriage_lift";
-SHOW = "full";
+PART = "height_lever";
+SHOW = "part";
 
 use <printer_parts.scad>;
 
@@ -226,40 +226,41 @@ if (SHOW == "full") {
 }
 
 
+z = $t + 0;
 
 if (PART == "2020_inside_l") {
-    2020_inside_l();
+    rotate([0,0,180 + z]) 2020_inside_l();
 }
 
 if (PART == "2020_inside_3_way") {
-    rotate([0,0,0]) 2020_inside_3_way();
+    rotate([0,0,z]) 2020_inside_3_way();
 }
 
 if (PART == "2020_3_way_corner_plate") {
-    rotate([0,0,180]) 2020_3_way_corner_plate();
+    rotate([0,0,180 + z]) 2020_3_way_corner_plate();
 }
 
 if (PART == "2020_rail_carriage_lift") {
-    2020_rail_carriage_lift();
+    rotate([0,0,180 + z]) 2020_rail_carriage_lift();
 }
 
 if (PART == "height_lever") {
-    height_lever();
+    rotate([0,0,180 + z]) height_lever();
 }
 
 if (PART == "platform_corner") {
-    platform_corner();
+    rotate([0,0,z]) platform_corner();
 }
 
 if (PART == "2020_rail_lift") {
-    2020_rail_lift();
+    rotate([0,0,180 + z]) 2020_rail_lift();
 }
 
 if (PART == "2020_dual_rail_lift") {
-    2020_dual_rail_lift();
+    rotate([0,0,180] + z) 2020_dual_rail_lift();
 }
 
 if (PART == "2020_rail_mount") {
-    2020_rail_mount();
+    rotate([0,0,z]) 2020_rail_mount();
 }
 

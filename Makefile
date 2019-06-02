@@ -59,10 +59,8 @@ else
         OPENSCAD=/usr/bin/openscad
     endif
 endif
-# OPENSCAD=/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD
-# OPENSCAD_OPTIONS=-DVERBOSE=false -DSHOW=none
 
-OPENSCAD_OPTIONS=-DVERBOSE=false -DSHOW=none
+OPENSCAD_OPTIONS= -D VERBOSE=false -D SHOW=\"part\"
 
 # IMAGE_OPTIONS=--imgsize=1024,768 --colorscheme=DeepOcean
 IMAGE_OPTIONS=--imgsize=1024,768

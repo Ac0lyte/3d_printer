@@ -1,15 +1,76 @@
+/*
+ * This is my attempt at creating a z asiz carriage.
+ * I suspect that it may be fairly over built, but it is 
+ * intended for a moving z-axis and I am printing it in PLA
+ * so the material is not asstron as I would like.
+ *
+ * The parts in this file are:
+ *   - 2020_z_carriage()
+ *     The actual carriage itself
+ *
+ *   - scs10uu()
+ *     A quick mock up of a SCS10UU bearing race
+ *     used for fitment and to help keep my sanity.
+ *
+ *   - scs10uu_holes()
+ *     Just 4 cylinders used with a difference to
+ *     place holes in the carriage for mounting
+ *     the bearings
+ *
+ *   - bearing_race()
+ *     A generic, parameterized bearing race
+ *     created incase I need to model anything else
+ *     in the same family as the SCS10UU
+ *
+ * The size variable anlong with the left/right/center parts 
+ * were created for use when splitting the print into 3 pieces
+ * because my DiVinci Jr 1.0w could not print the full thing.
+ *
+ * Copyright 2019 Tim Schaller
+ * All rights reserved
+ * Released under the GPL3
+ * No claims are made as to the fitness and/or corectness of 
+ * this work. Use at your own risk. If you create useless things,
+ * or if the parts fail it is on you NOT ME. As far as I know
+ * this might make your printer burst into flames or print
+ * little pink bunnies. You call. };->
+ *
+ */
+
 include <vars.scad>;
 PART = "2020_z_carriage";
+IMAGE = "none"
+size=120;
 
 if (PART == "2020_z_carriage") {
     2020_z_carriage();
-    // translate([ 30, 0, 0]) scs10uu();
-    // translate([-30, 0, 0]) scs10uu();
+}
 
-    /* // Cut points
-    size=120;
-    color("blue") translate([0,    size/2, 0]) cube([size, size, 1], center=true);
-    color("red")  translate([size, size/2, 0]) cube([size, size, 1], center=true); */
+if (IMAGE == "2020_z_carriage_full") {
+    2020_z_carriage();
+    translate([ 30, 0, 0]) scs10uu();
+    translate([-30, 0, 0]) scs10uu();
+}
+
+if (PART == "2020_z_carriage_left") {
+    intersection() {
+        2020_z_carriage();
+        translate([size, size/2, 0]) cube([size, size, size], center=true);
+    }
+}
+
+if (PART == "2020_z_carriage_right") {
+    intersection() {
+        2020_z_carriage();
+        translate([0-size, size/2, 0]) cube([size, size, size], center=true);
+    }
+}
+
+if (PART == "2020_z_carriage_center") {
+    intersection() {
+        2020_z_carriage();
+        translate([0, size/2, 0]) cube([size, size, size], center=true);
+    }
 }
 
 module 2020_z_carriage() {
