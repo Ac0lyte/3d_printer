@@ -73,7 +73,7 @@ SLIC3R_OPTIONS=--load $(SLIC3R_INI) --print-center 125,105
 # ----- Everything after this should not need modification
 
 # Names of parts to build
-PARTS=$(shell grep 'PART == ' $(PREFIX).scad | cut -d'"' -f2)
+PARTS=$(shell grep 'PART == ' parts.scad | cut -d'"' -f2)
 
 STL=stl
 IMAGE=png
