@@ -2,9 +2,213 @@ include <vars.scad>;
 PART = "2020_z_carriage";
 
 if (PART == "2020_z_carriage") {
-    color("skyblue") 2020_z_carriage();
+    2020_z_carriage();
+    // translate([ 30, 0, 0]) scs10uu();
+    // translate([-30, 0, 0]) scs10uu();
+
+    /* // Cut points
+    size=120;
+    color("blue") translate([0,    size/2, 0]) cube([size, size, 1], center=true);
+    color("red")  translate([size, size/2, 0]) cube([size, size, 1], center=true); */
 }
 
 module 2020_z_carriage() {
-    
+  // Platform base dimentions
+  platfom_width = 160;
+  platfom_height = 5;
+  platfom_depth = 30;
+
+  //
+  linear_bearing_height=29;
+  linear_bearing_od=19;
+  linear_bearing_id=10;
+
+  //608zz
+  bearing_height=7;
+  bearing_od=22;
+  bearing_id=8;
+  bearing_race=11;
+
+  // M5 Nut
+  M5_height = 4;
+  M5_diam = 9;
+
+
+  z_carriage_half();
+  mirror([1,0,0]) z_carriage_half();
+
+
+  module z_carriage_half() {
+    difference(){
+      union() {
+        // Carriage base
+        hull() {
+          translate([   0,13,0])   cylinder(h=5, d=1,  $fn=100, center=true);
+          translate([   0,40,0])   cylinder(h=5, d=1,  $fn=100, center=true);
+          translate([  30,13,0])   cylinder(h=5, d=20, $fn=100, center=true);
+          translate([ 165,30,0]) cylinder(h=5, d=20, $fn=100, center=true);
+        }
+
+        // Bridge between races - Removed because belt connector goes here
+        // translate([15,0,0]) cube([30,5,20], $fn=100, center=true);
+
+        // Bearing race mount
+        translate([30,13,0]) cube([45,10,40], $fn=100, center=true);
+
+        // Ribs
+        hull() {
+          translate([30, 13, 7.5]) sphere(d=5, $fn=100);
+          translate([30, 13,-7.5]) sphere(d=5, $fn=100);
+          translate([0,37.5,1])   sphere(d=5, $fn=100);
+          translate([0,37.5,-1])  sphere(d=5, $fn=100);
+        }
+        // Ribs
+        hull() {
+          translate([30, 13,  7.5]) sphere(d=5, $fn=100);
+          translate([30, 13, -7.5]) sphere(d=5, $fn=100);
+          translate([95, 37.5,  1])  sphere(d=5, $fn=100);
+          translate([95, 37.5, -1]) sphere(d=5, $fn=100);
+        }
+        // Ribs
+        hull() {
+          translate([30, 13, 7.5])    sphere(d=5, $fn=100);
+          translate([30, 13,-7.5])    sphere(d=5, $fn=100);
+          translate([172.5,32.5,1])  sphere(d=5, $fn=100);
+          translate([172.5,32.5,-1]) sphere(d=5, $fn=100);
+        }
+      }
+
+      // Rail holes
+      translate([ 30, 0, 0]) cube([41,27,36], center=true);
+      // Rail screw holes
+      translate([30,20,0]) scs10uu_holes();
+
+      // height adjustment bolt hole
+      translate([10,35,0])
+      hull(){
+        rotate([0, 10,0]) cylinder(h=10, d=height_bolt_diam+1, center=true, $fn=100);
+        rotate([0,-10,0]) cylinder(h=10, d=height_bolt_diam+1, center=true, $fn=100);
+      }
+
+      // height adjustment pivot hole
+      translate([10,35,-5]) sphere(d=pivot_diam+0.2, $fn=100);
+
+      // 608zz bearing slot
+      translate([ 170,36,0]) rotate([90,0,0]) cylinder(h=bearing_height+2, d=bearing_od+10, $fn=100, center=true);
+    }
+
+    // 608zz bearing peg
+    translate([ 170,36,0]) rotate([90,0,0]) cylinder(h=bearing_height+2, d=bearing_id-0.2, $fn=100, center=true);
+
+    // 608zz bearing race stop
+    translate([170,32.5,0]) difference() {
+      sphere(d=bearing_race, $fn=100);
+      translate([0, bearing_race/4, 0]) cube([bearing_race+1, bearing_race/2, bearing_race+1], center=true);
+    }
+  }
+}
+
+
+module scs10uu() {
+  bearing_race(
+    T  = 8,
+    h  = 13,
+    E  = 20,
+    W  = 40,
+    L  = 35,
+    F  = 26,
+    G  = 21,
+    B  = 28,
+    C  = 21,
+    K  = 6,
+    S1 = 5,
+    S2 = 4.3,
+    L1 = 12,
+    id = 10,
+    od = 12
+  );
+}
+
+module scs10uu_holes() {
+  bearing_holes(
+    T  = 8,
+    h  = 13,
+    E  = 20,
+    W  = 40,
+    L  = 35,
+    F  = 26,
+    G  = 21,
+    B  = 28,
+    C  = 21,
+    K  = 6,
+    S1 = 5,
+    S2 = 4.3,
+    L1 = 12,
+    id = 10,
+    od = 12
+  );
+}
+
+module bearing_race ( T, h, E, W, L, F, G, B, C, K, S1, S2, L1, id, od )
+{
+  color("lightgrey")
+  difference() {
+    // base block
+    cube([W,F,L], center=true);
+
+    // linear bearing outside diameter
+    cylinder(h=L+1, d=od, center=true, $fn=200);
+
+    // Screw holes Y is always either zero or 1/2 height
+    x1 = (W - B);
+    x2 = 0 - x1;
+
+    z1 = (L - C);
+    z2 = 0 - z1;
+
+    translate([x1, (L1/2)+1, z1]) rotate([90,0,0]) cylinder(h=L1+1, d=S1, $fn=100, center=true);
+    translate([x1, (L1/2)+1, z2]) rotate([90,0,0]) cylinder(h=L1+1, d=S1, $fn=100, center=true);
+    translate([x2, (L1/2)+1, z1]) rotate([90,0,0]) cylinder(h=L1+1, d=S1, $fn=100, center=true);
+    translate([x2, (L1/2)+1, z2]) rotate([90,0,0]) cylinder(h=L1+1, d=S1, $fn=100, center=true);
+
+    translate([x1, 0, z1]) rotate([90,0,0]) cylinder(h=F+1, d=S2, $fn=100, center=true);
+    translate([x1, 0, z2]) rotate([90,0,0]) cylinder(h=F+1, d=S2, $fn=100, center=true);
+    translate([x2, 0, z1]) rotate([90,0,0]) cylinder(h=F+1, d=S2, $fn=100, center=true);
+    translate([x2, 0, z2]) rotate([90,0,0]) cylinder(h=F+1, d=S2, $fn=100, center=true);
+
+    // Bevels, etc
+    translate([(W/2)-K, 0-((F/2)-((F-G)/2)), 0]) cube([K*2+1, F-G+1, L+1], center=true);
+    translate([0-((W/2)-K), 0-((F/2)-((F-G)/2)), 0]) cube([K*2+1, F-G+1, L+1], center=true);
+
+    translate([W/2, 0-(L1/2), 0]) cube([((W-(B+S1))/2)+0.1, F-L1+0.1, L+1], center=true);
+  }
+
+  // bearing
+  color("grey")
+  difference() {
+    // linear bearing outside diameter
+    cylinder(h=L-4, d=od, center=true, $fn=200);
+
+    // linear bearing inside diameter
+    cylinder(h=L, d=id, center=true, $fn=200);
+  }
+}
+
+
+module bearing_holes ( T, h, E, W, L, F, G, B, C, K, S1, S2, L1, id, od )
+{
+  color("lightcoral")
+  union() {
+    // Screw holes Y is always either zero or 1/2 height
+    x1 = (W - B);
+    x2 = 0 - x1;
+
+    z1 = (L - C);
+    z2 = 0 - z1;
+
+    translate([x1, 0, z1]) rotate([90,0,0]) cylinder(h=F+1, d=S1, $fn=100, center=true);
+    translate([x1, 0, z2]) rotate([90,0,0]) cylinder(h=F+1, d=S1, $fn=100, center=true);
+    translate([x2, 0, z1]) rotate([90,0,0]) cylinder(h=F+1, d=S1, $fn=100, center=true);
+    translate([x2, 0, z2]) rotate([90,0,0]) cylinder(h=F+1, d=S1, $fn=100, center=true);
+  }
 }
