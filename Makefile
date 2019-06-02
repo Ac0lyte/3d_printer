@@ -73,7 +73,7 @@ SLIC3R_OPTIONS=--load $(SLIC3R_INI) --print-center 125,105
 # ----- Everything after this should not need modification
 
 # Names of parts to build
-PARTS=$(shell grep 'PART == ' parts.scad | cut -d'"' -f2)
+PARTS=$(shell grep 'PART == ' *.scad | cut -d'"' -f2)
 
 STL=stl
 IMAGE=png
@@ -99,12 +99,12 @@ clean:
 
 # Dependencies for models
 
-$(MODELS) : $(STL)/$(PREFIX)-%.$(STL) : $(PREFIX).scad
+$(MODELS) : $(STL)/$(PREFIX)-%.$(STL) : parts.scad
 	time $(OPENSCAD) $(OPENSCAD_OPTIONS) -o $@ -DPART=\"$(subst $(PREFIX)-,,$(subst .$(STL),,$(@F)))\" $<
 
 # Dependencies for images
 
-$(IMAGES) : $(IMAGE)/$(PREFIX)-%.$(IMAGE) : $(PREFIX).scad
+$(IMAGES) : $(IMAGE)/$(PREFIX)-%.$(IMAGE) : parts.scad
 	time $(OPENSCAD) $(OPENSCAD_OPTIONS) -o $@ -DPART=\"$(subst $(PREFIX)-,,$(subst .$(IMAGE),,$(@F)))\" $(IMAGE_OPTIONS) $<
 
 # Dependencies for slicing

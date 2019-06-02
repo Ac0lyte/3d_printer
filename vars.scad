@@ -1,3 +1,7 @@
+/* Makefile needs */
+PART = "none";
+IMAGE = "none";
+
 /* frame */
 height = 690;
 width = 500;
@@ -34,4 +38,3 @@ M4_nut_diam = 8;
 // Height adjustment
 pivot_diam=12;
 height_bolt_diam=M4_bolt_diam;
-

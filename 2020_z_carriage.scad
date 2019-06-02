@@ -1,6 +1,6 @@
 /*
  * This is my attempt at creating a z asiz carriage.
- * I suspect that it may be fairly over built, but it is 
+ * I suspect that it may be fairly over built, but it is
  * intended for a moving z-axis and I am printing it in PLA
  * so the material is not asstron as I would like.
  *
@@ -22,14 +22,14 @@
  *     created incase I need to model anything else
  *     in the same family as the SCS10UU
  *
- * The size variable anlong with the left/right/center parts 
+ * The size variable anlong with the left/right/center parts
  * were created for use when splitting the print into 3 pieces
  * because my DiVinci Jr 1.0w could not print the full thing.
  *
  * Copyright 2019 Tim Schaller
  * All rights reserved
  * Released under the GPL3
- * No claims are made as to the fitness and/or corectness of 
+ * No claims are made as to the fitness and/or corectness of
  * this work. Use at your own risk. If you create useless things,
  * or if the parts fail it is on you NOT ME. As far as I know
  * this might make your printer burst into flames or print
@@ -39,7 +39,6 @@
 
 include <vars.scad>;
 PART = "2020_z_carriage";
-IMAGE = "none"
 size=120;
 
 if (PART == "2020_z_carriage") {

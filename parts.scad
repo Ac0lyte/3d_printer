@@ -6,13 +6,14 @@
 
 include <vars.scad>;
 
-/* What to print */
-PART = "height_lever";
-SHOW = "part";
+include <printer_parts.scad>;
+include <2020_z_carriage.scad>;
+include <pivot_nut_holder.scad>;
 
-use <printer_parts.scad>;
-use <2020_z_carriage.scad>;
-use <pivot_nut_holder.scad>;
+
+/* What to print */
+PART = "pivot_nut_holder";
+SHOW = "part";
 
 z = $t + 0;
 
@@ -51,4 +52,3 @@ if (PART == "2020_dual_rail_lift") {
 if (PART == "2020_rail_mount") {
     rotate([0,0,z]) 2020_rail_mount();
 }
-

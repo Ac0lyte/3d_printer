@@ -1,5 +1,4 @@
 include <vars.scad>;
-PART = "pivot_nut_holder";
 
 if (PART == "pivot_nut_holder") {
     color("skyblue") pivot_nut_holder();
@@ -14,7 +13,7 @@ module pivot_nut_holder(
 ) {
     difference() {
         sphere( d=pivot_diam, $fn=100);
-        
+
         // center bolt hole
         cylinder(h=pivot_diam+1, d=bolt_diam, $fn=100, center=true);
 
