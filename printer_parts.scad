@@ -1,5 +1,8 @@
 /* Global */
 include <vars.scad>;
+include <2020_extrusion.scad>;
+include <height_lever.scad>;
+include <608zz_bearing.scad>;
 
 /* ========================================================= */
 /* MODULES                                                   */
@@ -160,65 +163,6 @@ module 2020_rail_carriage_lift(rail_d=10) {
   }
 }
 
-module height_lever() {
-  // Platform base dimentions
-  platfom_width = 180;
-  platfom_height = 5;
-  platfom_depth = 30;
-
-  //
-  linear_bearing_height=29;
-  linear_bearing_od=19;
-  linear_bearing_id=10;
-
-  //608zz
-  bearing_height=7;
-  bearing_od=22;
-  bearing_id=8;
-  bearing_race=11;
-
-  // M5 Nut
-  M5_height = 4;
-  M5_diam = 9;
-
-  // Lever rod
-  rod_diam = 6;
-  
-  // hight adjust lever
-  color("lightblue") {
-    // 608zz bearing holder
-    difference() {
-      union(){
-        // lever handle
-        hull(){
-          translate([10, 35, bearing_height+7.5]) cylinder(h=5, d=10, $fn=100, center=true);
-          translate([40, 35, bearing_height+10]) rotate([0,90,0]) cylinder(h=20, d=12, $fn=100, center=true);
-        }
-        translate([170, 35, bearing_height+10]) rotate([0,90,0]) cylinder(h=20, d=12, $fn=100, center=true);
-        // bearing holder
-        hull(){
-          translate([170,38,0]) rotate([90,0,0])  cylinder(h=bearing_height+5, d=bearing_od+5, $fn=100, center=true);
-          translate([200,38,0]) rotate([90,0,0])  cylinder(h=bearing_height+5, d=bearing_od+5, $fn=100, center=true);
-        }
-      }
-      
-      // Bearing holes
-      translate([170,35.5,0]) rotate([90,0,0])  cylinder(h=bearing_height+1, d=bearing_od+0.1,   $fn=100, center=true);
-      translate([200,40.5,0]) rotate([90,0,0])  cylinder(h=bearing_height+1, d=bearing_od+0.1,   $fn=100, center=true);
-      
-      // screw hole in lever
-      translate([10, 35, bearing_height+7.5]) cylinder(h=10, d=4, $fn=100, center=true);
-      // spring indent in lever
-      translate([10, 35, bearing_height+3]) cylinder(h=5, d=5, $fn=100, center=true);
-
-      // Rod holes
-      translate([45, 35, bearing_height+10]) rotate([0,90,0]) cylinder(h=15, d=rod_diam, $fn=100, center=true);
-      translate([165, 35, bearing_height+10]) rotate([0,90,0]) cylinder(h=15, d=rod_diam, $fn=100, center=true);
-    }
-  }
-}
-
-
 module platform_corner() {
     // Bearing dimensions
     bearing_height=7;
@@ -248,17 +192,6 @@ module platform_corner() {
 } // platform_corner
 
 
-module 608zz_bearing() {
-    bearing_height=7;
-    bearing_od=22;
-    bearing_id=8;
-
-    color("white")
-    difference() {
-      cylinder(h=bearing_height, d=bearing_od, $fn=100, center=true);
-      cylinder(h=bearing_height+1, d=bearing_id, $fn=100, center=true);
-    }
-}
 
 module 2020_rail_bearing(rail_d=10) {
     height=20;
@@ -405,44 +338,3 @@ module 2020_inside_l( toung=false) {
     }
 }
 
-module 2020_extrusion(bar_height){
-    small=0.001;
-
-    translate([0,0,0])
-    intersection(){
-        cylinder(d=26.87,h=bar_height,center=true, $fn=200);
-        difference(){
-            union(){
-                difference(){
-                cube([20,20,bar_height],center=true);
-                    union()
-                    {
-                        cube([16.4+small,16.4+small,bar_height+small],center=true);
-                        cube([6.2+small,20+small,bar_height+small],center=true);
-                        cube([20+small,6.2+small,bar_height+small],center=true);
-
-                        translate([0,9.75,0])
-                        cube([7.2+small,0.5+small,bar_height+small],center=true);
-                        translate([9.75+small,0,0])
-                        cube([0.5+small,7.2+small,bar_height+small],center=true);
-                        translate([0,-9.75-small,0])
-                        cube([7.2+small,0.5+small,bar_height+small],center=true);
-                        translate([-9.75-small,0,0])
-                        cube([0.5+small,7.2+small,bar_height+small],center=true);
-                    }
-
-                }
-                rotate([0,0,45]){
-                    cube([1.5,26,bar_height],center=true);
-                    cube([26,1.5,bar_height],center=true);
-                }
-                translate([7.5,7.5,0])cube([4.5,4.5,bar_height],center=true);
-                translate([-7.5,-7.5,0])cube([4.5,4.5,bar_height],center=true);
-                translate([-7.5,7.5,0])cube([4.5,4.5,bar_height],center=true);
-                translate([7.5,-7.5,0])cube([4.5,4.5,bar_height],center=true);
-                cube([8,8,bar_height],center=true);
-            }
-            cylinder(r=2.5,h=bar_height+small,center=true, $fn=200);
-        }
-}
-}

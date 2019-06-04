@@ -1,5 +1,5 @@
 /*
- * This is my attempt at creating a z asiz carriage.
+ * This is my attempt at creating a z axiz carriage.
  * I suspect that it may be fairly over built, but it is
  * intended for a moving z-axis and I am printing it in PLA
  * so the material is not asstron as I would like.
@@ -38,38 +38,38 @@
  */
 
 include <vars.scad>;
+use <2020_extrusion.scad>;
+use <height_lever.scad>;
+use <608zz_bearing.scad>;
+
 PART = "2020_z_carriage";
 size=120;
 
 if (PART == "2020_z_carriage") {
     2020_z_carriage();
+    translate([95,0,0]) rotate([0,90,0]) color("skyblue",0.25)  2020_extrusion(190);
+    translate([ 30, -26, 0]) color("green",0.25) scs10uu();
+
+    translate([0,-16.5,0]) {
+      color("orange", 0.25) height_lever();
+      translate([170,35,0]) rotate([90,0,0]) 608zz_bearing();
+      translate([200,40,0]) rotate([90,0,0]) 608zz_bearing();
+    }
 }
 
 if (IMAGE == "2020_z_carriage_full") {
-    2020_z_carriage();
-    translate([ 30, 0, 0]) scs10uu();
-    translate([-30, 0, 0]) scs10uu();
 }
 
-if (PART == "2020_z_carriage_left") {
-    intersection() {
-        2020_z_carriage();
-        translate([size, size/2, 0]) cube([size, size, size], center=true);
-    }
+if (PART == "scs10uu_mount") {
+   scs10uu_mount();
 }
 
-if (PART == "2020_z_carriage_right") {
-    intersection() {
-        2020_z_carriage();
-        translate([0-size, size/2, 0]) cube([size, size, size], center=true);
-    }
+if (PART == "608zz_mount") {
+    608zz_mount();
 }
 
-if (PART == "2020_z_carriage_center") {
-    intersection() {
-        2020_z_carriage();
-        translate([0, size/2, 0]) cube([size, size, size], center=true);
-    }
+if (PART == "pivot_mount") {
+    pivot_mount();
 }
 
 module 2020_z_carriage() {
@@ -93,80 +93,81 @@ module 2020_z_carriage() {
   M5_height = 4;
   M5_diam = 9;
 
+  translate([30, -12.9, 0]) scs10uu_mount();
+  translate([170,16.5,0]) 608zz_mount();
+  translate([10,18.5,0]) pivot_mount();
+}
 
-  z_carriage_half();
-  mirror([1,0,0]) z_carriage_half();
 
-
-  module z_carriage_half() {
-    difference(){
-      union() {
-        // Carriage base
-        hull() {
-          translate([   0,13,0])   cylinder(h=5, d=1,  $fn=100, center=true);
-          translate([   0,40,0])   cylinder(h=5, d=1,  $fn=100, center=true);
-          translate([  30,13,0])   cylinder(h=5, d=20, $fn=100, center=true);
-          translate([ 165,30,0]) cylinder(h=5, d=20, $fn=100, center=true);
-        }
-
-        // Bridge between races - Removed because belt connector goes here
-        // translate([15,0,0]) cube([30,5,20], $fn=100, center=true);
-
-        // Bearing race mount
-        translate([30,13,0]) cube([45,10,40], $fn=100, center=true);
-
-        // Ribs
-        hull() {
-          translate([30, 13, 7.5]) sphere(d=5, $fn=100);
-          translate([30, 13,-7.5]) sphere(d=5, $fn=100);
-          translate([0,37.5,1])   sphere(d=5, $fn=100);
-          translate([0,37.5,-1])  sphere(d=5, $fn=100);
-        }
-        // Ribs
-        hull() {
-          translate([30, 13,  7.5]) sphere(d=5, $fn=100);
-          translate([30, 13, -7.5]) sphere(d=5, $fn=100);
-          translate([95, 37.5,  1])  sphere(d=5, $fn=100);
-          translate([95, 37.5, -1]) sphere(d=5, $fn=100);
-        }
-        // Ribs
-        hull() {
-          translate([30, 13, 7.5])    sphere(d=5, $fn=100);
-          translate([30, 13,-7.5])    sphere(d=5, $fn=100);
-          translate([172.5,32.5,1])  sphere(d=5, $fn=100);
-          translate([172.5,32.5,-1]) sphere(d=5, $fn=100);
-        }
+module pivot_mount(){
+  difference(){
+    union(){
+      translate([0,-((pivot_diam+3.0)/2), 0]) cube([30,2,18], center=true);
+      hull() {
+        cylinder(h=6, d=pivot_diam,  $fn=100, center=true);
+        translate([0,-((pivot_diam+2)/2), 0]) cube([29,2,6], center=true);
       }
+    }
+    translate([ 10, -(pivot_diam/2), 0]) rotate([90,0,0]) cylinder(h=pivot_diam, d=M4_bolt_hole+0.2, $fn=100, center=true);
+    translate([-10, -(pivot_diam/2), 0]) rotate([90,0,0]) cylinder(h=pivot_diam, d=M4_bolt_hole+0.2, $fn=100, center=true);
+    translate([ 10, 1, 0]) rotate([90,0,0]) cylinder(h=pivot_diam/2, d=8, $fn=100, center=true);
+    translate([-10, 1, 0]) rotate([90,0,0]) cylinder(h=pivot_diam/2, d=8, $fn=100, center=true);
 
-      // Rail holes
-      translate([ 30, 0, 0]) cube([41,27,36], center=true);
-      // Rail screw holes
-      translate([30,20,0]) scs10uu_holes();
-
-      // height adjustment bolt hole
-      translate([10,35,0])
-      hull(){
-        rotate([0, 10,0]) cylinder(h=10, d=height_bolt_diam+1, center=true, $fn=100);
-        rotate([0,-10,0]) cylinder(h=10, d=height_bolt_diam+1, center=true, $fn=100);
-      }
-
-      // height adjustment pivot hole
-      translate([10,35,-5]) sphere(d=pivot_diam+0.2, $fn=100);
-
-      // 608zz bearing slot
-      translate([ 170,36,0]) rotate([90,0,0]) cylinder(h=bearing_height+2, d=bearing_od+10, $fn=100, center=true);
+    // height adjustment bolt hole
+    translate([0,0,0])
+    hull(){
+      rotate([0, 10,0]) cylinder(h=10, d=height_bolt_diam+1, center=true, $fn=100);
+      rotate([0,-10,0]) cylinder(h=10, d=height_bolt_diam+1, center=true, $fn=100);
     }
 
-    // 608zz bearing peg
-    translate([ 170,36,0]) rotate([90,0,0]) cylinder(h=bearing_height+2, d=bearing_id-0.2, $fn=100, center=true);
-
-    // 608zz bearing race stop
-    translate([170,32.5,0]) difference() {
-      sphere(d=bearing_race, $fn=100);
-      translate([0, bearing_race/4, 0]) cube([bearing_race+1, bearing_race/2, bearing_race+1], center=true);
-    }
+    // height adjustment pivot hole
+    translate([0,0,-5]) sphere(d=pivot_diam+0.2, $fn=100);
   }
 }
+
+module 608zz_mount(){
+  // 608zz bearing peg
+  difference(){
+    union(){
+      rotate([90,0,0]) cylinder(h=608zz_height+4, d=608zz_id-0.2, $fn=100, center=true);
+      translate([0,-3,0]) rotate([90,0,0]) cylinder(h=4, d=608zz_id+5, $fn=100, center=true);
+      translate([0,-(608zz_height+4)/2 ,0])
+      cube([30,2,18], center=true);
+    }
+    translate([10,-(608zz_height+4)/2 ,0]) rotate([90,0,0]) cylinder(h=5, d=M4_bolt_hole, $fn=100, center=true);
+    translate([-10,-(608zz_height+4)/2 ,0]) rotate([90,0,0]) cylinder(h=5, d=M4_bolt_hole, $fn=100, center=true);
+  }
+}
+
+module scs10uu_mount() {
+  difference() {
+    union(){
+      hull() {
+        translate([0,18,12]) rotate([0,90,0]) cylinder(h=13, d=1, center=true);
+        translate([0, 5,12]) rotate([0,90,0]) cylinder(h=13, d=1, center=true);
+        translate([0, 5,19]) rotate([0,90,0]) cylinder(h=13, d=1, center=true);
+      }
+      hull() {
+        translate([0,18,-12]) rotate([0,90,0]) cylinder(h=13, d=1, center=true);
+        translate([0, 5,-12]) rotate([0,90,0]) cylinder(h=13, d=1, center=true);
+        translate([0, 5,-19]) rotate([0,90,0]) cylinder(h=13, d=1, center=true);
+      }
+      translate([0, 0, 0]) cube([45,10,40], $fn=100, center=true);
+      translate([0, 12, 11]) cube([45,15,2], center=true);
+      translate([0, 12,-11]) cube([45,15,2], center=true);
+    }
+    translate([0,-2, 0]) cube([41,10,36], center=true);
+    translate([0, 4, 0]) cube([46,2.1,20], center=true);
+
+    translate([0, 0, 0]) scs10uu_holes();
+    translate([12,6.51, 0]) cube([8,3,50], center=true);
+    translate([-12,6.51, 0]) cube([8,3,50], center=true);
+
+    translate([12,12.5, 0]) cylinder(h=50, d=M4_bolt_hole, $fn=100);
+    translate([-12,12.5, 0]) cylinder(h=50, d=M4_bolt_hole, $fn=100);
+  }
+}
+
 
 
 module scs10uu() {

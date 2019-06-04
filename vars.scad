@@ -25,15 +25,26 @@ z_carriage_width = z_rail_width + frame_size;
 
 // M5
 M5_bolt_diam = 5;
+M5_bolt_hole = 5.5;
 M5_nut_height = 4;
 M5_nut_width = 7.9;
 M5_nut_diam = 9;
 
 // M4
 M4_bolt_diam = 4;
+M4_bolt_hole = 4.5;
 M4_nut_height = 3.5;
 M4_nut_width = 6.9;
 M4_nut_diam = 8;
+
+
+//608zz
+608zz_height=7;
+608zz_od=22;
+608zz_id=8;
+608zz_race=11;
+
+
 
 // Height adjustment
 pivot_diam=12;
