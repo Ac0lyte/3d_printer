@@ -1,12 +1,53 @@
+/*
+ * This is my attempt at creating a z axiz carriage.
+ * I suspect that it may be fairly over built, but it is
+ * intended for a moving z-axis and I am printing it in PLA
+ * so the material is not asstron as I would like.
+ *
+ * The size variable anlong with the left/right/center parts
+ * were created for use when splitting the print into 3 pieces
+ * because my DiVinci Jr 1.0w could not print the full thing.
+ *
+ * The parts in this file are:
+ *
+ *   - ()
+ *
+ *   - ()
+ *
+ *   - ()
+ *
+ *   - ()
+ *
+ *   - ()
+ *
+ *   - ()
+ *
+ *   - ()
+ *
+ * Copyright 2019 Tim Schaller
+ * All rights reserved
+ * Released under the GPL3
+ * No claims are made as to the fitness and/or corectness of
+ * this work. Use at your own risk. If you create useless things,
+ * or if the parts fail it is on you NOT ME. As far as I know
+ * this might make your printer burst into flames or print
+ * little pink bunnies. You call. };->
+ *
+ */
+
 /* Global */
 include <vars.scad>;
+include <2020_z_carriage>;
 include <2020_extrusion.scad>;
 include <height_lever.scad>;
 include <608zz_bearing.scad>;
+include <linear_bearings.scad>;
+include <pivot_nut_holder>;
 
 /* ========================================================= */
 /* MODULES                                                   */
 /* ========================================================= */
+
 module 2020_corner_plate(x=4, y=4, wide=false) {
   difference(){
     hull(){
@@ -337,4 +378,3 @@ module 2020_inside_l( toung=false) {
         rotate([90,0,0]) translate([0,20,4]) cylinder(h=6,d=m4_nut_diam, center=true, $fn=6);
     }
 }
-
