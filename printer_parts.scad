@@ -42,7 +42,7 @@ include <2020_extrusion.scad>;
 include <height_lever.scad>;
 include <608zz_bearing.scad>;
 include <linear_bearings.scad>;
-include <pivot_nut_holder>;
+include <pivot_nut_holder.scad>;
 
 /* ========================================================= */
 /* MODULES                                                   */

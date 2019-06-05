@@ -35,7 +35,7 @@
  use <height_lever.scad>;
  use <608zz_bearing.scad>;
  use <linear_bearings.scad>;
- use <pivot_nut_holder>;
+ use <pivot_nut_holder.scad>;
 
 PART = "2020_z_carriage";
 size=120;
