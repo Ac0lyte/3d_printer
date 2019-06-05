@@ -57,11 +57,11 @@ if (PART == "scs10uu_mount") {
 }
 
 if (PART == "608zz_mount") {
-    608zz_mount();
+    rotate([0,0,90]) 608zz_mount();
 }
 
 if (PART == "pivot_mount") {
-    pivot_mount();
+    rotate([0,0,90]) pivot_mount();
 }
 
 /* ========================================================= */
