@@ -3,33 +3,11 @@ include <vars.scad>;
 include <2020_extrusion.scad>;
 include <height_lever.scad>;
 include <608zz_bearing.scad>;
+include <2020_corner_plate.scad>;
 
 /* ========================================================= */
 /* MODULES                                                   */
 /* ========================================================= */
-module 2020_corner_plate(x=4, y=4, wide=false) {
-  difference(){
-    hull(){
-        for ( i = [0:x-1]) {
-          translate([10 * i, 0, 0]) cylinder(h=5, d=20, center=true, $fn=200);
-        }
-        for ( i = [0:y-1]) {
-          translate([0, 10 * i, 0]) cylinder(h=5, d=20, center=true, $fn=200);
-        }
-        if(wide == true) {
-            translate([x*5-7.5,-12.5,0]) cube([x*10+15,5,5], center=true);
-            translate([-12.5,y*5-7.5,0]) cube([5,y*10+15,5], center=true);
-        }
-    }
-    for ( i = [0:x-1]) {
-        translate([10 * i, 0, 0]) cylinder(h=6, d=5, center=true, $fn=200);
-    }
-    for ( i = [0:y-1]) {
-        translate([0, 10 * i, 0]) cylinder(h=6, d=5, center=true, $fn=200);
-    }
-  }
-}
-
 
 module 2020_3_way_corner_plate(x=4) {
   color("red") union() {
@@ -337,4 +315,3 @@ module 2020_inside_l( toung=false) {
         rotate([90,0,0]) translate([0,20,4]) cylinder(h=6,d=m4_nut_diam, center=true, $fn=6);
     }
 }
-

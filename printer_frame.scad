@@ -33,8 +33,8 @@
 include <vars.scad>;
 
 /* What to print */
-PART = "height_lever";
-SHOW = "part";
+PART = "none";
+SHOW = "full";
 
 use <printer_parts.scad>;
 
@@ -224,5 +224,3 @@ if (SHOW == "full") {
     // 4 magnets
    }
 }
-
-
