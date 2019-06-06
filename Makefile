@@ -44,20 +44,11 @@ else
     UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S),Linux)
         OPENSCAD=/usr/bin/openscad
-    endif
-    ifeq ($(UNAME_S),Darwin)
-        OPENSCAD=/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD
-    endif
-    UNAME_P := $(shell uname -p)
-    ifeq ($(UNAME_P),x86_64)
-        OPENSCAD=/usr/bin/openscad
-    endif
-    ifneq ($(filter %86,$(UNAME_P)),)
-        OPENSCAD=/usr/bin/openscad
-    endif
-    ifneq ($(filter arm%,$(UNAME_P)),)
-        OPENSCAD=/usr/bin/openscad
-    endif
+		else
+	    ifeq ($(UNAME_S),Darwin)
+	        OPENSCAD=/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD
+	    endif
+		endif
 endif
 
 OPENSCAD_OPTIONS= -D VERBOSE=false -D SHOW=\"part\"
