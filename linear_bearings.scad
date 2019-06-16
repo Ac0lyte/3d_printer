@@ -33,6 +33,10 @@ if (PART == "scs10uu") {
     scs10uu();
 }
 
+/* ========================================================= */
+/* MODULES                                                   */
+/* ========================================================= */
+
 module scs10uu() {
   bearing_race(
     T  = 8,
@@ -63,6 +67,8 @@ module scs10uu_holes() {
     S1 = 5
   );
 }
+
+
 
 module bearing_race ( T, h, E, W, L, F, G, B, C, K, S1, S2, L1, id, od )
 {
@@ -109,7 +115,7 @@ module bearing_race ( T, h, E, W, L, F, G, B, C, K, S1, S2, L1, id, od )
   }
 }
 
-
+// used to punch out mounting holes
 module bearing_holes ( W, L, F, B, C, S1)
 {
   color("lightcoral")

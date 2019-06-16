@@ -16,7 +16,7 @@ include <vars.scad>;
 PART = "2020_mount_plate";
 
 if (PART == "2020_mount_plate") {
-    rotate([0, 00, 0])
+    rotate([90, 0, 90])
     2020_mount_plate();
 }
 

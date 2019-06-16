@@ -19,7 +19,7 @@ use <2020_mount_plate.scad>;
 PART = "2020_bronze_bearing_holder";
 
 if (PART == "2020_bronze_bearing_holder") {
-    rotate([0, 00, 0])
+    rotate([90, 00, 0])
     2020_bronze_bearing_holder();
 }
 
@@ -38,10 +38,16 @@ module 2020_bronze_bearing_holder() {
       translate([0,2,0]) cube([15,4,18], center=true);
       translate([0,25,0]) cube([11,12,18], center=true);
     }
+    // Remove space for the bearing
     translate([0,12,0]) bronze_bearing();
+    // Since the mount is longer than the bearing, remove the extra
+    // If you want a lip for a bearing stop then shrink this diameter.
     translate([0,12,0]) cylinder(h=20, d=16, $fn=200, center=true);
 
+    // Create the slit
     translate([0,25,0]) cube([1,13,20], center=true);
+    // create the bolt hole
     translate([0,27,0]) rotate([0,90,0]) cylinder(h=20, d=M4_bolt_hole, $fn=200, center=true);
+    translate([6,27,0]) rotate([0,90,0]) cylinder(h=4, d=M4_nut_diam, $fn=6, center=true);
   }
 }
