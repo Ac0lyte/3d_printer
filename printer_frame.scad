@@ -31,12 +31,14 @@
 */
 /* Global */
 include <vars.scad>;
+//use <printer_parts.scad>;
+include <parts.scad>;
 
 /* What to print */
-PART = "none";
-SHOW = "full";
+PART = "2020_bronze_bearing_holder";
+//PART = "bronze_bearing";
+SHOW = "part";
 
-use <printer_parts.scad>;
 
 /*  FRAME */
 if (SHOW == "full") {

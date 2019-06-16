@@ -37,11 +37,12 @@
 
 /* Global */
 include <vars.scad>;
-include <2020_z_carriage>;
+include <2020_z_carriage.scad>;
 include <2020_extrusion.scad>;
 include <height_lever.scad>;
 include <608zz_bearing.scad>;
 include <2020_corner_plate.scad>;
+include <2020_rail_mount.scad>;
 
 /* ========================================================= */
 /* MODULES                                                   */
@@ -254,25 +255,6 @@ module 2020_dual_rail_mount(rail_d=10) {
     translate([0,-7.5,2.5]) cube([40,5,5], center=true);
 }
 
-module 2020_rail_mount(rail_d=10) {
-    height=5;
-
-    translate([0,0,2.5])
-    difference() {
-        union() {
-            hull() {
-                cylinder(h=height, d=20, center=true, $fn=200);
-                translate([15,0,0]) cylinder(h=height, d=20, center=true, $fn=200);
-                translate([-15,0,0]) cylinder(h=height, d=20, center=true, $fn=200);
-            }
-            translate([0, 0, height]) cylinder(h=height*3, d=20, center=true, $fn=200);
-        }
-        translate([0, 0, height]) cylinder(h=(height*4)+1, d=rail_d, center=true, $fn=200);
-        translate([15,0,0]) cylinder(h=height+1, d=6, center=true, $fn=200);
-        translate([-15,0,0]) cylinder(h=height+1, d=6, center=true, $fn=200);
-    }
-
-}
 
 module 2020_inside_3_way() {
     union() {

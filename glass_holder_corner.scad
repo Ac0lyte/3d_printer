@@ -24,6 +24,11 @@ if (PART == "glass_holder_side") {
     glass_holder_side();
 }
 
+if (PART == "glass_holder_side_round") {
+    rotate([0, 0, 45])
+    glass_holder_side(fn=360);
+}
+
 if (PART == "glass_holder_corner") {
     glass_holder_corner();
 }
@@ -35,22 +40,23 @@ module glass_holder_side(
   length=20,
   bolt_head_diam=9,
   bolt_hole_diam=5.5,
+  fn=6,
 ) {
 
-  x_off=-(bolt_head_diam/4);
-  y_off=-(bolt_head_diam/4);
+  x_off=-(1);
+  y_off=-(1);
 
   intersection() {
     difference() {
       union() {
-        cylinder(h=height+2, d=length, center=true);
+        cylinder(h=height+4, d=length, center=true);
         translate([x_off, y_off, -height])
             cylinder(h=7, d=bolt_head_diam+2, $fn=100, center=true);
       }
-      translate([1,1,0]) rotate([0,0,45]) cube([length-2, length, height], center=true);
+      translate([1,1,0]) rotate([0,0,45]) cube([length-5, length, height], center=true);
 
       translate([x_off, y_off, -(height-1)]) rotate([0, 0, 15])
-          cylinder(h=7, d=bolt_head_diam, $fn=6, center=true);
+          cylinder(h=7, d=bolt_head_diam, $fn=fn, center=true);
       translate([x_off, y_off, height-1])
           cylinder(h=3, d=bolt_head_diam, $fn=100, center=true);
 

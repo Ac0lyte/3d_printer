@@ -7,8 +7,17 @@
 include <vars.scad>;
 
 include <printer_parts.scad>;
-include <2020_z_carriage.scad>;
 include <pivot_nut_holder.scad>;
+include <2020_z_carriage.scad>;
+include <2020_extrusion.scad>;
+include <height_lever.scad>;
+include <608zz_bearing.scad>;
+include <2020_corner_plate.scad>;
+include <2020_rail_mount.scad>;
+include <glass_holder_corner.scad>;
+include <bronze_bearing.scad>;
+include <2020_bronze_bearing_holder.scad>;
+include <2020_mount_plate.scad>;
 
 
 /* What to print */
@@ -47,8 +56,4 @@ if (PART == "2020_rail_lift") {
 
 if (PART == "2020_dual_rail_lift") {
     rotate([0,0,180] + z) 2020_dual_rail_lift();
-}
-
-if (PART == "2020_rail_mount") {
-    rotate([0,0,z]) 2020_rail_mount();
 }

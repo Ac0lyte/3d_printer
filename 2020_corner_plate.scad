@@ -11,17 +11,62 @@
  *
  */
 
- /* ========================================================= */
- /* MODULES                                                   */
- /* ========================================================= */
-
 include <vars.scad>;
 
 PART = "2020_corner_plate";
 
-if (PART == "2020_corner_plate") {
-    2020_corner_plate();
+if (PART == "2020_corner_plate_4x4") {
+    2020_corner_plate(4,4,false);
 }
+
+if (PART == "2020_corner_plate_4x4_wide") {
+    2020_corner_plate(4,4,true);
+}
+
+if (PART == "2020_corner_plate_3x4") {
+    2020_corner_plate(3,4,false);
+}
+
+if (PART == "2020_corner_plate_3x4_wide") {
+    2020_corner_plate(3,4,true);
+}
+
+if (PART == "2020_corner_plate_2x4") {
+    2020_corner_plate(2,4,false);
+}
+
+if (PART == "2020_corner_plate_2x4_wide") {
+    2020_corner_plate(2,4,true);
+}
+
+if (PART == "2020_corner_plate_3x3") {
+    2020_corner_plate(3,3,false);
+}
+
+if (PART == "2020_corner_plate_3x3_wide") {
+    2020_corner_plate(3,3,true);
+}
+
+if (PART == "2020_corner_plate_2x3") {
+    2020_corner_plate(2,3,false);
+}
+
+if (PART == "2020_corner_plate_2x3_wide") {
+    2020_corner_plate(2,3,true);
+}
+
+if (PART == "2020_corner_plate_2x2") {
+    2020_corner_plate(2,2,false);
+}
+
+if (PART == "2020_corner_plate_2x2_wide") {
+    2020_corner_plate(2,2,true);
+}
+
+
+/* ========================================================= */
+/* MODULES                                                   */
+/* ========================================================= */
 
 
 module 2020_corner_plate(x=4, y=4, wide=false) {
