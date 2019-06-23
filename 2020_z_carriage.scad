@@ -158,7 +158,8 @@ module scs10uu_mount() {
     translate([12,6.51, 0]) cube([8,3,50], center=true);
     translate([-12,6.51, 0]) cube([8,3,50], center=true);
 
-    translate([12,12.5, 0]) cylinder(h=50, d=M4_bolt_hole, $fn=100);
-    translate([-12,12.5, 0]) cylinder(h=50, d=M4_bolt_hole, $fn=100);
+    // Screw holes - attach to the 2020
+    translate([12,12.5, -25]) cylinder(h=50, d=M4_bolt_hole, $fn=100);
+    translate([-12,12.5, -25]) cylinder(h=50, d=M4_bolt_hole, $fn=100);
   }
 }

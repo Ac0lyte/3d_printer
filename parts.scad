@@ -18,6 +18,7 @@ include <glass_holder_corner.scad>;
 include <bronze_bearing.scad>;
 include <2020_bronze_bearing_holder.scad>;
 include <2020_mount_plate.scad>;
+include <2020_z_mount_spacer.scad>;
 
 
 /* What to print */
