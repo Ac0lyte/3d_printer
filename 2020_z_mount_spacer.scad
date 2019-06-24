@@ -41,8 +41,32 @@ if (PART == "2020_z_mount_spacer") {
 /* MODULES                                                   */
 /* ========================================================= */
 
+module 2020_z_mount_spacer(width=40, depth=13, height=35, x_wall=3.5, z_wall=4.5) {
+  h_diam = 5;
+  x_off = (width/2) - (h_diam/2) - x_wall;
+  z_off = (height/2) - (h_diam/2) - z_wall;
+  ridge = 17;
 
-module 2020_z_mount_spacer(w=25, d=40, h=28) {
+  difference() {
+    union(){
+      cube([width, depth, height], center=true);
+      translate([0, (depth+1)/2, 0]) cube([ridge, 1, height], center=true);
+
+      translate([0, -6, 0]) cube([20, 25, 28], center=true);
+      translate([0, -6, 0]) cube([40, 25, 13], center=true);
+
+    }
+    translate([ x_off, 0 , z_off]) rotate([90,0,0]) cylinder(h=height+1, d=h_diam, $fn=100, center=true);
+    translate([-x_off, 0 , z_off]) rotate([90,0,0]) cylinder(h=height+1, d=h_diam, $fn=100, center=true);
+    translate([ x_off, 0 ,-z_off]) rotate([90,0,0]) cylinder(h=height+1, d=h_diam, $fn=100, center=true);
+    translate([-x_off, 0 ,-z_off]) rotate([90,0,0]) cylinder(h=height+1, d=h_diam, $fn=100, center=true);
+  }
+
+  translate([0,-28.5, 12]) rotate([90,0,90]) 2020_mount_plate_2(height=4);
+  translate([0,-28.5,-12]) rotate([90,0,90]) 2020_mount_plate_2(height=4);
+}
+
+module 2020_z_mount_spacer_v1(w=25, d=40, h=28) {
   cube([w, d, h], center=true);
   translate([(w/2)+9,0,(h/2)-2]) rotate([90,0,0]) 2020_mount_plate(height=4);
   translate([(w/2)+9,0,-((h/2)-2)]) rotate([90,0,0]) 2020_mount_plate(height=4);

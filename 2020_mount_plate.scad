@@ -26,11 +26,20 @@ if (PART == "2020_mount_plate") {
  /* ========================================================= */
 
 
-module 2020_mount_plate(height=2) {
-  color("blue")
-  difference(){
-      cube([18,height,40], center=true);
-      translate([0,0,15]) rotate([90,0,0]) cylinder(h=height+1, d=M4_bolt_hole, $fn=200, center=true);
-      translate([0,0,-15]) rotate([90,0,0]) cylinder(h=height+1, d=M4_bolt_hole, $fn=200, center=true);
-  }
-}
+ module 2020_mount_plate(height=2) {
+   color("blue")
+   difference(){
+       cube([18,height,40], center=true);
+       translate([0,0,15]) rotate([90,0,0]) cylinder(h=height+1, d=M4_bolt_hole, $fn=200, center=true);
+       translate([0,0,-15]) rotate([90,0,0]) cylinder(h=height+1, d=M4_bolt_hole, $fn=200, center=true);
+   }
+ }
+
+ module 2020_mount_plate_2(height=2) {
+   color("blue")
+   difference(){
+       cube([20,height,20], center=true);
+       translate([0,0,5]) rotate([90,0,0]) cylinder(h=height+1, d=M4_bolt_hole, $fn=200, center=true);
+       translate([0,0,-5]) rotate([90,0,0]) cylinder(h=height+1, d=M4_bolt_hole, $fn=200, center=true);
+   }
+ }
