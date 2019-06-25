@@ -27,6 +27,7 @@
 
 include <vars.scad>;
 use <2020_mount_plate.scad>;
+use <linear_bearings.scad>;
 
 
 PART = "2020_z_mount_spacer";
@@ -35,6 +36,13 @@ size=120;
 if (PART == "2020_z_mount_spacer") {
   color("blue")
   2020_z_mount_spacer();
+
+  /*
+  color("green",0.25)
+  translate([0, 19.5, 0]) rotate([0,0,180]) scs10uu();
+
+  color("lightgrey",0.25) translate([0,20, 0]) cylinder(h=50, d=10, $fn=100, center=true);
+  */
 }
 
 /* ========================================================= */
@@ -50,16 +58,16 @@ module 2020_z_mount_spacer(width=40, depth=13, height=35, x_wall=3.5, z_wall=4.5
   difference() {
     union(){
       cube([width, depth, height], center=true);
-      translate([0, (depth+1)/2, 0]) cube([ridge, 1, height], center=true);
+      //translate([0, (depth+1)/2, 0]) cube([ridge, 1, height], center=true);
 
       translate([0, -6, 0]) cube([20, 25, 28], center=true);
       translate([0, -6, 0]) cube([40, 25, 13], center=true);
 
     }
-    translate([ x_off, 0 , z_off]) rotate([90,0,0]) cylinder(h=height+1, d=h_diam, $fn=100, center=true);
-    translate([-x_off, 0 , z_off]) rotate([90,0,0]) cylinder(h=height+1, d=h_diam, $fn=100, center=true);
-    translate([ x_off, 0 ,-z_off]) rotate([90,0,0]) cylinder(h=height+1, d=h_diam, $fn=100, center=true);
-    translate([-x_off, 0 ,-z_off]) rotate([90,0,0]) cylinder(h=height+1, d=h_diam, $fn=100, center=true);
+    translate([ x_off, 0 , z_off]) rotate([90,0,0]) cylinder(h=height+1, d=h_diam+.5, $fn=100, center=true);
+    translate([-x_off, 0 , z_off]) rotate([90,0,0]) cylinder(h=height+1, d=h_diam+.5, $fn=100, center=true);
+    translate([ x_off, 0 ,-z_off]) rotate([90,0,0]) cylinder(h=height+1, d=h_diam+.5, $fn=100, center=true);
+    translate([-x_off, 0 ,-z_off]) rotate([90,0,0]) cylinder(h=height+1, d=h_diam+.5, $fn=100, center=true);
   }
 
   translate([0,-28.5, 12]) rotate([90,0,90]) 2020_mount_plate_2(height=4);

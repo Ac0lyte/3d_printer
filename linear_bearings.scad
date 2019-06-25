@@ -37,6 +37,7 @@ if (PART == "scs10uu") {
 /* MODULES                                                   */
 /* ========================================================= */
 
+// http://www.cncshop.com.au/index.php?main_page=product_info&cPath=20_26&products_id=8
 module scs10uu() {
   bearing_race(
     T  = 8,
@@ -81,10 +82,10 @@ module bearing_race ( T, h, E, W, L, F, G, B, C, K, S1, S2, L1, id, od )
     cylinder(h=L+1, d=od, center=true, $fn=200);
 
     // Screw holes Y is always either zero or 1/2 height
-    x1 = (W - B);
+    x1 = B/2;
     x2 = 0 - x1;
 
-    z1 = (L - C);
+    z1 = C/2;
     z2 = 0 - z1;
 
     translate([x1, (L1/2)+1, z1]) rotate([90,0,0]) cylinder(h=L1+1, d=S1, $fn=100, center=true);
@@ -121,10 +122,10 @@ module bearing_holes ( W, L, F, B, C, S1)
   color("lightcoral")
   union() {
     // Screw holes Y is always either zero or 1/2 height
-    x1 = (W - B);
+    x1 = B/2;
     x2 = 0 - x1;
 
-    z1 = (L - C);
+    z1 = C/2;
     z2 = 0 - z1;
 
     translate([x1, 0, z1]) rotate([90,0,0]) cylinder(h=F+1, d=S1, $fn=100, center=true);
