@@ -34,22 +34,74 @@ PART = "2020_z_mount_spacer";
 size=120;
 
 if (PART == "2020_z_mount_spacer") {
-  color("blue")
-  2020_z_mount_spacer();
+  color("skyblue", 1) 2020_z_mount_spacer_a();
 
-  /*
+  color("green", 1) 2020_z_mount_spacer_b();
+
+
   color("green",0.25)
   translate([0, 19.5, 0]) rotate([0,0,180]) scs10uu();
 
-  color("lightgrey",0.25) translate([0,20, 0]) cylinder(h=50, d=10, $fn=100, center=true);
-  */
+  color("lightgrey",0.35) translate([0,19.5, 0]) cylinder(h=50, d=10, $fn=100, center=true);
+
+}
+
+if (PART == "2020_z_mount_spacer_a") {
+  color("skyblue")
+  2020_z_mount_spacer_a();
+}
+
+if (PART == "2020_z_mount_spacer_b") {
+  color("green")
+  2020_z_mount_spacer_b();
 }
 
 /* ========================================================= */
 /* MODULES                                                   */
 /* ========================================================= */
 
-module 2020_z_mount_spacer(width=40, depth=13, height=35, x_wall=3.5, z_wall=4.5) {
+module 2020_z_mount_spacer_a(width=40, depth=13, height=35, x_wall=3.5, z_wall=4.5) {
+  h_diam = 5;
+  x_off = (width/2) - (h_diam/2) - x_wall;
+  z_off = (height/2) - (h_diam/2) - z_wall;
+  ridge = 17;
+
+  difference() {
+    union(){
+      cube([width, depth, height], center=true);
+      translate([0, -6, 0]) cube([40, 21, 13], center=true);
+    }
+    translate([ x_off, 0 , z_off]) rotate([90,0,0]) cylinder(h=height+1, d=h_diam+.5, $fn=100, center=true);
+    translate([-x_off, 0 , z_off]) rotate([90,0,0]) cylinder(h=height+1, d=h_diam+.5, $fn=100, center=true);
+    translate([ x_off, 0 ,-z_off]) rotate([90,0,0]) cylinder(h=height+1, d=h_diam+.5, $fn=100, center=true);
+    translate([-x_off, 0 ,-z_off]) rotate([90,0,0]) cylinder(h=height+1, d=h_diam+.5, $fn=100, center=true);
+
+    translate([ 5, -(depth) ,0]) rotate([0,0,0]) cylinder(h=height+1, d=h_diam+.5, $fn=100, center=true);
+    translate([-5, -(depth) ,0]) rotate([0,0,0]) cylinder(h=height+1, d=h_diam+.5, $fn=100, center=true);
+  }
+
+}
+
+module 2020_z_mount_spacer_b(width=40, depth=13, height=35, x_wall=3.5, z_wall=4.5) {
+  h_diam = 5;
+  x_off = (width/2) - (h_diam/2) - x_wall;
+  z_off = (height/2) - (h_diam/2) - z_wall;
+  ridge = 17;
+
+  difference() {
+    union(){
+      translate([0, -12.5, 0]) cube([20, 12, 28], center=true);
+      translate([0,-28.5, 12]) rotate([90,0,90]) 2020_mount_plate_2(height=4);
+      translate([0,-28.5,-12]) rotate([90,0,90]) 2020_mount_plate_2(height=4);
+    }
+    translate([0, -11.4, 0]) cube([21, 10, 13], center=true);
+    translate([ 5, -(depth) ,0]) rotate([0,0,0]) cylinder(h=height+1, d=h_diam+.5, $fn=100, center=true);
+    translate([-5, -(depth) ,0]) rotate([0,0,0]) cylinder(h=height+1, d=h_diam+.5, $fn=100, center=true);
+  }
+
+}
+
+module 2020_z_mount_spacer_v2(width=40, depth=13, height=35, x_wall=3.5, z_wall=4.5) {
   h_diam = 5;
   x_off = (width/2) - (h_diam/2) - x_wall;
   z_off = (height/2) - (h_diam/2) - z_wall;

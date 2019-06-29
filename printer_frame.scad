@@ -35,7 +35,7 @@ include <vars.scad>;
 include <parts.scad>;
 
 /* What to print */
-PART = "2020_z_mount_spacer";
+PART = "2020_ps_mount";
 //PART = "bronze_bearing";
 SHOW = "part";
 
