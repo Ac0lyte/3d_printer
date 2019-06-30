@@ -27,9 +27,6 @@ size=120;
 if (PART == "2020_ps_mount") {
   color("skyblue")
   2020_ps_mount();
-
-//  color("green", 0.5)
-//  translate([0,-12.5,-12.5]) rotate([0,90,0]) 2020_extrusion(40);
 }
 
 /* ========================================================= */
