@@ -24,13 +24,15 @@ if (PART == "2020_x_axis_carriage_assembly") {
   color("skyblue")
   2020_x_axis_carriage();
 
+  translate([0, -20, 40]) rotate([270,0,0]) hotend();
+
   color("green",0.25)
   translate([0, 19.5, 0]) rotate([0,90,180]) scs10uu();
 
   color("red",0.25)
-  translate([ 27, -1, 40]) rotate([0,0,180]) scs10uu();
+  translate([ 32, -1, 40]) rotate([0,0,180]) scs10uu();
   color("red",0.25)
-  translate([-27, -1, 40]) rotate([0,0,180]) scs10uu();
+  translate([-32, -1, 40]) rotate([0,0,180]) scs10uu();
 }
 
 if (PART == "2020_x_axis_carriage") {
@@ -44,15 +46,15 @@ if (PART == "2020_x_axis_carriage") {
 
 module 2020_x_axis_carriage() {
   rotate([0,90,0]) 2020_z_mount_spacer_a(tab = false);
-  translate([ 27,-.5,0]) rotate([0,0,180]) 2020_pillow_block(d=10, w=40);
-  translate([-27,-.5,0]) rotate([0,180,180]) 2020_pillow_block(d=10, w=40);
+  translate([ 32,-.5,0]) rotate([0,0,180]) 2020_pillow_block(d=10, w=40);
+  translate([-32,-.5,0]) rotate([0,180,180]) 2020_pillow_block(d=10, w=40);
   difference() {
-    translate([ 22,1.5,0]) rotate([0,0,180]) cube([10,10,40], center=true);
-    translate([ 27,-.5,0]) rotate([0,0,180]) 2020_pillow_block_holes(d=10, w=40);
+    translate([ 24,0,0]) rotate([0,0,180]) cube([16,13,40], center=true);
+    translate([ 32,-.5,0]) rotate([0,0,180]) 2020_pillow_block_holes(d=10, w=40);
   }
   difference() {
-    translate([-22,1.5,0]) rotate([0,0,180]) cube([10,10,40], center=true);
-    translate([-27,-.5,0]) rotate([0,0,180]) 2020_pillow_block_holes(d=10, w=40);
+    translate([-24,0,0]) rotate([0,0,180]) cube([16,13,40], center=true);
+    translate([-32,-.5,0]) rotate([0,0,180]) 2020_pillow_block_holes(d=10, w=40);
   }
 }
 
@@ -90,4 +92,17 @@ module 2020_pillow_block_holes(d=10, w=20) {
   // create the bolt hole
   translate([0,d*1.10,0]) rotate([0,90,0]) cylinder(h=20, d=M4_bolt_hole, $fn=200, center=true);
   translate([6,d*1.10,0]) rotate([0,90,0]) cylinder(h=4, d=M4_nut_diam*1.1, $fn=6, center=true);
+}
+
+module hotend() {
+  difference(){
+    union(){
+      translate([0,0, 10]) cylinder(h=6,d=11.6, $fn=6, center=true);
+
+      cylinder(h=6,d=12, $fn=100, center=true);
+      translate([0,0, 5]) cylinder(h=4,d=16, $fn=100, center=true);
+      translate([0,0,-4.5]) cylinder(h=3,d=16, $fn=100, center=true);
+    }
+    cylinder(h=35,d=4, $fn=100, center=true);
+  }
 }
