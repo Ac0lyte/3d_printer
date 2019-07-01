@@ -21,7 +21,7 @@ include <2020_mount_plate.scad>;
 include <2020_z_mount_spacer.scad>;
 include <2020_ps_mount.scad>;
 include <2020_AC_Socket_IEC320_C14.scad>;
-
+include <2020_dual_connector.scad>;
 
 /* What to print */
 PART = "pivot_nut_holder";
