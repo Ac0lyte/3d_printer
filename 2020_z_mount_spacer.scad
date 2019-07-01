@@ -60,7 +60,9 @@ if (PART == "2020_z_mount_spacer_b") {
 /* MODULES                                                   */
 /* ========================================================= */
 
-module 2020_z_mount_spacer_a(width=40, depth=13, height=35, x_wall=3.5, z_wall=4.5) {
+module 2020_z_mount_spacer_a(
+  width=40, depth=13, height=35, x_wall=3.5, z_wall=4.5, tab=true
+) {
   h_diam = 5;
   x_off = (width/2) - (h_diam/2) - x_wall;
   z_off = (height/2) - (h_diam/2) - z_wall;
@@ -69,7 +71,9 @@ module 2020_z_mount_spacer_a(width=40, depth=13, height=35, x_wall=3.5, z_wall=4
   difference() {
     union(){
       cube([width, depth, height], center=true);
-      translate([0, -6, 0]) cube([40, 21, 13], center=true);
+      if (tab == true)
+        translate([0, -6, 0]) cube([40, 21, 13], center=true);
+
     }
     translate([ x_off, 0 , z_off]) rotate([90,0,0]) cylinder(h=height+1, d=h_diam+.5, $fn=100, center=true);
     translate([-x_off, 0 , z_off]) rotate([90,0,0]) cylinder(h=height+1, d=h_diam+.5, $fn=100, center=true);
