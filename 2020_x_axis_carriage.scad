@@ -98,13 +98,16 @@ module 2020_pillow_block(d=10, w=40) {
     // Create the slit
     translate([0,d,0]) cube([1,d+1,w+1], center=true);
 
-    // create the bolt hole
+    // create the bolt holes
+    translate([0,d*1.10,10]) rotate([0,90,0]) cylinder(h=20, d=M4_bolt_hole, $fn=200, center=true);
+    translate([6,d*1.10,10]) rotate([0,90,0]) cylinder(h=4, d=M4_nut_diam*1.1, $fn=6, center=true);
+
     translate([0,d*1.10,-10]) rotate([0,90,0]) cylinder(h=20, d=M4_bolt_hole, $fn=200, center=true);
     translate([6,d*1.10,-10]) rotate([0,90,0]) cylinder(h=4, d=M4_nut_diam*1.1, $fn=6, center=true);
   }
 }
 
-module 2020_pillow_block_holes(d=10, w=20) {
+module 2020_pillow_block_holes(d=10, w=20, m=false) {
   wall=2;
 
   // Remove space for the rod
@@ -112,9 +115,12 @@ module 2020_pillow_block_holes(d=10, w=20) {
 
   // Create the slit
   translate([0,d,0]) cube([1,d+1,w+1], center=true);
-  // create the bolt hole
-  translate([0,d*1.10,0]) rotate([0,90,0]) cylinder(h=20, d=M4_bolt_hole, $fn=200, center=true);
-  translate([6,d*1.10,0]) rotate([0,90,0]) cylinder(h=4, d=M4_nut_diam*1.1, $fn=6, center=true);
+  // create the bolt holes
+  translate([0,d*1.10,10]) rotate([0,90,0]) cylinder(h=20, d=M4_bolt_hole, $fn=200, center=true);
+  translate([6,d*1.10,10]) rotate([0,90,0]) cylinder(h=4, d=M4_nut_diam*1.1, $fn=6, center=true);
+
+  translate([0,d*1.10,-10]) rotate([0,90,0]) cylinder(h=20, d=M4_bolt_hole, $fn=200, center=true);
+  translate([6,d*1.10,-10]) rotate([0,90,0]) cylinder(h=4, d=M4_nut_diam*1.1, $fn=6, center=true);
 }
 
 module hotend() {
