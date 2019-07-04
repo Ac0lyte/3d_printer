@@ -122,30 +122,11 @@ module 2020_pillow_block(d=10.5, w=40) {
       }
       translate([0,d,0]) cube([d,d,w], center=true);
     }
-<<<<<<< HEAD
-    // Remove space for the rod
-    translate([0,0,0]) cylinder(h=w+1, d=d, $fn=200, center=true);
-
-    // Create the slit
-    translate([0,d,0]) cube([1,d+1,w+1], center=true);
-
-    // create the bolt holes
-    translate([0,d*1.10,10]) rotate([0,90,0]) cylinder(h=20, d=M4_bolt_hole, $fn=200, center=true);
-    translate([6,d*1.10,10]) rotate([0,90,0]) cylinder(h=4, d=M4_nut_diam*1.1, $fn=6, center=true);
-
-    translate([0,d*1.10,-10]) rotate([0,90,0]) cylinder(h=20, d=M4_bolt_hole, $fn=200, center=true);
-    translate([6,d*1.10,-10]) rotate([0,90,0]) cylinder(h=4, d=M4_nut_diam*1.1, $fn=6, center=true);
-  }
-}
-
-module 2020_pillow_block_holes(d=10, w=20, m=false) {
-=======
     2020_pillow_block_holes(d=d, w=w);
   }
 }
 
 module 2020_pillow_block_holes(d=10, w=40, h1=true, h2=true, extend=false) {
->>>>>>> c9695da6fb2a856142fd1ea64365425fa69b7689
   wall=2;
 
   // Remove space for the rod
@@ -153,14 +134,6 @@ module 2020_pillow_block_holes(d=10, w=40, h1=true, h2=true, extend=false) {
 
   // Create the slit
   translate([0,d,0]) cube([1,d+1,w+1], center=true);
-<<<<<<< HEAD
-  // create the bolt holes
-  translate([0,d*1.10,10]) rotate([0,90,0]) cylinder(h=20, d=M4_bolt_hole, $fn=200, center=true);
-  translate([6,d*1.10,10]) rotate([0,90,0]) cylinder(h=4, d=M4_nut_diam*1.1, $fn=6, center=true);
-
-  translate([0,d*1.10,-10]) rotate([0,90,0]) cylinder(h=20, d=M4_bolt_hole, $fn=200, center=true);
-  translate([6,d*1.10,-10]) rotate([0,90,0]) cylinder(h=4, d=M4_nut_diam*1.1, $fn=6, center=true);
-=======
   if (extend == true) {
     translate([0, 1, w]) cube([1,d+1,w+1], center=true);
     translate([0, 1,-w]) cube([1,d+1,w+1], center=true);
@@ -179,7 +152,6 @@ module 2020_pillow_block_holes(d=10, w=40, h1=true, h2=true, extend=false) {
     translate([ 6, d*1.10, 10]) rotate([0,90,0]) cylinder(h=4, d=M4_nut_diam*1.1, $fn=6, center=true);
     translate([-7, d*1.10, 10]) rotate([0,90,0]) cylinder(h=4, d=M4_nut_diam*1.1, $fn=200, center=true);
   }
->>>>>>> c9695da6fb2a856142fd1ea64365425fa69b7689
 }
 
 module hotend() {
