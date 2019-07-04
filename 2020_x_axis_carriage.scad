@@ -22,9 +22,12 @@ PART = "2020_x_axis_carriage_assembly";
 
 if (PART == "2020_x_axis_carriage_assembly") {
   color("skyblue")
-  2020_x_axis_carriage();
+  translate([0, 0, 0]) rotate([0,180,0])  difference(){
+    2020_x_axis_carriage();
+    translate([0,0,50]) cube([100,100,100], center=true);
+  }
 
-  translate([0, -20, 40]) rotate([270,0,0]) hotend();
+  translate([0, -17, 40]) rotate([270,0,0]) hotend();
 
   color("green",0.25)
   translate([0, 19.5, 0]) rotate([0,90,180]) scs10uu();
@@ -35,9 +38,28 @@ if (PART == "2020_x_axis_carriage_assembly") {
   translate([-32, -1, 40]) rotate([0,0,180]) scs10uu();
 }
 
-if (PART == "2020_x_axis_carriage") {
+if (PART == "2020_x_axis_carriage_half") {
   color("skyblue")
-  2020_x_axis_carriage();
+  difference(){
+    2020_x_axis_carriage();
+    translate([0,0,50]) cube([100,100,100], center=true);
+  }
+}
+
+if (PART == "2020_x_axis_carriage_left") {
+  color("skyblue")
+  difference(){
+    2020_x_axis_carriage();
+    translate([50,0,0]) cube([100,100,100], center=true);
+  }
+}
+
+if (PART == "2020_x_axis_carriage_right") {
+  color("skyblue")
+  difference(){
+    2020_x_axis_carriage();
+    translate([-50,0,0]) cube([100,100,100], center=true);
+  }
 }
 
 /* ========================================================= */
@@ -58,7 +80,7 @@ module 2020_x_axis_carriage() {
   }
 }
 
-module 2020_pillow_block(d=10, w=20) {
+module 2020_pillow_block(d=10, w=40) {
   wall=2;
 
   difference(){
@@ -75,9 +97,10 @@ module 2020_pillow_block(d=10, w=20) {
 
     // Create the slit
     translate([0,d,0]) cube([1,d+1,w+1], center=true);
+
     // create the bolt hole
-    translate([0,d*1.10,0]) rotate([0,90,0]) cylinder(h=20, d=M4_bolt_hole, $fn=200, center=true);
-    translate([6,d*1.10,0]) rotate([0,90,0]) cylinder(h=4, d=M4_nut_diam*1.1, $fn=6, center=true);
+    translate([0,d*1.10,-10]) rotate([0,90,0]) cylinder(h=20, d=M4_bolt_hole, $fn=200, center=true);
+    translate([6,d*1.10,-10]) rotate([0,90,0]) cylinder(h=4, d=M4_nut_diam*1.1, $fn=6, center=true);
   }
 }
 
