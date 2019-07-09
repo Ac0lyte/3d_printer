@@ -79,7 +79,7 @@ if (PART == "2020_x_axis_carriage_right") {
 /* ========================================================= */
 module 2020_x_axis_carriage_connector() {
   difference() {
-    rotate([0,90,0]) 2020_z_mount_spacer_a(tab = false);
+    translate([0, 3, 0]) rotate([0,90,0]) scale([1, .5, 1]) 2020_z_mount_spacer_a(tab = false);
     translate([ 17, 0, 0]) cube([3,15,41], center=true);
     translate([-17, 0, 0]) cube([3,15,41], center=true);
   }
@@ -89,10 +89,10 @@ module 2020_x_axis_carriage_rail_mount() {
   difference() {
     union (){
       translate([2,0, 0]) cube([22,14,40], center=true);
-      translate([-2, 0, 20]) rotate([0,0,270]) 2020_pillow_block(d=10, w=40);
+      translate([-2, 0, 20]) rotate([0,0,270]) 2020_pillow_block(d=10.75, w=40);
     }
     translate([-4, 0, 0]) rotate([0,90,0]) scs10uu_holes();
-    translate([-2, 0, 20]) rotate([0,0,270]) 2020_pillow_block_holes(d=10, w=40, extend=true, h1=false);
+    translate([-2, 0, 20]) rotate([0,0,270]) 2020_pillow_block_holes(d=10.75, w=40, extend=true, h1=false);
   }
 }
 
@@ -110,7 +110,7 @@ module 2020_x_axis_carriage() {
   }
 }
 
-module 2020_pillow_block(d=10.5, w=40) {
+module 2020_pillow_block(d=11, w=40) {
   wall=2;
 
   difference(){
@@ -126,7 +126,7 @@ module 2020_pillow_block(d=10.5, w=40) {
   }
 }
 
-module 2020_pillow_block_holes(d=10, w=40, h1=true, h2=true, extend=false) {
+module 2020_pillow_block_holes(d=11, w=40, h1=true, h2=true, extend=false) {
   wall=2;
 
   // Remove space for the rod
