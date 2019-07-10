@@ -18,11 +18,14 @@ use <2020_mount_plate.scad>;
 use <linear_bearings.scad>;
 
 
-PART = "2020_x_axis_carriage_assembly";
+PART = "2020_x_axis_carriage_connector_right";
 
 if (PART == "2020_x_axis_carriage_assembly") {
-  color("skyblue")
-  2020_x_axis_carriage_connector();
+  color("skyblue", 0.25)
+  2020_x_axis_carriage_connector_left();
+
+  color("skyblue", 0.25)
+  2020_x_axis_carriage_connector_right();
 
   translate([ 24.5,-.5,00]) 2020_x_axis_carriage_rail_mount();
   translate([-24.5,-.5,00]) rotate([0, 0, 180]) 2020_x_axis_carriage_rail_mount();
@@ -33,16 +36,21 @@ if (PART == "2020_x_axis_carriage_assembly") {
   }
 
   color("red",0.25) {
-    translate([ 24.5, -1, 60]) rotate([0,0, 90]) scs10uu();
-    translate([-24.5, -1, 60]) rotate([0,0,270]) scs10uu();
+    translate([ 24.5, -1, 75]) rotate([0,0, 90]) scs10uu();
+    translate([-24.5, -1, 75]) rotate([0,0,270]) scs10uu();
   }
-  translate([0, -17, 60]) rotate([270,0,0]) hotend();
+  translate([0, -17, 75]) rotate([270,0,0]) hotend();
 }
 
 
-if (PART == "2020_x_axis_carriage_connector") {
+if (PART == "2020_x_axis_carriage_connector_left") {
   color("skyblue")
-  2020_x_axis_carriage_connector();
+  2020_x_axis_carriage_connector_left();
+}
+
+if (PART == "2020_x_axis_carriage_connector_right") {
+  color("skyblue")
+  2020_x_axis_carriage_connector_right();
 }
 
 if (PART == "2020_x_axis_carriage_rail_mount") {
@@ -77,12 +85,36 @@ if (PART == "2020_x_axis_carriage_right") {
 /* ========================================================= */
 /* MODULES                                                   */
 /* ========================================================= */
-module 2020_x_axis_carriage_connector() {
+module 2020_x_axis_carriage_connector_left() {
   difference() {
-    translate([0, 3, 0]) rotate([0,90,0]) scale([1, .5, 1]) 2020_z_mount_spacer_a(tab = false);
+    translate([0, 2.75, 0]) rotate([0,90,0]) scale([1, .5, 1]) 2020_z_mount_spacer_a(tab = false);
     translate([ 17, 0, 0]) cube([3,15,41], center=true);
     translate([-17, 0, 0]) cube([3,15,41], center=true);
   }
+  translate([0,4,37.75]) cube([31,9,35.5], center=true);
+  difference(){
+    translate([0,14.5,50.5]) cube([40,12,10], center=true);
+    translate([0,14.5,50]) rotate([0,0,0]) cylinder(h=22, d=M4_bolt_hole, $fn=100, center=true);
+    translate([0,14.5,53.51]) rotate([0,0,30]) cylinder(h=M5_nut_height, d=M5_nut_diam, $fn=6, center=true);
+  }
+  translate([0,20,45]) cube([40,1,1], center=true);
+  translate([0,9,45]) cube([40,1,1], center=true);
+}
+
+module 2020_x_axis_carriage_connector_right() {
+  difference() {
+    translate([0, 2.75, 0]) rotate([0,90,0]) scale([1, .5, 1]) 2020_z_mount_spacer_a(tab = false);
+    translate([ 17, 0, 0]) cube([3,15,41], center=true);
+    translate([-17, 0, 0]) cube([3,15,41], center=true);
+  }
+  translate([0,4,27.75]) cube([31,9,15.5], center=true);
+  difference(){
+    translate([0,14.5,27.25]) cube([40,12,14.5], center=true);
+    translate([0,14.5,27]) rotate([0,0,0]) cylinder(h=22, d=M4_bolt_hole, $fn=100, center=true);
+    translate([0,14.5,21.49]) rotate([0,0,30]) cylinder(h=M5_nut_height, d=M5_nut_diam, $fn=6, center=true);
+  }
+  translate([0,20,35]) cube([40,1,1], center=true);
+  translate([0,9,35]) cube([40,1,1], center=true);
 }
 
 module 2020_x_axis_carriage_rail_mount() {
