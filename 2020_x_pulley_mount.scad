@@ -15,36 +15,59 @@ include <vars.scad>;
 use <M5.scad>;
 use <2020_mount_plate.scad>;
 
+brace_thickness = 8;
 
-PART = "2020_x_pulley_mount_assembly_one";
+PART = "2020_x_pulley_mount_assembly_two";
 
 if (PART == "2020_x_pulley_mount_assembly_one") {
-  color("yellow")
+  pully_height = 5;
+  pully_width=6.5;
+  washer_height = (brace_thickness + 1)/2;
+  nut_height = 0 - (brace_thickness + M5_nut_height)/2;
+  bolt_length = 25;
+  bolt_height = (M5_bolt_head_height)/2;
+
+  color("skyblue")
   2020_x_pulley_mount(type=1);
 
-  color("red", 0.5) {
-    ph=5;
-    translate([0,31.0,ph]) g2_smooth_pulley();
+  color("black", 0.25) {
+    translate([0,31.0,bolt_height]) M5_bolt(l=bolt_length);
+    translate([0,31.0,washer_height+pully_width+3]) M5_washer();
+    translate([0,31.0,nut_height]) M5_nut();
+    translate([0,31.0,washer_height]) M5_washer();
   }
-  color("black", 0.5) {
-    wh=4.5;
-    translate([0,31.0,wh]) M5_washer();
+  color("red", 0.5) {
+    translate([0,31.0,pully_height]) g2_smooth_pulley(h=pully_width);
   }
 }
 
 if (PART == "2020_x_pulley_mount_assembly_two") {
-  color("yellow")
+  pully_height = 5;
+  pully_width=6.5;
+  washer_height = (brace_thickness + 1)/2;
+  nut_height = 0 - (brace_thickness + M5_nut_height)/2;
+  bolt_length = 25;
+  bolt_height = (M5_bolt_head_height)/2;
+
+  color("skyblue")
   2020_x_pulley_mount(type=2);
 
+  color("black", 0.5) {
+    wh=4.5;
+    translate([0,31.0,bolt_height]) M5_bolt(l=bolt_length);
+    translate([0,31.0,washer_height+pully_width+3]) M5_washer();
+    translate([0,31.0,nut_height]) M5_nut();
+    translate([0,31.0,washer_height]) M5_washer();
+
+    translate([15,43.0,bolt_height]) M5_bolt(l=bolt_length);
+    translate([15,43.0,washer_height+pully_width+3]) M5_washer();
+    translate([15,43.0,nut_height]) M5_nut();
+    translate([15,43.0,washer_height]) M5_washer();
+  }
   color("red", 0.5) {
     ph=5;
     translate([0,31.0,ph]) g2_smooth_pulley();
     translate([15,43.0,ph]) g2_smooth_pulley();
-  }
-  color("black", 0.5) {
-    wh=4.5;
-    translate([0,31.0,wh]) M5_washer();
-    translate([15,43.0,wh]) M5_washer();
   }
 }
 
@@ -63,7 +86,6 @@ if (PART == "2020_x_pulley_mount_two") {
 /* ========================================================= */
 module 2020_x_pulley_mount(type=2) {
   difference(){
-    brace_thickness = 8;
     brace_offset = 0;
     brace_length = 26;
     brace2_offset = 6;

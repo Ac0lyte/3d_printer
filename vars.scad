@@ -26,6 +26,8 @@ z_carriage_width = z_rail_width + frame_size;
 // M5
 M5_bolt_diam = 5;
 M5_bolt_hole = 5.5;
+M5_bolt_head_diam = 9;
+M5_bolt_head_height = 4;
 M5_nut_height = 4;
 M5_nut_width = 7.9;
 M5_nut_diam = 9;
