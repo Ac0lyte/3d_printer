@@ -24,7 +24,6 @@ include <2020_AC_Socket_IEC320_C14.scad>;
 include <2020_dual_connector.scad>;
 include <2020_x_axis_carriage.scad>;
 include <2020_x_pulley_mount.scad>;
-include <2020_x_pulley.scad>;
 
 /* What to print */
 PART = "pivot_nut_holder";
