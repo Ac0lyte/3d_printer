@@ -12,6 +12,7 @@
 */
 
 include <vars.scad>;
+use <M5.scad>;
 use <2020_mount_plate.scad>;
 
 
@@ -24,12 +25,10 @@ if (PART == "2020_x_pulley_mount_assembly_one") {
   color("red", 0.5) {
     ph=5;
     translate([0,31.0,ph]) g2_smooth_pulley();
-    //translate([15,43.0,ph]) g2_smooth_pulley();
   }
   color("black", 0.5) {
     wh=4.5;
     translate([0,31.0,wh]) M5_washer();
-    //translate([15,43.0,wh]) M5_washer();
   }
 }
 
@@ -115,12 +114,5 @@ module g2_smooth_pulley(h=6.5) {
     }
     translate([0, 0, (h/2)+1])
     cylinder(h=h+3, d=5, center=true, $fn=100);
-  }
-}
-
-module M5_washer(h=1,w=1) {
-  difference() {
-    cylinder(h=h, d=w+5, center=true, $fn=100);
-    cylinder(h=h+0.1, d=5, center=true, $fn=100);
   }
 }
