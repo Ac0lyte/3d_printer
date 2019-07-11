@@ -34,7 +34,7 @@ PART = "2020_z_mount_spacer";
 size=120;
 
 if (PART == "2020_z_mount_spacer") {
-  color("skyblue", 1) 2020_z_mount_spacer_a();
+  color(part_color, 1) 2020_z_mount_spacer_a();
 
   color("green", 1) 2020_z_mount_spacer_b();
 
@@ -45,7 +45,7 @@ if (PART == "2020_z_mount_spacer") {
 }
 
 if (PART == "2020_z_mount_spacer_a") {
-  color("skyblue")
+  color(part_color)
   2020_z_mount_spacer_a();
 }
 
