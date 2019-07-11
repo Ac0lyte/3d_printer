@@ -11,6 +11,8 @@
  *
 */
 
+
+
 include <vars.scad>;
 use <M5.scad>;
 use <g2.scad>;
@@ -119,7 +121,7 @@ module 2020_x_pulley_mount(type=2) {
       }
       if (type == 2) {
         hull(){
-          translate([ brace2_offset, 0, 0]) cube([5,1,30], center=true);
+          translate([ brace2_offset, 0, -10]) cube([5,1,15], center=true);
           translate([ brace2_offset+10,brace2_length,  0]) cube([5,1,6], center=true);
         }
       }
