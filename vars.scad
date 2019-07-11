@@ -2,6 +2,9 @@
 PART = "none";
 IMAGE = "none";
 
+/* colors */
+part_color = "skyblue";
+
 /* frame */
 height = 690;
 width = 500;

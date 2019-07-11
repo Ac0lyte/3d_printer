@@ -8,23 +8,25 @@ include <vars.scad>;
 
 include <printer_parts.scad>;
 include <M5.scad>;
-include <pivot_nut_holder.scad>;
-include <2020_z_carriage.scad>;
-include <2020_extrusion.scad>;
-include <height_lever.scad>;
-include <608zz_bearing.scad>;
-include <2020_corner_plate.scad>;
-include <2020_rail_mount.scad>;
+include <g2.scad>;
 include <glass_holder_corner.scad>;
 include <bronze_bearing.scad>;
+include <pivot_nut_holder.scad>;
+include <height_lever.scad>;
+include <608zz_bearing.scad>;
+include <2020_extrusion.scad>;
+include <2020_corner_plate.scad>;
+include <2020_rail_mount.scad>;
 include <2020_bronze_bearing_holder.scad>;
 include <2020_mount_plate.scad>;
-include <2020_z_mount_spacer.scad>;
 include <2020_ps_mount.scad>;
 include <2020_AC_Socket_IEC320_C14.scad>;
 include <2020_dual_connector.scad>;
 include <2020_x_axis_carriage.scad>;
+include <2020_z_carriage.scad>;
+include <2020_z_mount_spacer.scad>;
 include <2020_x_pulley_mount.scad>;
+include <2020_z_pulley_mount.scad>;
 
 /* What to print */
 PART = "pivot_nut_holder";
