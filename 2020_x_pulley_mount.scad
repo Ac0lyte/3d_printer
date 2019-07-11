@@ -99,12 +99,8 @@ module 2020_x_pulley_mount(type=2) {
     brace2_length = 38;
 
     union(){
-      translate([ 0, 0, 0]) 2020_mount_plate(width=20);
-      translate([ 0, 2, 0]) 2020_mount_plate(width=20);
-      translate([ 0, 4, 0]) 2020_mount_plate(width=20);
-      translate([-11, -11, 0]) rotate([0,0,90]) 2020_mount_plate(width=20);
-      translate([-13, -11, 0]) rotate([0,0,90]) 2020_mount_plate(width=20);
-      translate([-15, -11, 0]) rotate([0,0,90]) 2020_mount_plate(width=20);
+      translate([ 0, 2, 0]) 2020_mount_plate(width=20, height=6);
+      translate([-13, -11, 0]) rotate([0,0,90]) 2020_mount_plate(width=20, height=6);
       translate([-13, 2, 0]) cube([6,6,40], center=true);
 
       hull() {
@@ -116,7 +112,7 @@ module 2020_x_pulley_mount(type=2) {
       }
 
       hull(){
-        translate([ brace_offset, 0,0]) cube([5,6,25], center=true);
+        translate([ brace_offset, 0,0]) cube([5,6,21], center=true);
         translate([ brace_offset,brace_length,  0]) cube([5,1,6], center=true);
       }
       if (type == 2) {
