@@ -29,7 +29,10 @@
 
 include <vars.scad>;
 
+PART = "scs10uu";
+
 if (PART == "scs10uu") {
+    color(part_color)
     scs10uu();
 }
 
