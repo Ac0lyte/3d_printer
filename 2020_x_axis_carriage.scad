@@ -93,6 +93,7 @@ module 2020_x_axis_carriage_rail_mount() {
     }
     translate([-4, 0, 0]) rotate([0,90,0]) scs10uu_holes();
     translate([-2, 0, 20]) rotate([0,0,270]) 2020_pillow_block_holes(d=10, w=40, extend=true, h1=false);
+    translate([ -2, 0, 0]) rotate([0, 0, 0]) cylinder(h=100, d=5, $fn=100, center=true);
   }
 }
 
