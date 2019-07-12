@@ -15,6 +15,7 @@ include <pivot_nut_holder.scad>;
 include <height_lever.scad>;
 include <608zz_bearing.scad>;
 include <v6_j_type_hotend.scad>;
+include <y_carriage_hotend.scad>;
 
 include <2020_extrusion.scad>;
 include <2020_corner_plate.scad>;
