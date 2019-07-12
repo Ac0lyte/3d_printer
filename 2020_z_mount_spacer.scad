@@ -34,20 +34,18 @@ PART = "2020_z_mount_spacer";
 size=120;
 
 if (PART == "2020_z_mount_spacer") {
-  color("skyblue", 1) 2020_z_mount_spacer_a();
+  color(part_color, 1) 2020_z_mount_spacer_a();
 
   color("green", 1) 2020_z_mount_spacer_b();
 
 
+  color("lightgrey",0.35) translate([0,19.5, 0]) cylinder(h=50, d=10, $fn=100, center=true);
   color("green",0.25)
   translate([0, 19.5, 0]) rotate([0,0,180]) scs10uu();
-
-  color("lightgrey",0.35) translate([0,19.5, 0]) cylinder(h=50, d=10, $fn=100, center=true);
-
 }
 
 if (PART == "2020_z_mount_spacer_a") {
-  color("skyblue")
+  color(part_color)
   2020_z_mount_spacer_a();
 }
 

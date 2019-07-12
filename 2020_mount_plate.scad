@@ -16,8 +16,15 @@ include <vars.scad>;
 PART = "2020_mount_plate";
 
 if (PART == "2020_mount_plate") {
-    rotate([90, 0, 90])
-    2020_mount_plate();
+  color(part_color)
+  rotate([90, 0, 90])
+  2020_mount_plate();
+}
+
+if (PART == "2020_mount_plate_2") {
+  color(part_color)
+  rotate([90, 0, 90])
+  2020_mount_plate_2();
 }
 
 
@@ -25,21 +32,39 @@ if (PART == "2020_mount_plate") {
  /* MODULES                                                   */
  /* ========================================================= */
 
+/*
+ *  A base plate used when designing parts for the 2020 system
+ *
+ * width = x
+ * height = y
+ * length = z
+ * holes = number of screw holes
+ * hole_size = diameter of holes
+ * margin = distance from edges to the CENTER of the holes
+ */
 
- module 2020_mount_plate(height=2) {
-   color("blue")
+ module 2020_mount_plate(
+   height=2,
+   width=18,
+   length=40,
+   holes=2,
+   hole_size=M4_bolt_hole,
+   margin=5
+ ) {
+   space = ((length - (margin *2)) / (holes-1) );
    difference(){
-       cube([18,height,40], center=true);
-       translate([0,0,15]) rotate([90,0,0]) cylinder(h=height+1, d=M4_bolt_hole, $fn=200, center=true);
-       translate([0,0,-15]) rotate([90,0,0]) cylinder(h=height+1, d=M4_bolt_hole, $fn=200, center=true);
+     cube([width, height, length], center=true);
+     z_start = 0 - ((length/2)-margin);
+     for (Z = [ 1 : holes ]) {
+        z = z_start + ((Z-1) * space);
+        echo(z);
+        translate([0,0,z]) rotate([90,0,0]) cylinder(h=height+1, d=hole_size, $fn=200, center=true);
+     }
    }
  }
 
+/* A shorter version of above */
+
  module 2020_mount_plate_2(height=2) {
-   color("blue")
-   difference(){
-       cube([20,height,20], center=true);
-       translate([0,0,5]) rotate([90,0,0]) cylinder(h=height+1, d=M4_bolt_hole, $fn=200, center=true);
-       translate([0,0,-5]) rotate([90,0,0]) cylinder(h=height+1, d=M4_bolt_hole, $fn=200, center=true);
-   }
+   2020_mount_plate(length=20, width=20);
  }
