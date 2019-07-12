@@ -22,7 +22,6 @@ brace_rise = 0;
 pully_width=10;
 brace_length=15;
 
-
 PART = "2020_z_pulley_mount_assembly";
 
 if (PART == "2020_z_pulley_mount_assembly") {

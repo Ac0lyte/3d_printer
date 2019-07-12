@@ -74,7 +74,11 @@ MODELS=$(patsubst %,$(STL)/$(PREFIX)-%.$(STL),$(PARTS))
 IMAGES=$(patsubst %,$(IMAGE)/$(PREFIX)-%.$(IMAGE),$(PARTS))
 GCODES=$(patsubst %,$(GCODE)/$(PREFIX)-%.$(GCODE),$(PARTS))
 
-all:	models images
+MODEL_NAME=$(STL)/$(PREFIX)-$@.$(STL)
+IMAGE_NAME=$(IMAGE)/$(PREFIX)-$@.$(IMAGE)
+GCODE_NAME=$(GCODE)/$(PREFIX)-$@.$(GCODE),
+
+all:	$(PARTS)
 
 directories:
 	@mkdir -p $(STL) $(IMAGE) $(GCODE)
@@ -84,6 +88,10 @@ models: directories $(MODELS)
 gcodes: directories $(GCODES)
 
 images: directories $(IMAGES)
+
+$(PARTS): $(shell grep -i "PART == \"$@\"" *.scad)
+	make $(IMAGE_NAME)
+	make $(MODEL_NAME)
 
 clean:
 	rm -rf $(STL) $(GCODE) $(IMAGE)
@@ -101,4 +109,3 @@ $(IMAGES) : $(IMAGE)/$(PREFIX)-%.$(IMAGE) : parts.scad
 # Dependencies for slicing
 
 $(GCODES) : $(GCODE)/%.$(GCODE) : $(STL)/%.$(STL) $(SLIC3R_INI)
-	$(SLIC3R) -o $@ $(SLIC3R_OPTIONS) $<
