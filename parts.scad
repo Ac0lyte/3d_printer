@@ -11,6 +11,7 @@ include <M5.scad>;
 include <g2.scad>;
 include <glass_holder_corner.scad>;
 include <bronze_bearing.scad>;
+include <linear_bearings.scad>;
 include <pivot_nut_holder.scad>;
 include <height_lever.scad>;
 include <608zz_bearing.scad>;
