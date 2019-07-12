@@ -19,7 +19,7 @@ use <linear_bearings.scad>;
 use <v6_j_type_hotend.scad>;
 
 
-PART = "2020_x_axis_carriage_connector_right";
+PART = "10mm_rail_clamp";
 
 if (PART == "2020_x_axis_carriage_assembly") {
   color(part_color, 0.25)
@@ -83,6 +83,9 @@ if (PART == "2020_x_axis_carriage_right") {
   }
 }
 
+if (PART == "10mm_rail_clamp") {
+  color(part_color) 10mm_rail_clamp();
+}
 /* ========================================================= */
 /* MODULES                                                   */
 /* ========================================================= */
@@ -123,28 +126,28 @@ module 2020_x_axis_carriage_rail_mount() {
   difference() {
     union (){
       translate([2,0, 0]) cube([22,14,40], center=true);
-      translate([-2, 0, 20]) rotate([0,0,270]) 2020_pillow_block(d=10.75, w=40);
+      translate([-2, 0, 20]) rotate([0,0,270]) 10mm_rail_clamp(d=10.75, w=40);
     }
     translate([-4, 0, 0]) rotate([0,90,0]) scs10uu_holes();
-    translate([-2, 0, 20]) rotate([0,0,270]) 2020_pillow_block_holes(d=10.75, w=40, extend=true, h1=false);
+    translate([-2, 0, 20]) rotate([0,0,270]) 10mm_rail_clamp_holes(d=10.75, w=40, extend=true, h1=false);
   }
 }
 
 module 2020_x_axis_carriage() {
   rotate([0,90,0]) 2020_z_mount_spacer_a(tab = false);
-  translate([ 32,-.5,0]) rotate([0,0,180]) 2020_pillow_block(d=10, w=40);
-  translate([-32,-.5,0]) rotate([0,180,180]) 2020_pillow_block(d=10, w=40);
+  translate([ 32,-.5,0]) rotate([0,0,180]) 10mm_rail_clamp(d=10, w=40);
+  translate([-32,-.5,0]) rotate([0,180,180]) 10mm_rail_clamp(d=10, w=40);
   difference() {
     translate([ 24,0,0]) rotate([0,0,180]) cube([16,13,40], center=true);
-    translate([ 32,-.5,0]) rotate([0,0,180]) 2020_pillow_block_holes(d=10, w=40);
+    translate([ 32,-.5,0]) rotate([0,0,180]) 10mm_rail_clamp_holes(d=10, w=40);
   }
   difference() {
     translate([-24,0,0]) rotate([0,0,180]) cube([16,13,40], center=true);
-    translate([-32,-.5,0]) rotate([0,0,180]) 2020_pillow_block_holes(d=10, w=40);
+    translate([-32,-.5,0]) rotate([0,0,180]) 10mm_rail_clamp_holes(d=10, w=40);
   }
 }
 
-module 2020_pillow_block(d=11, w=40) {
+module 10mm_rail_clamp(d=11, w=40) {
   wall=2;
 
   difference(){
@@ -156,11 +159,11 @@ module 2020_pillow_block(d=11, w=40) {
       }
       translate([0,d,0]) cube([d,d,w], center=true);
     }
-    2020_pillow_block_holes(d=d, w=w);
+    10mm_rail_clamp_holes(d=d, w=w);
   }
 }
 
-module 2020_pillow_block_holes(d=11, w=40, h1=true, h2=true, extend=false) {
+module 10mm_rail_clamp_holes(d=11, w=40, h1=true, h2=true, extend=false) {
   wall=2;
 
   // Remove space for the rod
