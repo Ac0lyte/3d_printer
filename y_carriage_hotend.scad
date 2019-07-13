@@ -19,7 +19,7 @@ use <v6_j_type_hotend.scad>;
 
 nut_offset = 18-(M5_nut_height/2);
 
-PART = "y_carriage_hotend_assembly";
+PART = "hotend_fit_test";
 
 if (PART == "y_carriage_hotend_assembly") {
   color(part_color) y_carriage_hotend(cut="left");
@@ -50,7 +50,28 @@ if (PART == "y_carriage_hotend_right") {
   y_carriage_hotend(cut="right");
 }
 
+if (PART == "hotend_fit_test") {
+  translate([ 30,-3, 0]) hotend_fit_test(added=.5, cut="left");
+  translate([ 30, 3, 0]) hotend_fit_test(added=.5, cut="right");
 
+  translate([ 0,-3, 0]) hotend_fit_test(added=1, cut="left");
+  translate([ 0, 3, 0]) hotend_fit_test(added=1, cut="right");
+
+  translate([-30,-3, 0]) hotend_fit_test(added=1.5, cut="left");
+  translate([-30, 3, 0]) hotend_fit_test(added=1.5, cut="right");
+
+
+  translate([ 30, 30, 0]) hotend_fit_test(added=2, cut="left");
+  translate([ 30, 36, 0]) hotend_fit_test(added=2, cut="right");
+
+  translate([ 0, 30, 0]) hotend_fit_test(added=2.5, cut="left");
+  translate([ 0, 36, 0]) hotend_fit_test(added=2.5, cut="right");
+
+  translate([-30, 30, 0]) hotend_fit_test(added=3, cut="left");
+  translate([-30, 36, 0]) hotend_fit_test(added=3, cut="right");
+
+
+}
 /* ========================================================= */
 /* MODULES                                                   */
 /* ========================================================= */
@@ -66,6 +87,23 @@ if (PART == "y_carriage_hotend_right") {
  *       to render.
  *
  */
+
+module hotend_fit_test(added=0,cut="left") {
+  difference(){
+    cube([20+added,20+added,12], center=true);
+    translate([0,0,0]){
+      translate([0,0, 5]) cylinder(h=4.1,d=16+added, $fn=100, center=true);
+      cylinder(h=6.1,d=12+added, $fn=100, center=true);
+      translate([0,0,-4.5]) cylinder(h=3.1,d=16+added, $fn=100, center=true);
+    }
+    if (cut == "right") {
+      translate([0, -25, 0]) cube([50,50,20],center=true);
+    };
+    if (cut == "left") {
+      translate([0, 25, 0]) cube([50,50,20],center=true);
+    };
+  }
+}
 
 module y_carriage_hotend(cut="left", seperation=40) {
   cut_offset = 25;
