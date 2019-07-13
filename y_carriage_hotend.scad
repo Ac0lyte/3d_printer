@@ -124,9 +124,9 @@ module y_carriage_hotend_full(seperation=40) {
       difference(){
         cube([seperation,26,12], center=true);
         translate([0,0,0]){
-          translate([0,0, 5]) cylinder(h=4.1,d=16, $fn=100, center=true);
-          cylinder(h=6.1,d=12, $fn=100, center=true);
-          translate([0,0,-4.5]) cylinder(h=3.1,d=16, $fn=100, center=true);
+          translate([0,0, 5]) cylinder(h=4.1,d=17, $fn=100, center=true);
+          cylinder(h=6.1,d=13, $fn=100, center=true);
+          translate([0,0,-4.5]) cylinder(h=3.1,d=17, $fn=100, center=true);
         }
       }
       translate([seperation,0,0]) rotate([90,0,0]) 2020_z_mount_spacer_a(tab=false);
