@@ -21,6 +21,7 @@ brace_length=15;
 brace_rise = 0;
 pully_width=10;
 brace_length=15;
+holder_offset=-0;
 
 PART = "2020_z_pulley_mount_assembly";
 
@@ -30,10 +31,10 @@ if (PART == "2020_z_pulley_mount_assembly") {
   bolt_length = pully_width + (brace_thickness * 2)+M5_bolt_head_height;
   bolt_height = (M5_bolt_head_height)/2;
 
-  color(part_color)
+//  color(part_color)
   2020_z_pulley_mount(tensioner=false);
 
-  translate([0,brace_length,0]) rotate([90,0,0]) {
+  translate([holder_offset, brace_length, 0]) rotate([90,0,0]) {
     color("black", 0.25) {
       translate([0,0,-bolt_height]) M5_bolt(l=bolt_length);
       translate([0,0,washer_height]) M5_washer();
@@ -100,7 +101,7 @@ if (PART == "2020_z_pulley_mount") {
 }
 
 if (PART == "2020_z_pulley_tensioner") {
-  color(part_color)
+//  color(part_color)
   2020_z_pulley_mount(tensioner=true);
 }
 
@@ -108,45 +109,100 @@ if (PART == "2020_z_pulley_tensioner") {
 /* MODULES                                                   */
 /* ========================================================= */
 
+module 2020_z_pulley_mount_plate(tensioner=false, mount_width=50) {
+  brace_offset = (brace_thickness + pully_width) / 2 + 2;
+  mount_thickness = 5;
+  base_width = 20 + mount_thickness;
+
+  // 2020 mount plate
+  difference() {
+    union() {
+      // vertical plate and holes
+      difference(){
+        cube([20, mount_thickness, mount_width], center=true);
+        translate([0, 0, 20]) rotate([90, 0, 0]) cylinder(h=mount_thickness+1, d=M4_bolt_hole, $fn=100, center=true);
+        translate([0, 0,-20]) rotate([90, 0, 0]) cylinder(h=mount_thickness+1, d=M4_bolt_hole, $fn=100, center=true);
+        rotate([90, 0, 0]) cylinder(h=mount_thickness+1, d=M5_bolt_head_diam, $fn=100, center=true);
+      }
+      // vorizintal plate and holes
+      translate([10+(mount_thickness)/2, -(10+(mount_thickness)/2), 0]) rotate([0, 0, 90])
+      difference(){
+        cube([20, mount_thickness, mount_width], center=true);
+        translate([0, 0, 20]) rotate([90, 0, 0]) cylinder(h=mount_thickness+1, d=M4_bolt_hole, $fn=100, center=true);
+        translate([0, 0, 0])  rotate([90, 0, 0]) cylinder(h=mount_thickness+1, d=M4_bolt_hole, $fn=100, center=true);
+        translate([0, 0,-20]) rotate([90, 0, 0]) cylinder(h=mount_thickness+1, d=M4_bolt_hole, $fn=100, center=true);
+      }
+      // Fill in the corner
+      translate([10+(mount_thickness)/2,0,0]) cube([mount_thickness,mount_thickness, mount_width], center=true);
+    }
+    translate([-5.05, 0, 0]) cube([10.1,mount_thickness+1,M5_bolt_head_diam], center=true);
+  }
+}
+
+module 2020_z_pulley_mount_slide(tensioner=false) {
+  brace_offset = (brace_thickness + pully_width)/2 +2;
+  mount_thickness = 5;
+  base_width = 20+mount_thickness;
+
+  // rails
+  translate([ 2.5, 1 + mount_thickness/2, 10]) cube([25, 2, 2], center=true);
+  translate([ 2.5, 1 + mount_thickness/2,-10]) cube([25, 2, 2], center=true);
+
+  // Top Plate
+  translate([12, 13.5, 0])
+  difference(){
+      cube([mount_thickness+1, mount_thickness+(2*brace_offset)+3, 18], center=true);
+      translate([0, mount_thickness/2, 0]) rotate([0, 90, 0]) cylinder(h=mount_thickness+2, d=M5_bolt_hole, $fn=100, center=true);
+    }
+}
+
+module 2020_z_pulley_mount_holder(tensioner=false) {
+  brace_offset = (brace_thickness + pully_width)/2 +2;
+  mount_thickness = 5;
+  base_width = 20+mount_thickness;
+
+  // pully holder
+  difference() {
+    translate([0, .5, 0]) union(){
+      translate([0,mount_thickness,0]) rotate([90,0,0]) hull(){
+        cylinder(h=mount_thickness+1, d=18, $fn=100, center=true);
+        translate([9,0,0]) cube([1,18,mount_thickness+1], center=true);
+      }
+      translate([0,25,0]) rotate([90,0,0]) hull(){
+         cylinder(h=mount_thickness+1, d=18, $fn=100, center=true);
+         translate([9,0,0]) cube([1,18,mount_thickness+1], center=true);
+      }
+      translate([12,15,0]) difference() {
+        cube([mount_thickness+1,mount_thickness+(2*brace_offset)-1,18], center=true);
+        if (tensioner == false) {
+          translate([ 0, 0, 0]) rotate([0, 90, 0]) cylinder(h=mount_thickness+2, d=M5_bolt_hole, $fn=100, center=true);
+          translate([-1, 0, 0]) rotate([0, 90, 0]) cylinder(h=M5_bolt_head_height+0.1, d=M5_bolt_head_diam, $fn=100, center=true);
+        }
+        if (tensioner == true) {
+          translate([0, 0, 7]) cube([mount_thickness+2, 14, 6], center=true);
+          translate([0, 0,-7]) cube([mount_thickness+2, 14,6], center=true);
+        }
+      }
+    }
+    rotate([90,0,0]) cylinder(h=4*(mount_thickness+brace_offset)+1, d=M4_bolt_hole, $fn=100, center=true);
+  }
+}
+
+
 module 2020_z_pulley_mount(tensioner=false) {
   brace_offset = (brace_thickness + pully_width)/2 +2;
   mount_thickness = 5;
   base_width = 20+mount_thickness;
 
   union(){
-    // 2020 mount plate
-    difference(){
-      cube([20,mount_thickness,50], center=true);
-      rotate([90,0,0]) cylinder(h=mount_thickness+1, d=M5_bolt_head_diam, $fn=100, center=true);
-      translate([0,0,20]) rotate([90,0,0]) cylinder(h=mount_thickness+1, d=M4_bolt_hole, $fn=100, center=true);
-      translate([0,0,-20]) rotate([90,0,0]) cylinder(h=mount_thickness+1, d=M4_bolt_hole, $fn=100, center=true);
-    }
-    translate([10+(mount_thickness)/2,-(10+(mount_thickness)/2),0]) rotate([0,0,90])
-    difference(){
-      cube([20,mount_thickness,50], center=true);
-      rotate([90,0,0]) cylinder(h=mount_thickness+1, d=M4_bolt_hole, $fn=100, center=true);
-      translate([0,0,20]) rotate([90,0,0]) cylinder(h=mount_thickness+1, d=M4_bolt_hole, $fn=100, center=true);
-      translate([0,0,-20]) rotate([90,0,0]) cylinder(h=mount_thickness+1, d=M4_bolt_hole, $fn=100, center=true);
-    }
-    translate([10+(mount_thickness)/2,0,0]) cube([mount_thickness,mount_thickness,50], center=true);
+    color("red",0.5)
+    if(tensioner) 2020_z_pulley_mount_plate(tensioner, mount_width=22);
+    else 2020_z_pulley_mount_plate(tensioner, mount_width=22);
 
-    // pully holder
-    difference() {
-      union(){
-        translate([0,mount_thickness,0]) rotate([90,0,0]) cylinder(h=mount_thickness+1, d=18, $fn=100, center=true);
-        translate([0,25,0]) rotate([90,0,0]) hull(){
-           cylinder(h=mount_thickness+1, d=18, $fn=100, center=true);
-           translate([9,0,0]) cube([1,18,mount_thickness+1], center=true);
-        }
-        translate([12,15,0]) difference() {
-          cube([mount_thickness+1,mount_thickness+(2*brace_offset)-1,18], center=true);
-          translate([0, 0, 7]) cube([mount_thickness+2, 14, 6], center=true);
-          translate([0, 0,-7]) cube([mount_thickness+2, 14,6], center=true);
-        }
-      }
-      rotate([90,0,0]) cylinder(h=4*(mount_thickness+brace_offset)+1, d=M4_bolt_hole, $fn=100, center=true);
-    }
-
+    color("green",0.5)
+    translate([holder_offset, 0, 0]) 2020_z_pulley_mount_holder(tensioner);
+    color("blue",0.5)
+    if(tensioner==false) 2020_z_pulley_mount_slide(tensioner);
   }
 }
 
