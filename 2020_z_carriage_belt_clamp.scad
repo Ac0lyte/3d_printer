@@ -23,8 +23,10 @@ PART = "2020_z_carriage_belt_clamp_assembly";
 if (PART == "2020_z_carriage_belt_clamp_assembly") {
   color(part_color) 2020_z_carriage_belt_clamp();
 
-  color("red",0.5)
-  translate([1,15,14.25]) z_belt_clamp();
+  color("red",0.5){
+    translate([1, 15, 14.25]) z_belt_clamp();
+    translate([1, 15,-14.25]) z_belt_clamp();
+  }
 }
 
 if (PART == "2020_z_carriage_belt_clamp") {

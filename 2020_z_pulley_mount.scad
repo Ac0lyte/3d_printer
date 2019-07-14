@@ -22,7 +22,7 @@ brace_rise = 0;
 pully_width=10;
 brace_length=15;
 
-PART = "2020_z_pulley_tensioner";
+PART = "2020_z_pulley_mount_assembly";
 
 if (PART == "2020_z_pulley_mount_assembly") {
   washer_height = (pully_width)/2+1.5;
@@ -31,7 +31,7 @@ if (PART == "2020_z_pulley_mount_assembly") {
   bolt_height = (M5_bolt_head_height)/2;
 
   color(part_color)
-  2020_z_pulley_mount();
+  2020_z_pulley_mount(tensioner=false);
 
   translate([0,brace_length,0]) rotate([90,0,0]) {
     color("black", 0.25) {
