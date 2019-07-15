@@ -46,25 +46,31 @@ module 2020_z_carriage_belt_clamp() {
     difference(){
       union(){
         rotate([0,90,0]) 2020_mount_plate(height=5,width=20);
-        translate([0,6,0]) cube([20, 7, 20], center=true);
-        translate([0,10,0]) cube([5, 25, 36], center=true);
-        translate([7,12,5]) rotate([90,0,0]) cylinder(h=19, d=5, $fn=100, center=true);
-        translate([7,12,-5]) rotate([90,0,0]) cylinder(h=19, d=5, $fn=100, center=true);
-        translate([0,12,5]) rotate([90,0,0]) cylinder(h=19, d=5, $fn=100, center=true);
-        translate([0,12,-5]) rotate([90,0,0]) cylinder(h=19, d=5, $fn=100, center=true);
+        //translate([0,6,0]) cube([20, 7, 20], center=true);
+        translate([0, 10, 0]) cube([5, 25, 36], center=true);
+        translate([7, 12, 5]) rotate([90,0,0]) cylinder(h=19, d=5, $fn=100, center=true);
+        translate([7, 12,-5]) rotate([90,0,0]) cylinder(h=19, d=5, $fn=100, center=true);
+        translate([0, 12, 5]) rotate([90,0,0]) cylinder(h=19, d=5, $fn=100, center=true);
+        translate([0, 12,-5]) rotate([90,0,0]) cylinder(h=19, d=5, $fn=100, center=true);
       }
-      translate([0,16.5,0]) cube([6,14,9], center=true);
-      translate([ 0, 7, 14]) rotate([0,90,0]) cylinder(h=8, d=M4_bolt_hole, $fn=100, center=true);
-      translate([ 0, 7,-14]) rotate([0,90,0]) cylinder(h=8, d=M4_bolt_hole, $fn=100, center=true);
+      //center betl path break
+      translate([0, 13, 0]) cube([6,21,9], center=true);
+
+      // Bolt holes for clamp/clip
+      translate([ 0,  1, 14]) rotate([0,90,0]) cylinder(h=8, d=M4_bolt_hole, $fn=100, center=true);
+      translate([ 0, 19, 14]) rotate([0,90,0]) cylinder(h=8, d=M4_bolt_hole, $fn=100, center=true);
+      translate([ 0,  1,-14]) rotate([0,90,0]) cylinder(h=8, d=M4_bolt_hole, $fn=100, center=true);
+      translate([ 0, 19,-14]) rotate([0,90,0]) cylinder(h=8, d=M4_bolt_hole, $fn=100, center=true);
     }
-    translate([0,12,5]) rotate([90,0,0]) cylinder(h=21, d=5, $fn=100, center=true);
-    translate([0,12,-5]) rotate([90,0,0]) cylinder(h=21, d=5, $fn=100, center=true);
+    translate([0, 12, 5]) rotate([90,0,0]) cylinder(h=21, d=5, $fn=100, center=true);
+    translate([0, 12,-5]) rotate([90,0,0]) cylinder(h=21, d=5, $fn=100, center=true);
 }
 
 module z_belt_clamp(){
   difference(){
-    cube([13,25,8], center=true);
-    translate([0,-5,0]) cube([7,25,9], center=true);
-    translate([ 0, -8, 0]) rotate([0,90,0]) cylinder(h=14, d=M4_bolt_hole, $fn=100, center=true);
+    translate([0,-4, 0]) cube([13, 27.5, 8], center=true);
+    translate([0,-5.2, 0]) cube([7,25.2,9], center=true);
+    translate([0,-14, 0]) rotate([0,90,0]) cylinder(h=14, d=M4_bolt_hole, $fn=100, center=true);
+    translate([0, 4, 0]) rotate([0,90,0]) cylinder(h=14, d=M4_bolt_hole, $fn=100, center=true);
   }
 }
