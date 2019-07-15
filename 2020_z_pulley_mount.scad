@@ -105,6 +105,11 @@ if (PART == "2020_z_pulley_tensioner") {
   2020_z_pulley_mount(tensioner=true);
 }
 
+if (PART == "2020_z_pulley_mount_holder") {
+  color(part_color)
+  2020_z_pulley_mount_holder();
+}
+
 /* ========================================================= */
 /* MODULES                                                   */
 /* ========================================================= */
@@ -199,8 +204,8 @@ module 2020_z_pulley_mount(tensioner=false) {
     if(tensioner) 2020_z_pulley_mount_plate(tensioner, mount_width=22);
     else 2020_z_pulley_mount_plate(tensioner, mount_width=22);
 
-    color("green",0.5)
-    translate([holder_offset, 0, 0]) 2020_z_pulley_mount_holder(tensioner);
+//    color("green",0.5)
+//    translate([holder_offset, 0, 0]) 2020_z_pulley_mount_holder(tensioner);
     color("blue",0.5)
     if(tensioner==false) 2020_z_pulley_mount_slide(tensioner);
   }
