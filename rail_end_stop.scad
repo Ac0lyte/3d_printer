@@ -14,7 +14,7 @@
 include <vars.scad>;
 use <microswitch.scad>;
 
-PART = "rail_end_stop_assembly";
+PART = "rail_end_stop_2";
 
 
 if (PART == "rail_end_stop_assembly") {
@@ -30,6 +30,10 @@ if (PART == "rail_end_stop_top") {
 
 if (PART == "rail_end_stop_bottom") {
   color(part_color) rail_end_stop_bottom();
+}
+
+if (PART == "rail_end_stop_2") {
+  color(part_color) rail_end_stop_2();
 }
 
 
@@ -62,7 +66,7 @@ module rail_end_stop(id=10, od=14, width=5){
         cylinder(h=width, d=od, $fn=100, center=true);
         cube([od+10, 4, width], center=true);
       }
-      cylinder(h=width+1, d=id+.5, $fn=100, center=true); // rail
+      cylinder(h=width+1, d=id, $fn=100, center=true); // rail
       rotate([90,0,0]){
         translate([ (od/2+2), 0, 0]) cylinder(h=5, d=3.5, $fn=100, center=true);
         translate([-(od/2+2), 0, 0]) cylinder(h=5, d=3.5, $fn=100, center=true);
@@ -73,5 +77,18 @@ module rail_end_stop(id=10, od=14, width=5){
       translate([-4.75, 0, (od+plate_height)/2-1]) cylinder(h=6, $fn=100, center=true);
     }
     translate([ 4.75, 0, (od+plate_height)/2+2]) cylinder(h=6, $fn=100, center=true);
+  }
+}
+
+module rail_end_stop_2(){
+  difference(){
+    union(){
+      cube([20,20,5], center=true);
+      translate([5, 0, 3.5]) cube([5, 20, 2], center=true);
+      translate([5, 4.75, 2.5 + (M4_bolt_head_height/2) + 3]) cylinder(h=6, d=2, $fn=100, center=true);
+    }
+    cylinder(h=6, d=M4_bolt_hole, $fn=100, center=true);
+    translate([0,0,2.5+(M4_bolt_head_height/2)]) cylinder(h=M4_bolt_head_height, d=M4_bolt_head_diam, $fn=100, center=true);
+    translate([5,-4.75, 2]) cylinder(h=10, d=2, $fn=100, center=true);
   }
 }

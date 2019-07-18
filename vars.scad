@@ -38,6 +38,8 @@ M5_nut_diam = 9;
 // M4
 M4_bolt_diam = 4;
 M4_bolt_hole = 4.5;
+M4_bolt_head_diam = 8;
+M4_bolt_head_height = 3;
 M4_nut_height = 3.5;
 M4_nut_width = 6.9;
 M4_nut_diam = 8;
