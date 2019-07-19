@@ -2,6 +2,9 @@
 PART = "none";
 IMAGE = "none";
 
+/* Maths */
+pi = 3.14159265359;
+
 /* colors */
 part_color = "skyblue";
 

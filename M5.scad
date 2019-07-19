@@ -16,11 +16,15 @@
 
 include <vars.scad>;
 
-module M5_bolt(l=25) {
+module M5_bolt(l=25, hex=false) {
   difference() {
     union() {
-      translate([0,0,l/2 + M5_bolt_head_height/2]) cylinder(h=M5_bolt_head_height, d=M5_bolt_head_diam, $fn=100, center=true);
       cylinder(h=l, d=M5_bolt_diam, $fn=100, center=true);
+      if( hex == true) {
+        translate([0,0,l/2 + M5_bolt_head_height/2]) cylinder(h=M5_bolt_head_height, d=M5_bolt_head_diam, $fn=6, center=true);
+      } else {
+        translate([0,0,l/2 + M5_bolt_head_height/2]) cylinder(h=M5_bolt_head_height, d=M5_bolt_head_diam, $fn=200, center=true);
+      }
     }
     translate([0,0,l/2 + M5_bolt_head_height]) cylinder(h=M5_bolt_head_height/2, d=M5_bolt_head_diam/2, $fn=6, center=true);
   }
