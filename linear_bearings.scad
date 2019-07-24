@@ -76,6 +76,68 @@ module scs10uu_holes() {
 
 module bearing_race ( T, h, E, W, L, F, G, B, C, K, S1, S2, L1, id, od )
 {
+  // Screw holes Y is always either zero or 1/2 height
+  x1 = B/2;
+  x2 = 0 - x1;
+
+  z1 = C/2;
+  z2 = 0 - z1;
+
+
+  // bearing
+  color("grey")
+  difference() {
+    // linear bearing outside diameter
+    cylinder(h=L-4, d=od, center=true, $fn=200);
+
+    // linear bearing inside diameter
+    cylinder(h=L, d=id, center=true, $fn=200);
+  }
+
+  difference(){
+    // linear bearing outside diameter
+    cylinder(h=L, d=od + 1, center=true, $fn=200);
+    cylinder(h=L+1, d=od, center=true, $fn=200);
+
+  }
+
+  // Screw holes
+  difference(){
+    translate([x1, (L1/2)+1, z1]) rotate([90,0,0]) cylinder(h=L1, d=S1 + 0.1, $fn=100, center=true);
+    translate([x1, (L1/2)+1, z1]) rotate([90,0,0]) cylinder(h=L1+1, d=S1, $fn=100, center=true);
+  }
+  difference(){
+    translate([x1, (L1/2)+1, z2]) rotate([90,0,0]) cylinder(h=L1, d=S1 + 0.1, $fn=100, center=true);
+    translate([x1, (L1/2)+1, z2]) rotate([90,0,0]) cylinder(h=L1+1, d=S1, $fn=100, center=true);
+  }
+  difference(){
+    translate([x2, (L1/2)+1, z1]) rotate([90,0,0]) cylinder(h=L1, d=S1 + 0.1, $fn=100, center=true);
+    translate([x2, (L1/2)+1, z1]) rotate([90,0,0]) cylinder(h=L1+1, d=S1, $fn=100, center=true);
+  }
+  difference(){
+    translate([x2, (L1/2)+1, z2]) rotate([90,0,0]) cylinder(h=L1, d=S1 + 0.1, $fn=100, center=true);
+    translate([x2, (L1/2)+1, z2]) rotate([90,0,0]) cylinder(h=L1+1, d=S1, $fn=100, center=true);
+  }
+
+  y1 = -(L1/4);
+  difference(){
+    translate([x1, y1, z1]) rotate([90,0,0]) cylinder(h=G-L1, d=S2 + 0.1, $fn=100, center=true);
+    translate([x1, y1, z1]) rotate([90,0,0]) cylinder(h=G-L1+1, d=S2, $fn=100, center=true);
+  }
+  difference(){
+    translate([x1, y1, z2]) rotate([90,0,0]) cylinder(h=G-L1, d=S2 + 0.1, $fn=100, center=true);
+    translate([x1, y1, z2]) rotate([90,0,0]) cylinder(h=G-L1+1, d=S2, $fn=100, center=true);
+  }
+  difference(){
+    translate([x2, y1, z1]) rotate([90,0,0]) cylinder(h=G-L1, d=S2 + 0.1, $fn=100, center=true);
+    translate([x2, y1, z1]) rotate([90,0,0]) cylinder(h=G-L1+1, d=S2, $fn=100, center=true);
+  }
+  difference(){
+    translate([x2, y1, z2]) rotate([90,0,0]) cylinder(h=G-L1, d=S2 + 0.1, $fn=100, center=true);
+    translate([x2, y1, z2]) rotate([90,0,0]) cylinder(h=G-L1+1, d=S2, $fn=100, center=true);
+  }
+
+
   color("lightgrey")
   difference() {
     // base block
@@ -84,13 +146,7 @@ module bearing_race ( T, h, E, W, L, F, G, B, C, K, S1, S2, L1, id, od )
     // linear bearing outside diameter
     cylinder(h=L+1, d=od, center=true, $fn=200);
 
-    // Screw holes Y is always either zero or 1/2 height
-    x1 = B/2;
-    x2 = 0 - x1;
-
-    z1 = C/2;
-    z2 = 0 - z1;
-
+    // Screw holes
     translate([x1, (L1/2)+1, z1]) rotate([90,0,0]) cylinder(h=L1+1, d=S1, $fn=100, center=true);
     translate([x1, (L1/2)+1, z2]) rotate([90,0,0]) cylinder(h=L1+1, d=S1, $fn=100, center=true);
     translate([x2, (L1/2)+1, z1]) rotate([90,0,0]) cylinder(h=L1+1, d=S1, $fn=100, center=true);
@@ -106,16 +162,6 @@ module bearing_race ( T, h, E, W, L, F, G, B, C, K, S1, S2, L1, id, od )
     translate([0-((W/2)-K), 0-((F/2)-((F-G)/2)), 0]) cube([K*2+1, F-G+1, L+1], center=true);
 
     translate([W/2, 0-(L1/2), 0]) cube([((W-(B+S1))/2)+0.1, F-L1+0.1, L+1], center=true);
-  }
-
-  // bearing
-  color("grey")
-  difference() {
-    // linear bearing outside diameter
-    cylinder(h=L-4, d=od, center=true, $fn=200);
-
-    // linear bearing inside diameter
-    cylinder(h=L, d=id, center=true, $fn=200);
   }
 }
 
