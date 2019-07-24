@@ -19,7 +19,7 @@ use <linear_bearings.scad>;
 use <v6_j_type_hotend.scad>;
 
 
-PART = "10mm_rail_clamp";
+PART = "2020_x_axis_carriage_assembly";
 
 if (PART == "2020_x_axis_carriage_assembly") {
   color(part_color, 0.25)
@@ -28,8 +28,8 @@ if (PART == "2020_x_axis_carriage_assembly") {
   color(part_color, 0.25)
   2020_x_axis_carriage_connector_right();
 
-  translate([ 24.5,-.5,00]) 2020_x_axis_carriage_rail_mount();
-  translate([-24.5,-.5,00]) rotate([0, 0, 180]) 2020_x_axis_carriage_rail_mount();
+  translate([ 38,-.5,00]) rotate([0, 0, 180]) 2020_x_axis_carriage_rail_mount();
+  translate([-38,-.5,00]) rotate([0, 0,   0]) 2020_x_axis_carriage_rail_mount();
 
   color("green",0.25) {
     translate([ 21, 19.5, 0]) rotate([0,90,180]) scs10uu();
