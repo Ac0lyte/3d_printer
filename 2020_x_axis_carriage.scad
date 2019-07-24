@@ -37,8 +37,8 @@ if (PART == "2020_x_axis_carriage_assembly") {
   }
 
   color("red",0.25) {
-    translate([ 24.5, -1, 75]) rotate([0,0, 90]) scs10uu();
-    translate([-24.5, -1, 75]) rotate([0,0,270]) scs10uu();
+    translate([ 40, -1, 75]) rotate([0, 0, 180]) scs10uu();
+    translate([-40, -1, 75]) rotate([0, 0, 180]) scs10uu();
   }
   translate([0, -17, 75]) rotate([270,0,0]) hotend();
 }
