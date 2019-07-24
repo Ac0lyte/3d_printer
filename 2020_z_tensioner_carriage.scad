@@ -5,7 +5,7 @@ use <M5.scad>;
 PART = "2020_z_tensioner_carriage_assembly";
 
 if (PART == "2020_z_tensioner_carriage_assembly") {
-  color("black")
+  color("black",0.25)
     translate([0, 31.5, 0,]) rotate([90, 0, 0])
   M5_bolt(length=40, hex=true);
   color("orange",0.25) 2020_z_tensioner_carriage_axle();
@@ -29,23 +29,26 @@ if (PART == "2020_z_tensioner_slide") {
 
 
 module 2020_z_tensioner_slide() {
+  X_SIZE = 40;
+  Y_SIZE = 50;
+  Z_SIZE = 5;
+
   difference(){
     union(){
       // front
-      translate([0, 0, 37]) cube([40, 50, 5], center=true);
+      translate([0, 0, 37]) cube([X_SIZE, Y_SIZE, 5], center=true);
       // side rails
       hull() {
         translate([ 17.75, 25, 3]) cube([4.5, 1, 1], center=true);
-        translate([ 17.75, 0, 35]) cube([4.5, 50, 1], center=true);
+        translate([ 17.75, 0, 35]) cube([4.5, Y_SIZE, 1], center=true);
       }
       hull(){
         translate([-17.75, 25, 3]) cube([4.5, 1, 1], center=true);
-        translate([-17.75, 0, 35]) cube([4.5, 50, 1], center=true);
+        translate([-17.75, 0, 35]) cube([4.5, Y_SIZE, 1], center=true);
 
       }
       // top
-      translate([0, 27.5, 21]) cube([40, 5, 37], center=true);
-      translate([0, 30.5, 15.5]) rotate([90, 0, 0]) cylinder(h=2, d=10, $fn=100, center=true);
+      translate([0, 27.5, 21]) cube([X_SIZE, 5, 37], center=true);
     }
     // adjustment bolt hole
     translate([0, 27.5, 15.5]) rotate([90, 0, 0]) cylinder(h=10, d=M5_bolt_hole, $fn=100, center=true);
@@ -57,23 +60,29 @@ module 2020_z_tensioner_slide() {
 }
 
 module 2020_z_tensioner_carriage() {
+  X_SIZE = 30;
+  Y_SIZE = 30;
+  Z_SIZE = 5;
 
   difference(){
     union(){
       // flange side
-      translate([0,0, -10]) cube([30, 30, 5], center=true);
+      translate([0,0, -10]) cube([X_SIZE, Y_SIZE, Z_SIZE], center=true);
       translate([0, 0, 13]) cylinder(h=11, d=30, center=true);
       // non-flange side
-      translate([0,0, 10]) cube([30, 30, 5], center=true);
+      translate([0,0, 10]) cube([X_SIZE, Y_SIZE, Z_SIZE], center=true);
       // top
       hull(){
-        translate([0, 17.5, 0]) cube([30, 5, 25], center=true);
+        translate([0, 17.5, 0]) cube([X_SIZE, 5, 25], center=true);
         translate([0, 20, 0]) sphere(d=10, center=true);
       }
     }
 
     // flange space
-    translate([0, 0, 11]) cylinder(h=8, d=19, center=true);
+    hull() {
+      translate([0, 0, 11]) cylinder(h=8, d=19, center=true);
+      translate([0, -15, 11]) cylinder(h=8, d=19, center=true);
+    }
     // axle space
     translate([0, 0, 3.5]) cylinder(h=33, d=9.8, $fn=100, center=true);
     // tension bolt hole
