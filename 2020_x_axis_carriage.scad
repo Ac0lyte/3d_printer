@@ -15,21 +15,29 @@ include <vars.scad>;
 use <2020_bronze_bearing_holder.scad>;
 use <2020_z_mount_spacer.scad>;
 use <2020_mount_plate.scad>;
+use <2020_x_pulley_mount.scad>;
 use <linear_bearings.scad>;
+use <g2.scad>;
 use <v6_j_type_hotend.scad>;
 
 
 PART = "2020_x_axis_carriage_assembly";
 
 if (PART == "2020_x_axis_carriage_assembly") {
+  //translate([0,10,10]) rotate([90,0,0]) 2020_x_pulley_mount(type=1);
+  color("grey", 0.25) {
+    translate([ 10,17,41]) rotate([90,0,0]) g2_smooth_pulley();
+    translate([-10,17,41]) rotate([90,0,0]) g2_smooth_pulley();
+  }
   color(part_color, 0.25)
-  2020_x_axis_carriage_connector_left();
+  rotate([0, 0, 180]) 2020_x_axis_carriage_assembly_left();
 
+  color("grey", 0.25) {
+    translate([ 23,17,30]) rotate([90,0,0]) g2_smooth_pulley();
+    translate([-23,17,30]) rotate([90,0,0]) g2_smooth_pulley();
+  }
   color(part_color, 0.25)
-  2020_x_axis_carriage_connector_right();
-
-  translate([ 38,-.5,00]) rotate([0, 0, 180]) 2020_x_axis_carriage_rail_mount();
-  translate([-38,-.5,00]) rotate([0, 0,   0]) 2020_x_axis_carriage_rail_mount();
+  rotate([0, 0, 180]) 2020_x_axis_carriage_assembly_right();
 
   color("green",0.25) {
     translate([ 21, 19.5, 0]) rotate([0,90,180]) scs10uu();
@@ -45,8 +53,23 @@ if (PART == "2020_x_axis_carriage_assembly") {
 
 
 if (PART == "2020_x_axis_carriage_connector_left") {
-  color(part_color)
-  2020_x_axis_carriage_connector_left();
+  color(part_color) {
+    difference(){
+      union(){
+        translate([0, -7, 0]) 2020_x_axis_carriage_connector_left();
+        difference(){
+          union(){
+            translate([ 38,-.5,00]) rotate([0, 0, 180]) 2020_x_axis_carriage_rail_mount();
+            translate([-38,-.5,00]) rotate([0, 0,   0]) 2020_x_axis_carriage_rail_mount();
+          }
+//          translate([0, 0, 40]) cube([100,20,40], center=true);
+        }
+        translate([ 20, -5, 0]) cube([10,5,40], center=true);
+        translate([-20, -5, 0]) cube([10,5,40], center=true);
+      }
+      translate([0, -9.5, 0]) cube([100,4,100], center=true);
+    }
+  }
 }
 
 if (PART == "2020_x_axis_carriage_connector_right") {
@@ -90,36 +113,94 @@ if (PART == "10mm_rail_clamp") {
 /* MODULES                                                   */
 /* ========================================================= */
 
+module 2020_x_axis_carriage_assembly_left(){
+  difference(){
+    union(){
+      translate([0, -7, 0]) 2020_x_axis_carriage_connector_left();
+      difference(){
+        union(){
+          translate([ 38,-.5,00]) rotate([0, 0, 180]) 2020_x_axis_carriage_rail_mount();
+          translate([-38,-.5,00]) rotate([0, 0,   0]) 2020_x_axis_carriage_rail_mount();
+        }
+          translate([0, 0, 40]) cube([100,20,40], center=true);
+      }
+      translate([ 20, -5, 0]) cube([10,5,40], center=true);
+      translate([-20, -5, 0]) cube([10,5,40], center=true);
+    }
+    translate([0, -9.5, 0]) cube([100,4,100], center=true);
+  }
+}
+
+module 2020_x_axis_carriage_assembly_right(){
+  difference(){
+    union(){
+      translate([0, -7, 0]) 2020_x_axis_carriage_connector_right();
+      difference(){
+        union(){
+          translate([ 38,-.5,00]) rotate([0, 0, 180]) 2020_x_axis_carriage_rail_mount();
+          translate([-38,-.5,00]) rotate([0, 0,   0]) 2020_x_axis_carriage_rail_mount();
+        }
+          translate([0, 0, 40]) cube([100,20,40], center=true);
+      }
+      translate([ 20, -5, 0]) cube([10,5,40], center=true);
+      translate([-20, -5, 0]) cube([10,5,40], center=true);
+    }
+    translate([0, -9.5, 0]) cube([100,4,100], center=true);
+  }
+}
+
 module 2020_x_axis_carriage_connector_left() {
+  // Carriage plate
   difference() {
     translate([0, 2.75, 0]) rotate([0,90,0]) scale([1, .5, 1]) 2020_z_mount_spacer_a(tab = false);
     translate([ 17, 0, 0]) cube([3,15,41], center=true);
     translate([-17, 0, 0]) cube([3,15,41], center=true);
   }
-  translate([0,4,37.75]) cube([31,9,35.5], center=true);
+  // Neck connecting clamp block to carriage plate
   difference(){
-    translate([0,14.5,50.5]) cube([40,12,10], center=true);
-    translate([0,14.5,50]) rotate([0,0,0]) cylinder(h=22, d=M4_bolt_hole, $fn=100, center=true);
-    translate([0,14.5,53.51]) rotate([0,0,30]) cylinder(h=M5_nut_height, d=M5_nut_diam, $fn=6, center=true);
+    translate([0,4,37.75]) cube([40,9,35.5], center=true);
+    translate([ 10,0,41]) rotate([90,0,0]) cylinder(h=20,d=4.5, $fn=100, center=true);
+    translate([-10,0,41]) rotate([90,0,0]) cylinder(h=20,d=4.5, $fn=100, center=true);
   }
-  translate([0,20,45]) cube([40,1,1], center=true);
-  translate([0,9,45]) cube([40,1,1], center=true);
+  // block below belt clamp
+  translate([0,12,50.5]) cube([40,15,10], center=true);
+  // Belt clamps here
+  translate([0, 10, 0]) {
+    difference(){
+      translate([0,14.5,50.5]) cube([40,12,10], center=true);
+      translate([0,14.5,50]) rotate([0,0,0]) cylinder(h=22, d=M4_bolt_hole, $fn=100, center=true);
+      translate([0,14.5,53.51]) rotate([0,0,30]) cylinder(h=M5_nut_height, d=M5_nut_diam, $fn=6, center=true);
+    }
+    translate([0,20,45]) cube([40,1,1], center=true);
+    translate([0,9,45]) cube([40,1,1], center=true);
+  }
 }
 
 module 2020_x_axis_carriage_connector_right() {
+  // Carriage plate
   difference() {
     translate([0, 2.75, 0]) rotate([0,90,0]) scale([1, .5, 1]) 2020_z_mount_spacer_a(tab = false);
     translate([ 17, 0, 0]) cube([3,15,41], center=true);
     translate([-17, 0, 0]) cube([3,15,41], center=true);
   }
-  translate([0,4,27.75]) cube([31,9,15.5], center=true);
-  difference(){
-    translate([0,14.5,27.25]) cube([40,12,14.5], center=true);
-    translate([0,14.5,27]) rotate([0,0,0]) cylinder(h=22, d=M4_bolt_hole, $fn=100, center=true);
-    translate([0,14.5,21.49]) rotate([0,0,30]) cylinder(h=M5_nut_height, d=M5_nut_diam, $fn=6, center=true);
+  // Neck connecting clamp block to carriage plate
+  difference() {
+    translate([0,4,27.75]) cube([60,9,15.5], center=true);
+    translate([ 23,0,30]) rotate([90,0,0]) cylinder(h=20,d=4.5, $fn=100, center=true);
+    translate([-23,0,30]) rotate([90,0,0]) cylinder(h=20,d=4.5, $fn=100, center=true);
   }
-  translate([0,20,35]) cube([40,1,1], center=true);
-  translate([0,9,35]) cube([40,1,1], center=true);
+  // block below belt clamp
+  translate([0,12,27.25]) cube([40,15,14.5], center=true);
+  // Belt clamps here
+  translate([0, 10, 0]) {
+    difference(){
+      translate([0,14.5,27.25]) cube([40,12,14.5], center=true);
+      translate([0,14.5,27]) rotate([0,0,0]) cylinder(h=22, d=M4_bolt_hole, $fn=100, center=true);
+      translate([0,14.5,21.49]) rotate([0,0,30]) cylinder(h=M5_nut_height, d=M5_nut_diam, $fn=6, center=true);
+    }
+    translate([0,20,35]) cube([40,1,1], center=true);
+    translate([0,9,35]) cube([40,1,1], center=true);
+  }
 }
 
 module 2020_x_axis_carriage_rail_mount() {
