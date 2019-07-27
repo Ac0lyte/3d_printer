@@ -21,7 +21,7 @@ use <g2.scad>;
 use <v6_j_type_hotend.scad>;
 
 
-PART = "2020_x_axis_carriage_assembly";
+PART = "2020_x_axis_carriage_connector_center";
 
 if (PART == "2020_x_axis_carriage_assembly") {
   //translate([0,10,10]) rotate([90,0,0]) 2020_x_pulley_mount(type=1);
@@ -51,6 +51,26 @@ if (PART == "2020_x_axis_carriage_assembly") {
   translate([0, -17, 75]) rotate([270,0,0]) hotend();
 }
 
+
+if (PART == "2020_x_axis_carriage_connector_center") {
+  color(part_color) {
+    difference(){
+      union(){
+        translate([0, -7, 0]) 2020_x_axis_carriage_connector_center();
+        difference(){
+          union(){
+            translate([ 38,-.5,00]) rotate([0, 0, 180]) 2020_x_axis_carriage_rail_mount(passthrough=true);
+            translate([-38,-.5,00]) rotate([0, 0,   0]) 2020_x_axis_carriage_rail_mount(passthrough=true);
+          }
+          translate([0, 0, 40]) cube([100,20,40], center=true);
+        }
+        translate([ 20, -5, 0]) cube([10,5,40], center=true);
+        translate([-20, -5, 0]) cube([10,5,40], center=true);
+      }
+      translate([0, -9.5, 0]) cube([100,4,100], center=true);
+    }
+  }
+}
 
 if (PART == "2020_x_axis_carriage_connector_left") {
   color(part_color) {
@@ -149,6 +169,31 @@ module 2020_x_axis_carriage_assembly_right(){
   }
 }
 
+
+// This provides a dual rail carrage that the belt clamp bolts onto.
+// This allows for smaller prints and faster itterations of the whole
+// assembly.
+module 2020_x_axis_carriage_connector_center() {
+  // Carriage plate
+  difference() {
+    translate([0, 2.75, 0]) rotate([0,90,0]) scale([1, .5, 1]) 2020_z_mount_spacer_a(tab = false);
+    translate([ 17, 0, 0]) cube([3,15,41], center=true);
+    translate([-17, 0, 0]) cube([3,15,41], center=true);
+  }
+  // mounting block
+  block_height = 25;
+  block_depth = 8;
+  block_width = 40;
+  block_offset = 0;
+
+  difference(){
+    translate([0, block_height/2, block_offset]) cube([block_width,block_height,block_depth], center=true);
+    translate([  0, block_height-5, block_offset]) rotate([0,0,0]) cylinder(h=block_depth+1, d=4.5, $fn=100, center=true);
+    translate([ 10, block_height-5, block_offset]) rotate([0,0,0]) cylinder(h=block_depth+1, d=4.5, $fn=100, center=true);
+    translate([-10, block_height-5, block_offset]) rotate([0,0,0]) cylinder(h=block_depth+1, d=4.5, $fn=100, center=true);
+  }
+}
+
 module 2020_x_axis_carriage_connector_left() {
   // Carriage plate
   difference() {
@@ -203,14 +248,14 @@ module 2020_x_axis_carriage_connector_right() {
   }
 }
 
-module 2020_x_axis_carriage_rail_mount() {
+module 2020_x_axis_carriage_rail_mount(passthrough=false) {
   difference() {
     union (){
       translate([2,0, 0]) cube([22,14,40], center=true);
-      translate([-2, 0, 20]) rotate([0,0,270]) 10mm_rail_clamp(d=10.75, w=40);
+      translate([-2, 0, 20]) rotate([0,0,270]) 10mm_rail_clamp(d=10.75, w=40, passthrough=passthrough);
     }
     translate([-4, 0, 0]) rotate([0,90,0]) scs10uu_holes();
-    translate([-2, 0, 20]) rotate([0,0,270]) 10mm_rail_clamp_holes(d=10.75, w=40, extend=true, h1=false);
+    translate([-2, 0, 20]) rotate([0,0,270]) 10mm_rail_clamp_holes(d=10.75, w=40, extend=true, h1=false,, passthrough=passthrough);
   }
 }
 
@@ -228,27 +273,25 @@ module 2020_x_axis_carriage() {
   }
 }
 
-module 10mm_rail_clamp(d=11, w=40) {
+module 10mm_rail_clamp(d=11, w=40, passthrough=false) {
   wall=2;
 
   difference(){
-    union() {
-      translate([0,0,0]) cylinder(h=w, d=d+(wall*2), $fn=200, center=true);
-      hull() {
-        translate([0,(d/4),0]) cube([d+(wall*2),(d/2)+wall,w], center=true);
-        translate([0,d/2,0]) cube([d,d/2,w], center=true);
-      }
-      translate([0,d,0]) cube([d,d,w], center=true);
-    }
-    10mm_rail_clamp_holes(d=d, w=w);
+    translate([0,0,0]) cylinder(h=w, d=d+(wall), $fn=200, center=true);
+    10mm_rail_clamp_holes(d=d, w=w, passthrough=passthrough);
   }
 }
 
-module 10mm_rail_clamp_holes(d=11, w=40, h1=true, h2=true, extend=false) {
+module 10mm_rail_clamp_holes(d=11, w=40, h1=true, h2=true, extend=false, passthrough=false) {
   wall=2;
-
   // Remove space for the rod
-  translate([0,0,0]) cylinder(h=w+1, d=d, $fn=200, center=true);
+  if (passthrough == true) {
+    hole_depth = 2 * w;
+    translate([0,0,0]) cylinder(h=hole_depth+1, d=d, $fn=200, center=true);
+  } else {
+    hole_depth = w;
+    translate([0,0,0]) cylinder(h=hole_depth+1, d=d, $fn=200, center=true);
+  }
 
   // Create the slit
   translate([0,d,0]) cube([1,d+1,w+1], center=true);
