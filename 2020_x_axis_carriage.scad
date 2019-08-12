@@ -16,40 +16,79 @@ use <2020_bronze_bearing_holder.scad>;
 use <2020_z_mount_spacer.scad>;
 use <2020_mount_plate.scad>;
 use <2020_x_pulley_mount.scad>;
+use <rail_y_pulley_mount.scad>;
+use <y_carriage_belt_clamp.scad>;
 use <linear_bearings.scad>;
 use <g2.scad>;
 use <v6_j_type_hotend.scad>;
 
 
-PART = "2020_x_axis_carriage_connector_center";
+PART = "2020_x_axis_carriage_assembly";
 
 if (PART == "2020_x_axis_carriage_assembly") {
-  //translate([0,10,10]) rotate([90,0,0]) 2020_x_pulley_mount(type=1);
-  color("grey", 0.25) {
-    translate([ 10,17,41]) rotate([90,0,0]) g2_smooth_pulley();
-    translate([-10,17,41]) rotate([90,0,0]) g2_smooth_pulley();
-  }
-  color(part_color, 0.25)
-  rotate([0, 0, 180]) 2020_x_axis_carriage_assembly_left();
+  // Rotate the whole thing to make me sane
+  rotate([90, 0, 180]){
 
-  color("grey", 0.25) {
-    translate([ 23,17,30]) rotate([90,0,0]) g2_smooth_pulley();
-    translate([-23,17,30]) rotate([90,0,0]) g2_smooth_pulley();
-  }
-  color(part_color, 0.25)
-  rotate([0, 0, 180]) 2020_x_axis_carriage_assembly_right();
+    // X carriage base
+    color(part_color, 0.25)
+    translate([0, -1, 0]) rotate([180, 0, 0]) difference(){
+        union(){
+          translate([0, -7, 0]) 2020_x_axis_carriage_connector_center();
+          difference(){
+            union(){
+              translate([ 38,-.5,00]) rotate([0, 0, 180]) 2020_x_axis_carriage_rail_mount(passthrough=true);
+              translate([-38,-.5,00]) rotate([0, 0,   0]) 2020_x_axis_carriage_rail_mount(passthrough=true);
+            }
+            translate([0, 0, 40]) cube([100,20,40], center=true);
+          }
+          translate([ 20, -5, 0]) cube([10,5,40], center=true);
+          translate([-20, -5, 0]) cube([10,5,40], center=true);
+        }
+        translate([0, -9.5, 0]) cube([100,4,100], center=true);
+      }
 
-  color("green",0.25) {
-    translate([ 21, 19.5, 0]) rotate([0,90,180]) scs10uu();
-    translate([-21, 19.5, 0]) rotate([0,90,180]) scs10uu();
-  }
+    // Y pully mount
+    translate([0, -3.5, 13]) rotate([90,0,180])
+    color(part_color, 0.25)rail_y_pulley_mount();
 
-  color("red",0.25) {
-    translate([ 40, -1, 75]) rotate([0, 0, 180]) scs10uu();
-    translate([-40, -1, 75]) rotate([0, 0, 180]) scs10uu();
-  }
-  translate([0, -17, 75]) rotate([270,0,0]) hotend();
+    // far end
+    // translate([0, -3.5, 13]) rotate([90,0,180])
+    // color(part_color, 0.25) rail_y_pulley_mount(rail_end="far");
+
+    // Y pulleys
+    color("grey", 0.25) {
+      // Toothed
+      translate([-49,21,29]) rotate([90,0,0]) g2_smooth_pulley();
+      //smooth
+      translate([-9,21,43]) rotate([90,0,0]) g2_smooth_pulley();
+      translate([-37,21,43]) rotate([90,0,0]) g2_smooth_pulley();
+      // far end
+      // translate([-23,21,30]) rotate([90,0,0]) g2_smooth_pulley();
+    }
+
+    // X axis bearing mounts
+    color("green",0.25) {
+      translate([ 21, 19.5, 0]) rotate([0,90,180]) scs10uu();
+      translate([-21, 19.5, 0]) rotate([0,90,180]) scs10uu();
+    }
+
+    // Y axis bearing mounts
+    color("red",0.25) {
+      translate([ 40, -1, 75]) rotate([0, 0, 180]) scs10uu();
+      translate([-40, -1, 75]) rotate([0, 0, 180]) scs10uu();
+    }
+
+    // Y axis belt clamp
+    color(part_color, 0.25)
+    translate([-25.5, 7, 75]) rotate([90, 180, 180]) y_carriage_belt_clamp();
+
+    // Hotend
+    color("yellow",0.25)
+    translate([0, -17, 75]) rotate([270,0,0]) hotend();
+
+  } // Close global rotation
 }
+
 
 
 if (PART == "2020_x_axis_carriage_connector_center") {

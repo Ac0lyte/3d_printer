@@ -296,8 +296,8 @@ if (PART == "2020_x_pulley_mount_assembly_flat_two") {
   pully_y = 0;
   pully_z = 16.5;
 
-  pully2_x = 18;
-  pully2_y = 5;
+  pully2_x = 13;
+  pully2_y = -13;
 
   pully_height = 5;
   pully_width=6.5;
@@ -308,7 +308,7 @@ if (PART == "2020_x_pulley_mount_assembly_flat_two") {
 
   // pully mount
     color(part_color)
-    2020_x_pulley_mount_flat(type=1);
+    2020_x_pulley_mount_flat(type=2);
 
     // mount screw and nut
     translate([pully_x, pully_y, pully_z - pully_height]) {
@@ -500,8 +500,8 @@ module 2020_x_pulley_mount_flat(type=2) {
   pully_x = 0;
   pully_y = 0;
 
-  pully2_x = 18;
-  pully2_y = 5;
+  pully2_x = 13;
+  pully2_y = -13;
 
   mount_length = 34;
   mount_height = 30;
@@ -525,7 +525,13 @@ module 2020_x_pulley_mount_flat(type=2) {
       }
 
       // pully mount
-      translate([0, ((mount_length-brace_length)/2)-mount_thickness, brace_offset]) rotate([0, 0, 0]) cube([20, brace_length, brace_thickness], center=true);
+      hull() {
+        translate([0, (mount_length/2)-(mount_thickness), (mount_height/2)-(mount_thickness/2)]) cube([20,1,brace_thickness], center=true);
+        translate([ pully_x, pully_y, brace_offset]) cylinder(h=brace_thickness, d=12, center=true, $fn=100);
+        if (type == 2) {
+          translate([pully2_x, pully2_y, brace_offset]) cylinder(h=brace_thickness, d=12, center=true, $fn=100);
+        }
+      }
     }
 
     // Pully mount Holes
