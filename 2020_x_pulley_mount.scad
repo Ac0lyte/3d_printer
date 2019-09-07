@@ -20,7 +20,7 @@ use <2020_mount_plate.scad>;
 
 brace_thickness = 8;
 
-PART = "2020_x_pulley_mount_assembly_flat_two";
+PART = "2020_x_pulley_mount_assembly_offset_one";
 
 /***************************************************************/
 

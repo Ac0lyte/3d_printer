@@ -28,9 +28,12 @@ PART = "2020_x_axis_carriage_assembly";
 if (PART == "2020_x_axis_carriage_assembly") {
   // Rotate the whole thing to make me sane
   rotate([90, 0, 180]){
+    // Y rails
+    translate([-40, -.5, 75]) rotate([0, 0, 0]) color("white", 0.25) cylinder(h=200, d=10, $fn=100, center=true);
+    translate([40, -.5, 75]) rotate([0, 0, 0]) color("white", 0.25) cylinder(h=200, d=10, $fn=100, center=true);
 
-    // X carriage base
-    color(part_color, 0.25)
+    // X carriage base by belt
+    color(part_color, 0.5)
     translate([0, -1, 0]) rotate([180, 0, 0]) difference(){
         union(){
           translate([0, -7, 0]) 2020_x_axis_carriage_connector_center();
@@ -49,21 +52,17 @@ if (PART == "2020_x_axis_carriage_assembly") {
 
     // Y pully mount
     translate([0, -3.5, 13]) rotate([90,0,180])
-    color(part_color, 0.25)rail_y_pulley_mount();
-
-    // far end
-    // translate([0, -3.5, 13]) rotate([90,0,180])
-    // color(part_color, 0.25) rail_y_pulley_mount(rail_end="far");
+    color(part_color, 0.5)rail_y_pulley_mount();
 
     // Y pulleys
     color("grey", 0.25) {
       // Toothed
-      translate([-49,21,29]) rotate([90,0,0]) g2_smooth_pulley();
+      translate([-49,26,29]) rotate([90,0,0]) g2_smooth_pulley();
       //smooth
-      translate([-9,21,43]) rotate([90,0,0]) g2_smooth_pulley();
-      translate([-37,21,43]) rotate([90,0,0]) g2_smooth_pulley();
+      translate([-9,26,43]) rotate([90,0,0]) g2_smooth_pulley();
+      translate([-37,26,43]) rotate([90,0,0]) g2_smooth_pulley();
       // far end
-      // translate([-23,21,30]) rotate([90,0,0]) g2_smooth_pulley();
+      // translate([-23,26,30]) rotate([90,0,0]) g2_smooth_pulley();
     }
 
     // X axis bearing mounts
@@ -72,6 +71,48 @@ if (PART == "2020_x_axis_carriage_assembly") {
       translate([-21, 19.5, 0]) rotate([0,90,180]) scs10uu();
     }
 
+    // X carriage base - far end
+    translate([0, 0, 150]) rotate([0, 180, 0]){
+      color(part_color, 0.5)
+      translate([0, -1, 0]) rotate([180, 0, 0]) difference(){
+          union(){
+            translate([0, -7, 0]) 2020_x_axis_carriage_connector_center();
+            difference(){
+              union(){
+                translate([ 38,-.5,00]) rotate([0, 0, 180]) 2020_x_axis_carriage_rail_mount(passthrough=true);
+                translate([-38,-.5,00]) rotate([0, 0,   0]) 2020_x_axis_carriage_rail_mount(passthrough=true);
+              }
+              translate([0, 0, 40]) cube([100,20,40], center=true);
+            }
+            translate([ 20, -5, 0]) cube([10,5,40], center=true);
+            translate([-20, -5, 0]) cube([10,5,40], center=true);
+          }
+          translate([0, -9.5, 0]) cube([100,4,100], center=true);
+        }
+
+      // far end
+      translate([0, -3.5, 13]) rotate([90,0,180])
+      color(part_color, 0.5) rail_y_pulley_mount(rail_end="far");
+
+      // Y pulleys
+      color("grey", 0.25) {
+        // Toothed
+         translate([23,26,35]) rotate([90,0,0]) g2_smooth_pulley();
+      }
+
+      // X axis bearing mounts
+      color("green",0.25) {
+        translate([ 21, 19.5, 0]) rotate([0,90,180]) scs10uu();
+        translate([-21, 19.5, 0]) rotate([0,90,180]) scs10uu();
+      }
+    }
+
+
+
+    // =================== \\
+    //  Y AXIS AND HOTEND  \\
+    // =================== \\
+
     // Y axis bearing mounts
     color("red",0.25) {
       translate([ 40, -1, 75]) rotate([0, 0, 180]) scs10uu();
@@ -79,7 +120,7 @@ if (PART == "2020_x_axis_carriage_assembly") {
     }
 
     // Y axis belt clamp
-    color(part_color, 0.25)
+    color(part_color, 0.5)
     translate([-25.5, 7, 75]) rotate([90, 180, 180]) y_carriage_belt_clamp();
 
     // Hotend

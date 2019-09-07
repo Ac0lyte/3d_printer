@@ -19,7 +19,10 @@ include <v6_j_type_hotend.scad>;
 
 include <y_carriage_hotend.scad>;
 include <rail_y_pulley_mount.scad>;
-
+include <y_carriage_belt_clamp.scad>
+include <2020_y_pulley_mount.scad>
+include <2020_y_pulley_tensioner.scad>;
+include <tension_knob.scad>;
 include <rail_end_stop.scad>;
 
 include <2020_extrusion.scad>;
