@@ -139,7 +139,7 @@ module nema_stepper(nema_size, height, mount_hole_depth = 5) {
 // extra = extra space added to all hole diameters
 //         to offset printer overflow
 
-module nema_stepper_holes(nema_size, hole_depth=10, extra=1) {
+module nema_stepper_holes(nema_size, hole_depth=10, extra=1, pilot_extra=0.1) {
   B = NEMA_B(nema_size);
   C = NEMA_C(nema_size);
   E = NEMA_E(nema_size);
@@ -151,13 +151,13 @@ module nema_stepper_holes(nema_size, hole_depth=10, extra=1) {
   b = B/2;
 
   // mount screw holes
-  translate([-b, -b, hole_depth/2]) cylinder(h=hole_depth, d=C + extra, $fn=60, center=true);
-  translate([-b,  b, hole_depth/2]) cylinder(h=hole_depth, d=C + extra, $fn=60, center=true);
-  translate([ b, -b, hole_depth/2]) cylinder(h=hole_depth, d=C + extra, $fn=60, center=true);
-  translate([ b,  b, hole_depth/2]) cylinder(h=hole_depth, d=C + extra, $fn=60, center=true);
+  translate([-b, -b, hole_depth/2]) cylinder(h=hole_depth+0.1, d=C + extra, $fn=60, center=true);
+  translate([-b,  b, hole_depth/2]) cylinder(h=hole_depth+0.1, d=C + extra, $fn=60, center=true);
+  translate([ b, -b, hole_depth/2]) cylinder(h=hole_depth+0.1, d=C + extra, $fn=60, center=true);
+  translate([ b,  b, hole_depth/2]) cylinder(h=hole_depth+0.1, d=C + extra, $fn=60, center=true);
 
   // pilot hole
-  translate([0,0,F/2]) cylinder(h=F, d=E + extra, $fn=60, center=true);
+  translate([0,0,F/2]) cylinder(h=F+pilot_extra, d=E + extra, $fn=60, center=true);
 
   // shaft hole
   translate([0,0,shaft_length/2]) cylinder(h=shaft_length, d=shaft_diam + extra, $fn=60, center=true);
