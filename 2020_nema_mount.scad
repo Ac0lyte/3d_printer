@@ -84,15 +84,17 @@ module 2020_nema_mount(
     }
 
     // nut holes
-    nut_offset = 0;
-    translate([ pully_x, pully_y, nut_offset]) {
+    nut_offset = mount_depth-2;
+    translate([ pully_x, pully_y, nut_offset])
       cylinder(h=M5_nut_height + 0.1, d=M5_nut_diam, $fn=6, center=true);
+      translate([ pully_x, pully_y, 0])
       cylinder(h=mount_depth * 2, d=M4_bolt_hole, $fn=60, center=true);
-    }
-    translate([-pully_x, pully_y, nut_offset]) {
+
+    translate([-pully_x, pully_y, nut_offset])
       cylinder(h=M5_nut_height + 0.1, d=M5_nut_diam, $fn=6, center=true);
+      translate([-pully_x, pully_y, 0]) 
       cylinder(h=mount_depth * 2, d=M4_bolt_hole, $fn=60, center=true);
-    }
+
   }
 
   // 2020 mount plate
