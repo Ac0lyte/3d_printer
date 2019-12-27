@@ -37,11 +37,13 @@ include <2020_dual_connector.scad>;
 include <2020_x_axis_carriage.scad>;
 include <2020_x_pulley_mount.scad>;
 
+include <2020_z_axis_bearing.scad>;
 include <2020_z_pulley_mount.scad>;
 include <2020_z_carriage.scad>;
 include <2020_z_carriage_belt_clamp.scad>;
 include <2020_z_tensioner_carriage.scad>;
 include <2020_z_mount_spacer.scad>;
+include <2020_nema_mount.scad>;
 
 /* What to print */
 PART = "pivot_nut_holder";

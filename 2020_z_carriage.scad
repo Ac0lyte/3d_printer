@@ -29,137 +29,71 @@
  *
  */
 
- include <vars.scad>;
- use <2020_extrusion.scad>;
- use <height_lever.scad>;
- use <608zz_bearing.scad>;
- use <linear_bearings.scad>;
- use <pivot_nut_holder.scad>;
+include <vars.scad>;
+use <2020_extrusion.scad>;
+use <2020_corner_plate.scad>;
+use <linear_bearings.scad>;
+use <pivot_nut_holder.scad>;
 
 PART = "2020_z_carriage";
 size=120;
 
+if (PART == "2020_z_carriage_assembly") {
+    plate_thickness = 4;
+    rail_offset = 47 + plate_thickness;
+
+    translate([105,10+rail_offset,0]) rotate([0,90,0]) color("black",0.25)  2020_extrusion(190);
+    translate([0,95+rail_offset,0]) rotate([0,90,90]) color("black",0.25)  2020_extrusion(190);
+    translate([0, -13, 0]) color("green",0.25) scs10uu();
+
+    color(part_color)
+    2020_z_carriage(plate_thickness);
+}
+
 if (PART == "2020_z_carriage") {
-    2020_z_carriage();
-    translate([95,0,0]) rotate([0,90,0]) color("skyblue",0.25)  2020_extrusion(190);
-    translate([ 30, -26, 0]) color("green",0.25) scs10uu();
-
-    translate([0,-16.5,0]) {
-      color("orange", 0.25) height_lever();
-      translate([170,35,0]) rotate([90,0,0]) 608zz_bearing();
-      translate([200,40,0]) rotate([90,0,0]) 608zz_bearing();
-    }
-}
-
-if (PART == "scs10uu_mount") {
-   scs10uu_mount();
-}
-
-if (PART == "608zz_mount") {
-    rotate([0,0,90]) 608zz_mount();
-}
-
-if (PART == "pivot_mount") {
-    rotate([0,0,90]) pivot_mount();
+    plate_thickness = 4;
+    color(part_color)
+    2020_z_carriage(plate_thickness);
 }
 
 /* ========================================================= */
 /* MODULES                                                   */
 /* ========================================================= */
 
-module 2020_z_carriage() {
-  // Platform base dimentions
-  platfom_width = 160;
-  platfom_height = 5;
-  platfom_depth = 30;
-
-  //
-  linear_bearing_height=29;
-  linear_bearing_od=19;
-  linear_bearing_id=10;
-
-  //608zz
-  bearing_height=7;
-  bearing_od=22;
-  bearing_id=8;
-  bearing_race=11;
-
-  // M5 Nut
-  M5_height = 4;
-  M5_diam = 9;
-
-  translate([30, -12.9, 0]) scs10uu_mount();
-  translate([170,16.5,0]) 608zz_mount();
-  translate([10,18.5,0]) pivot_mount();
-}
-
-
-module pivot_mount(){
-  difference(){
-    union(){
-      translate([0,-((pivot_diam+3.0)/2), 0]) cube([30,2,18], center=true);
-      hull() {
-        cylinder(h=6, d=pivot_diam,  $fn=100, center=true);
-        translate([0,-((pivot_diam+2)/2), 0]) cube([29,2,6], center=true);
-      }
-    }
-    translate([ 10, -(pivot_diam/2), 0]) rotate([90,0,0]) cylinder(h=pivot_diam, d=M4_bolt_hole+0.2, $fn=100, center=true);
-    translate([-10, -(pivot_diam/2), 0]) rotate([90,0,0]) cylinder(h=pivot_diam, d=M4_bolt_hole+0.2, $fn=100, center=true);
-    translate([ 10, 1, 0]) rotate([90,0,0]) cylinder(h=pivot_diam/2, d=8, $fn=100, center=true);
-    translate([-10, 1, 0]) rotate([90,0,0]) cylinder(h=pivot_diam/2, d=8, $fn=100, center=true);
-
-    // height adjustment bolt hole
-    translate([0,0,0])
-    hull(){
-      rotate([0, 10,0]) cylinder(h=10, d=height_bolt_diam+1, center=true, $fn=100);
-      rotate([0,-10,0]) cylinder(h=10, d=height_bolt_diam+1, center=true, $fn=100);
-    }
-
-    // height adjustment pivot hole
-    translate([0,0,-5]) sphere(d=pivot_diam+0.2, $fn=100);
-  }
-}
-
-module 608zz_mount(){
-  // 608zz bearing peg
-  difference(){
-    union(){
-      rotate([90,0,0]) cylinder(h=608zz_height+4, d=608zz_id-0.2, $fn=100, center=true);
-      translate([0,-3,0]) rotate([90,0,0]) cylinder(h=4, d=608zz_id+5, $fn=100, center=true);
-      translate([0,-(608zz_height+4)/2 ,0])
-      cube([30,2,18], center=true);
-    }
-    translate([10,-(608zz_height+4)/2 ,0]) rotate([90,0,0]) cylinder(h=5, d=M4_bolt_hole, $fn=100, center=true);
-    translate([-10,-(608zz_height+4)/2 ,0]) rotate([90,0,0]) cylinder(h=5, d=M4_bolt_hole, $fn=100, center=true);
-  }
-}
-
-module scs10uu_mount() {
+module 2020_z_carriage(plate_thickness = 4) {
   difference() {
     union(){
-      hull() {
-        translate([0,18,12]) rotate([0,90,0]) cylinder(h=13, d=1, center=true);
-        translate([0, 5,12]) rotate([0,90,0]) cylinder(h=13, d=1, center=true);
-        translate([0, 5,19]) rotate([0,90,0]) cylinder(h=13, d=1, center=true);
+      scs10uu_plate(plate_thickness = plate_thickness);
+      translate([0,41+plate_thickness,-3]) 2020_corner_plate(4,3,true,22);
+
+      hull(){
+        translate([0,plate_thickness,0]) cube([18,1,40], center=true);
+        translate([0,25.5+plate_thickness,-3]) cube([18,1,22], center=true);
       }
-      hull() {
-        translate([0,18,-12]) rotate([0,90,0]) cylinder(h=13, d=1, center=true);
-        translate([0, 5,-12]) rotate([0,90,0]) cylinder(h=13, d=1, center=true);
-        translate([0, 5,-19]) rotate([0,90,0]) cylinder(h=13, d=1, center=true);
+      hull(){
+        translate([0,plate_thickness,0]) cube([45,1,10], center=true);
+        translate([12.5,15.5+plate_thickness,0]) cube([55,1,16], center=true);
       }
-      translate([0, 0, 0]) cube([45,10,40], $fn=100, center=true);
-      translate([0, 12, 11]) cube([45,15,2], center=true);
-      translate([0, 12,-11]) cube([45,15,2], center=true);
+      hull(){
+        translate([12.5,15.5+plate_thickness,0]) cube([55,1,16], center=true);
+        translate([12.5,25.5+plate_thickness,-3]) cube([55,1,22], center=true);
+      }
     }
-    translate([0,-2, 0]) cube([41,10,36], center=true);
-    translate([0, 4, 0]) cube([46,2.1,20], center=true);
-
-    translate([0, 0, 0]) scs10uu_holes();
-    translate([12,6.51, 0]) cube([8,3,50], center=true);
-    translate([-12,6.51, 0]) cube([8,3,50], center=true);
-
-    // Screw holes - attach to the 2020
-    translate([12,12.5, -25]) cylinder(h=50, d=M4_bolt_hole, $fn=100);
-    translate([-12,12.5, -25]) cylinder(h=50, d=M4_bolt_hole, $fn=100);
+    translate([20,45.5,5]) cube([60,21,31], center=true);
+    translate([0,60,5]) cube([21,50,31], center=true);
+    translate([25,60,10]) cube([50,50,31], center=true);
   }
+}
+
+
+
+module scs10uu_plate(plate_thickness = 4) {
+    difference() {
+      // mount plate
+      translate([0, 0, 0]) cube([45,plate_thickness*2,40], $fn=100, center=true);
+
+      translate([0,-(plate_thickness/2), 0]) cube([41,plate_thickness+1,36], center=true);
+      translate([0, 0, 0]) scs10uu_holes();
+    }
+
 }

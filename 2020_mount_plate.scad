@@ -55,10 +55,16 @@ if (PART == "2020_mount_plate_2") {
    difference(){
      cube([width, height, length], center=true);
      z_start = 0 - ((length/2)-margin);
-     for (Z = [ 1 : holes ]) {
-        z = z_start + ((Z-1) * space);
-        echo(z);
-        translate([0,0,z]) rotate([90,0,0]) cylinder(h=height+1, d=hole_size, $fn=200, center=true);
+     if (holes > 0) {
+       if (holes == 1) {
+         rotate([90,0,0]) cylinder(h=height+1, d=hole_size, $fn=200, center=true);
+       } else {
+         for (Z = [ 1 : holes ]) {
+            z = z_start + ((Z-1) * space);
+            echo(z);
+            translate([0,0,z]) rotate([90,0,0]) cylinder(h=height+1, d=hole_size, $fn=200, center=true);
+         }
+       }
      }
    }
  }

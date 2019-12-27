@@ -69,25 +69,25 @@ if (PART == "2020_corner_plate_2x2_wide") {
 /* ========================================================= */
 
 
-module 2020_corner_plate(x=4, y=4, wide=false) {
+module 2020_corner_plate(x=4, y=4, wide=false, height=5) {
   difference(){
     hull(){
         for ( i = [0:x-1]) {
-          translate([10 * i, 0, 0]) cylinder(h=5, d=20, center=true, $fn=200);
+          translate([10 * i, 0, 0]) cylinder(h=height, d=20, center=true, $fn=60);
         }
         for ( i = [0:y-1]) {
-          translate([0, 10 * i, 0]) cylinder(h=5, d=20, center=true, $fn=200);
+          translate([0, 10 * i, 0]) cylinder(h=height, d=20, center=true, $fn=60);
         }
         if(wide == true) {
-            translate([x*5-7.5,-12.5,0]) cube([x*10+15,5,5], center=true);
-            translate([-12.5,y*5-7.5,0]) cube([5,y*10+15,5], center=true);
+            translate([x*5-7.5,-12.5,0]) cube([x*10+15,5,height], center=true);
+            translate([-12.5,y*5-7.5,0]) cube([5,y*10+15,height], center=true);
         }
     }
     for ( i = [0:x-1]) {
-        translate([10 * i, 0, 0]) cylinder(h=6, d=5, center=true, $fn=200);
+        translate([10 * i, 0, 0]) cylinder(h=height+1, d=5, center=true, $fn=60);
     }
     for ( i = [0:y-1]) {
-        translate([0, 10 * i, 0]) cylinder(h=6, d=5, center=true, $fn=200);
+        translate([0, 10 * i, 0]) cylinder(h=height+1, d=5, center=true, $fn=60);
     }
   }
 }

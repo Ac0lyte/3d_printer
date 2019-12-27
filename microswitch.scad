@@ -10,6 +10,9 @@
 // Found at:
 // https://github.com/christianege/openscad/blob/master/vitamins/microswitch.scad
 
+microswitch_color="black";
+microswitch_button_color="red";
+microswitch_contact_color="grey";
 
 function microswitch_thickness() = 6.4;
 function microswitch_length() = 19.8;
@@ -39,8 +42,8 @@ module microswitch_contact_space() {
         cube([microswitch_length() - 2, depth, microswitch_thickness() - 2], center = true);
 }
 
-module microswitch() {
-    vitamin("SMMICRO: Microswitch");
+module microswitch(exploded=flase) {
+    //vitamin("SMMICRO: Microswitch");
     translate([-(5.1 + 9.5 - 7.5), -(8.4 + 2.5), -3.2 + (exploded ? 5 : 0)]) {   // put operating point of button at the origin
         color(microswitch_color) render() difference() {              // main body
             cube([19.8, 10.2, 6.4]);

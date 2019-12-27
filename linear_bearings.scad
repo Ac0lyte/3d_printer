@@ -36,6 +36,11 @@ if (PART == "scs10uu") {
     scs10uu();
 }
 
+
+if (PART == "scs10uu_mount") {
+   scs10uu_mount();
+}
+
 /* ========================================================= */
 /* MODULES                                                   */
 /* ========================================================= */
@@ -240,5 +245,37 @@ module bearing_holes ( W, L, F, B, C, S1)
     translate([x1, 0, z2]) rotate([90,0,0]) cylinder(h=F+1, d=S1, $fn=100, center=true);
     translate([x2, 0, z1]) rotate([90,0,0]) cylinder(h=F+1, d=S1, $fn=100, center=true);
     translate([x2, 0, z2]) rotate([90,0,0]) cylinder(h=F+1, d=S1, $fn=100, center=true);
+  }
+}
+
+
+
+module scs10uu_mount() {
+  difference() {
+    union(){
+      hull() {
+        translate([0,18,12]) rotate([0,90,0]) cylinder(h=13, d=1, center=true);
+        translate([0, 5,12]) rotate([0,90,0]) cylinder(h=13, d=1, center=true);
+        translate([0, 5,19]) rotate([0,90,0]) cylinder(h=13, d=1, center=true);
+      }
+      hull() {
+        translate([0,18,-12]) rotate([0,90,0]) cylinder(h=13, d=1, center=true);
+        translate([0, 5,-12]) rotate([0,90,0]) cylinder(h=13, d=1, center=true);
+        translate([0, 5,-19]) rotate([0,90,0]) cylinder(h=13, d=1, center=true);
+      }
+      translate([0, 0, 0]) cube([45,10,40], $fn=100, center=true);
+      translate([0, 12, 11]) cube([45,15,2], center=true);
+      translate([0, 12,-11]) cube([45,15,2], center=true);
+    }
+    translate([0,-2, 0]) cube([41,10,36], center=true);
+    translate([0, 4, 0]) cube([46,2.1,20], center=true);
+
+    translate([0, 0, 0]) scs10uu_holes();
+    translate([12,6.51, 0]) cube([8,3,50], center=true);
+    translate([-12,6.51, 0]) cube([8,3,50], center=true);
+
+    // Screw holes - attach to the 2020
+    translate([12,12.5, -25]) cylinder(h=50, d=M4_bolt_hole, $fn=100);
+    translate([-12,12.5, -25]) cylinder(h=50, d=M4_bolt_hole, $fn=100);
   }
 }

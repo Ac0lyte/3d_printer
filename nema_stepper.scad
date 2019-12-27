@@ -9,7 +9,7 @@
 // E = Pilot diam (round part on moter face)
 // F = Pilot height
 
-PART = "NEMA17";
+PART = "NEMA17_HOLES";
 
 if (PART == "NEMA17") {
   nema_stepper(nema_size = 17, height = 30);
@@ -139,7 +139,14 @@ module nema_stepper(nema_size, height, mount_hole_depth = 5) {
 // extra = extra space added to all hole diameters
 //         to offset printer overflow
 
-module nema_stepper_holes(nema_size, hole_depth=10, extra=1, pilot_extra=0.1) {
+module nema_stepper_holes(
+  nema_size,
+  hole_depth=10,
+  extra=1,
+  pilot_extra=0.1,
+  mount_screw_height = 2
+) {
+  
   B = NEMA_B(nema_size);
   C = NEMA_C(nema_size);
   E = NEMA_E(nema_size);
@@ -155,6 +162,12 @@ module nema_stepper_holes(nema_size, hole_depth=10, extra=1, pilot_extra=0.1) {
   translate([-b,  b, hole_depth/2]) cylinder(h=hole_depth+0.1, d=C + extra, $fn=60, center=true);
   translate([ b, -b, hole_depth/2]) cylinder(h=hole_depth+0.1, d=C + extra, $fn=60, center=true);
   translate([ b,  b, hole_depth/2]) cylinder(h=hole_depth+0.1, d=C + extra, $fn=60, center=true);
+
+  // mount screw head holes
+  translate([-b, -b, mount_screw_height]) cylinder(h=hole_depth+0.1, d=(C*2) + extra, $fn=60);
+  translate([-b,  b, mount_screw_height]) cylinder(h=hole_depth+0.1, d=(C*2) + extra, $fn=60);
+  translate([ b, -b, mount_screw_height]) cylinder(h=hole_depth+0.1, d=(C*2) + extra, $fn=60);
+  translate([ b,  b, mount_screw_height]) cylinder(h=hole_depth+0.1, d=(C*2) + extra, $fn=60);
 
   // pilot hole
   translate([0,0,F/2]) cylinder(h=F+pilot_extra, d=E + extra, $fn=60, center=true);

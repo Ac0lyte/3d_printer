@@ -12,24 +12,33 @@
 */
 
 include <vars.scad>;
+
+microswitch_color="black";
+microswitch_button_color="red";
+microswitch_contact_color="grey";
+
 use <microswitch.scad>;
 
-PART = "rail_end_stop_2";
+PART = "rail_end_stop_bottom";
+
+id=10.5;
+od=15;
+width=7;
 
 
 if (PART == "rail_end_stop_assembly") {
-  color(part_color) rail_end_stop_top();
-  color(part_color, 0.75) rail_end_stop_bottom();
+  color(part_color) rail_end_stop_top(id=id, od=od, width=width);
+  color(part_color, 0.75) rail_end_stop_bottom(id=id, od=od, width=width);
 
   color("black",0.25) translate([-3, 8.5, 11]) microswitch();
 }
 
 if (PART == "rail_end_stop_top") {
-  color(part_color) rail_end_stop_top();
+  color(part_color) rail_end_stop_top(id=id, od=od, width=width);
 }
 
 if (PART == "rail_end_stop_bottom") {
-  color(part_color) rail_end_stop_bottom();
+  color(part_color) rail_end_stop_bottom(id=id, od=od, width=width);
 }
 
 if (PART == "rail_end_stop_2") {
@@ -59,17 +68,24 @@ module rail_end_stop(id=10, od=14, width=5){
   plate_height=2;
   plate_width=20;
   plate_depth=width;
+  tab_width=14;
+  tab_height=4;
+  bolt_diam=3.5;
 
   union(){
     rotate([90, 0, 0]) difference(){
       union(){
-        cylinder(h=width, d=od, $fn=100, center=true);
-        cube([od+10, 4, width], center=true);
+        // pipe clamp
+        cylinder(h=width, d=od, $fn=360, center=true);
+        // clamping Tabs
+        cube([od+tab_width, tab_height, width], center=true);
       }
-      cylinder(h=width+1, d=id, $fn=100, center=true); // rail
+      // pipe clamp cutout
+      cylinder(h=width+1, d=id, $fn=360, center=true); // rail
+      // clamping tabs bolt holes
       rotate([90,0,0]){
-        translate([ (od/2+2), 0, 0]) cylinder(h=5, d=3.5, $fn=100, center=true);
-        translate([-(od/2+2), 0, 0]) cylinder(h=5, d=3.5, $fn=100, center=true);
+        translate([  (od/2)+(tab_width/4),  0, 0]) cylinder(h=tab_height+1, d=bolt_diam, $fn=360, center=true);
+        translate([0-((od/2)+(tab_width/4)), 0, 0]) cylinder(h=tab_height+1, d=bolt_diam, $fn=360, center=true);
       }
     }
     difference(){
